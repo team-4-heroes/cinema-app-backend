@@ -1,4 +1,4 @@
-# dk.team4.frontend
+# team-4-heroes backend
 
 ## Names and GitHub accounts
 He Englund https://github.com/SirMeows 
@@ -24,6 +24,7 @@ Peter Sand https://github.com/ptsand
 ## Link to deployed project
 
 ## Link to frontend repository
+https://github.com/team-4-heroes/cinema-app-frontend
  
 ## Link to deployed frontend code
 
