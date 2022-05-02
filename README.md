@@ -30,6 +30,7 @@ https://cinema-app.azurewebsites.net
 https://github.com/team-4-heroes/cinema-app-frontend
  
 ## Link to deployed frontend code
+https://proud-island-0421efd03.1.azurestaticapps.net
 
 ## Sprint plan (1st)
 Sprint goal / List of tasks to be completed during this sprint
