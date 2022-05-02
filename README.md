@@ -22,6 +22,7 @@ Peter Sand https://github.com/ptsand
 9. Gruppekontrakten er udarbejdet i en demokratisk proces, og kan ændres ved vedtagelse i en demokratisk samtale gruppen imellem
 
 ## Link to deployed project
+https://cinema-app.azurewebsites.net
 
 ## Link to frontend repository
 https://github.com/team-4-heroes/cinema-app-frontend
