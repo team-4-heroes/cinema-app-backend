@@ -74,8 +74,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.GET, "/api/message/all").permitAll()
             .antMatchers(HttpMethod.GET, "/index.html").permitAll()
             // All other endpoints are private
-            .anyRequest().authenticated();
-            //.anyRequest().permitAll();  //Disable Security
+            //.anyRequest().authenticated();
+            .anyRequest().permitAll();  //Disable Security TODO: enable security
     http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
   }
 
