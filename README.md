@@ -34,5 +34,5 @@ https://proud-island-0421efd03.1.azurestaticapps.net
 ## Sprint plan (1st)
 Sprint goal / List of tasks to be completed during this sprint
 
-# Link to assignment description
+## Link to assignment description
 https://docs.google.com/document/d/1Ujl1cbtDhkA0-tYEVibyhu8FXufw-aXAJtY_xvea2mI/edit#
