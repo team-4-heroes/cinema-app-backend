@@ -1,6 +1,5 @@
-[![Build and deploy JAR app to Azure Web App - cinema-app](https://github.com/team-4-heroes/cinema-app-backend/actions/workflows/main_cinema-app.yml/badge.svg)](https://github.com/team-4-heroes/cinema-app-backend/actions/workflows/main_cinema-app.yml)
-
 # team-4-heroes backend
+[![Build and deploy JAR app to Azure Web App - cinema-app](https://github.com/team-4-heroes/cinema-app-backend/actions/workflows/main_cinema-app.yml/badge.svg)](https://github.com/team-4-heroes/cinema-app-backend/actions/workflows/main_cinema-app.yml)
 
 ## Names and GitHub accounts
 He Englund https://github.com/SirMeows 
@@ -34,3 +33,6 @@ https://proud-island-0421efd03.1.azurestaticapps.net
 
 ## Sprint plan (1st)
 Sprint goal / List of tasks to be completed during this sprint
+
+# Link to assignment description
+https://docs.google.com/document/d/1Ujl1cbtDhkA0-tYEVibyhu8FXufw-aXAJtY_xvea2mI/edit#
