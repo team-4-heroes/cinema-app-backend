@@ -1,3 +1,5 @@
+[![Build and deploy JAR app to Azure Web App - cinema-app](https://github.com/team-4-heroes/cinema-app-backend/actions/workflows/main_cinema-app.yml/badge.svg)](https://github.com/team-4-heroes/cinema-app-backend/actions/workflows/main_cinema-app.yml)
+
 # team-4-heroes backend
 
 ## Names and GitHub accounts
