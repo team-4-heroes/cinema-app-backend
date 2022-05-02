@@ -1,18 +1,27 @@
 package kea.dat3.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class ReservedSeat {
     @Id
     long id;
 
-    @ManyToOne
-    private Reservation reservation;
+    @OneToOne
+    Seat seat;
 
-    public Reservation getReservation() {
-        return reservation;
+    @ManyToOne
+    Reservation reservation;
+
+    public ReservedSeat(Seat seat, Reservation reservation) {
+        this.reservation = reservation;
+        this.seat = seat;
     }
 }
