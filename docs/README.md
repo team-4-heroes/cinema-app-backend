@@ -32,7 +32,8 @@ https://github.com/team-4-heroes/cinema-app-frontend
 https://proud-island-0421efd03.1.azurestaticapps.net
 
 ## Sprint plan (1st)
-Sprint goal / List of tasks to be completed during this sprint
+Sprint goal: Create backend for core functionality (focus on creating a reservation)
+![List of tasks to be completed during this sprint](sprint-1-tasks.png)
 
 ## Link to assignment description
 https://docs.google.com/document/d/1Ujl1cbtDhkA0-tYEVibyhu8FXufw-aXAJtY_xvea2mI/edit#
