@@ -1,5 +1,6 @@
 package kea.dat3.entities;
 
+import kea.dat3.entities.ratings.PegiAgeRating;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,7 +31,7 @@ public class Movie {
     @Size(max = 3)
     private int length; // in minutes
 
-    //private PegiRating pegiRating;
+    private PegiAgeRating pegiAgeRating;
 
     @OneToOne
     @JoinColumn(name = "price_id", referencedColumnName = "id")
