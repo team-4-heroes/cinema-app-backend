@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -34,4 +35,7 @@ public class Movie {
     @OneToOne
     @JoinColumn(name = "price_id", referencedColumnName = "id")
     private Price price;
+
+    @OneToMany(mappedBy = "genre")
+    Set<MovieGenre> movieGenres;
 }

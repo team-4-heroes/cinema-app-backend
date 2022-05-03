@@ -6,22 +6,23 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Genre {
+public class MovieGenre {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String name;
+    @ManyToOne
+    @JoinColumn(name = "movie_id")
+    Movie movie;
 
-    @OneToMany(mappedBy = "movie")
-    Set<MovieGenre> movieGenres;
-
+    @ManyToOne
+    @JoinColumn(name = "genre_id")
+    Genre genre;
 }
