@@ -5,8 +5,12 @@ import kea.dat3.dto.PersonRequest;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,11 +19,30 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 public class Person implements UserWithPassword {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
+    @Column(nullable = false)
     private String email;
 
-    @Id
-    @Column(nullable = false, length = 50, unique = true)
+    @Column(nullable = false)
+    private String first_name;
+
+    @Column(nullable = false)
+    private String last_name;
+
+    private char active;
+
+    private String phoneNumber;
+
+    @CreationTimestamp
+    private LocalDateTime create_date;
+
+    @UpdateTimestamp
+    private LocalDateTime last_updated;
+
+    @Column(nullable = false, length = 50)
     private String username;
 
     // 72 == Max length of a bcrypt encoded password
@@ -30,7 +53,7 @@ public class Person implements UserWithPassword {
     private boolean enabled;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "ENUM('USER','ADMIN')")
+    @Column(columnDefinition = "ENUM('CUSTUMER','STAFF','ADMIN')")
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name="security_role")
     List<Role> roles = new ArrayList<>();
@@ -46,14 +69,16 @@ public class Person implements UserWithPassword {
     }
 
 
-  public Person(String email, String username, String password) {
-    this.email = email;
-    this.username = username;
-    this.password = pwEncoder.encode(password);;
-    this.enabled = true;
-  }
+    public Person(String email,String first_name, String last_name, String phoneNumber, String username, String password) {
+        this.email = email;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.phoneNumber = phoneNumber;
+        this.username = username;
+        this.password = password;
+    }
 
-  public Person(PersonRequest body) {
+    public Person(PersonRequest body) {
         this.email = body.getEmail();
         this.username = body.getUsername();
         this.password = pwEncoder.encode(body.getPassword());

@@ -31,7 +31,7 @@ public class PersonService {
 
         Person person = new Person(body);
         // All new users are by default given the role USER
-        person.addRole(Role.USER);
+        person.addRole(Role.CUSTUMER);
         personRepository.save(person);
         return new PersonResponse(person);
     }

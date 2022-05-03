@@ -33,7 +33,7 @@ class DummyResponse {
       return ResponseEntity.ok(new DummyResponse("This is a message for  (NON-AUTHENTICATED)","anonymous"));
     }
 
-    @RolesAllowed("USER")
+    @RolesAllowed("CUSTUMER")
     @GetMapping("user")
     public ResponseEntity<?> userMsg(Principal principal) {
       return ResponseEntity.ok(new DummyResponse("This is a PROTECTED message for USERS", principal.getName()));
@@ -46,7 +46,7 @@ class DummyResponse {
     }
 
     //The system handles users with more than one role. I suggest you stick to ONE role for ONE user
-    @RolesAllowed({"USER", "ADMIN"})
+    @RolesAllowed({"CUSTUMER","STAFF", "ADMIN"})
     @GetMapping("user_admin")
     public ResponseEntity<?> admin_userMsg(Principal principal) {
       return ResponseEntity.ok(new DummyResponse("This is a PROTECTED message for USERS and ADMINS)", principal.getName()));

@@ -38,11 +38,12 @@ class PersonControllerTest {
   @BeforeEach
   public void setupPersonControllerTest() {
     personRepository.deleteAll();
-    Person u1 = new Person("u1@e.dk", "u1", "test12");
-    Person u2 = new Person("u2@e.dk", "u2", "test12");
+    Person user = new Person("email@testUser.dk", "gitteUser", "test", "12342121", "testNameUser", "testPassowrdUser");
+    Person admin = new Person("email@testAdmin.dk", "gitteAdmin", "test", "22342122", "testNameAdmin", "testPassowrdAdmin");
+    Person user_admin = new Person("email@testUserAdmin.dk", "gitteUserAdmin", "test", "32342123", "testNameUserAdmin", "testPassowrdUserAdmin");
     //Add roles if your testing security
-    personRepository.save(u1);
-    personRepository.save(u2);
+    personRepository.save(user);
+    personRepository.save(admin);
   }
 
   @Test

@@ -20,12 +20,12 @@ public class MakeTestData implements ApplicationRunner {
     }
 
     public void makeUsers() {
-        Person user = new Person("user@mail.dk","user","test12");
-        Person admin = new Person("admin@mail.dk","admin","test12");
-        Person user_admin = new Person("user-admin@mail.dk","user_admin","test12");
-        user.addRole(Role.USER);
+        Person user = new Person("email@testUser.dk", "gitteUser", "test", "12342121", "testNameUser", "testPassowrdUser");
+        Person admin = new Person("email@testAdmin.dk", "gitteAdmin", "test", "22342122", "testNameAdmin", "testPassowrdAdmin");
+        Person user_admin = new Person("email@testUserAdmin.dk", "gitteUserAdmin", "test", "32342123", "testNameUserAdmin", "testPassowrdUserAdmin");
+        user.addRole(Role.CUSTUMER);
         admin.addRole(Role.ADMIN);
-        user_admin.addRole(Role.USER);
+        user_admin.addRole(Role.CUSTUMER);
         user_admin.addRole(Role.ADMIN);
         personRepository.save(user);
         personRepository.save(admin);
