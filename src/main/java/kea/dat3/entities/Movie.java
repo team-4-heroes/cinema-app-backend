@@ -1,6 +1,7 @@
 package kea.dat3.entities;
 
-import kea.dat3.entities.ratings.PegiAgeRating;
+import kea.dat3.entities.movieAccessFactors.AccessFactor;
+import kea.dat3.entities.movieAccessFactors.AgeLimitPegi;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.Map;
 import java.util.Set;
 
 @Entity
@@ -31,11 +33,9 @@ public class Movie {
     @Size(max = 3)
     private int length; // in minutes
 
-    private PegiAgeRating pegiAgeRating;
+    // TODO: Map of AccessFactors here, do with PEGI for the sake of example
 
-    @OneToOne
-    @JoinColumn(name = "price_id", referencedColumnName = "id")
-    private Price price;
+    private double basePrice;
 
     @OneToMany(mappedBy = "genre")
     Set<MovieGenre> movieGenres;

@@ -1,9 +1,9 @@
-package kea.dat3.entities.ratings;
+package kea.dat3.entities.movieAccessFactors;
 
 import lombok.Getter;
 
 @Getter
-public enum PegiAgeRating {
+public enum AgeLimitPegi implements AccessFactor {
 
     PEGI_3("PEGI 3"),
     PEGI_7("PEGI 7"),
@@ -13,7 +13,7 @@ public enum PegiAgeRating {
 
     private String name;
 
-    PegiAgeRating(String name) {
+    AgeLimitPegi(String name) {
         this.name = name;
     }
 }

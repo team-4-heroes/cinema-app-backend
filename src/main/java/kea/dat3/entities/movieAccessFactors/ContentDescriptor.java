@@ -1,9 +1,9 @@
-package kea.dat3.entities.ratings;
+package kea.dat3.entities.movieAccessFactors;
 
 import lombok.Getter;
 
 @Getter
-public enum PegiContentDescriptor {
+public enum ContentDescriptor implements AccessFactor {
 
 
     VIOLENCE("VIOLENCE"),
@@ -17,7 +17,7 @@ public enum PegiContentDescriptor {
 
     private final String name;
 
-    PegiContentDescriptor(String name) {
+    ContentDescriptor(String name) {
         this.name = name;
     }
 }

@@ -1,9 +1,9 @@
-package kea.dat3.entities.ratings;
+package kea.dat3.entities.movieAccessFactors;
 
 import lombok.Getter;
 
 @Getter
-public enum DanishAgeRating {
+public enum AgeLimitDenmark implements AccessFactor {
 
     A("TILLADT FOR ALLE"),
     AGE_7("FRARÅDES BØRN UNDER 7 ÅR"),
@@ -12,7 +12,7 @@ public enum DanishAgeRating {
 
     private String description;
 
-    DanishAgeRating(String description) {
+    AgeLimitDenmark(String description) {
         this.description = description;
     }
 }

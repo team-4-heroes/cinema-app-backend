@@ -1,6 +1,5 @@
 package kea.dat3.dto;
 
-import kea.dat3.entities.Price;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +13,6 @@ public class MovieRequest {
     private String title;
     private int releaseYear;
     private int length;
-    // private PegiRating pegiRating;
-    private Price price;
+    // private Set<AccessFactor> accessFactors
+    private double price;
 }
