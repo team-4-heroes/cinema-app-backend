@@ -16,6 +16,7 @@ public class ReservationController {
     Reservation addSeatToReservation(Reservation reservation, ReservedSeat seat) {
         Set<ReservedSeat> reservations = reservation.getReservedSeats();
         reservations.add(seat);
+        reservation.setReservedSeats(reservations);
         return reservation;
     }
 }
