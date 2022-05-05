@@ -22,6 +22,7 @@ public class PersonService {
     }
 
     public PersonResponse addPerson(PersonRequest body) {
+
         if(personRepository.existsByUsername(body.getUsername())) {
           throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Username is already taken");
         }
@@ -31,12 +32,10 @@ public class PersonService {
         if(personRepository.existsByPhoneNumber(body.getPhoneNumber())){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Phonenumber is already in use");
         }
-
-        Person person = new Person(body);
-        // All new users are by default given the role CUSTOMER
-        person.addRole(Role.CUSTUMER);
-        personRepository.save(person);
-        return new PersonResponse(person);
+        Person newPerson = new Person(body);
+        newPerson.addRole(Role.CUSTUMER);
+        personRepository.save(newPerson);
+        return new PersonResponse(newPerson);
     }
 
     public List<PersonResponse> getPersons() {

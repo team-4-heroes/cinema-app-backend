@@ -20,7 +20,7 @@ import java.util.List;
 public class Person implements UserWithPassword {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Column(nullable = false)
     private String email;

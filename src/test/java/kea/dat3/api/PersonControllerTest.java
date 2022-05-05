@@ -50,11 +50,11 @@ class PersonControllerTest {
   void testPersonFound() throws Exception {
     // request a nonexistent person and verify HTTP Status and error response
     mockMvc.perform(MockMvcRequestBuilders
-                    .get("/api/persons/u1")
+                    .get("/api/persons/testNameUser")
                     .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
-            .andExpect(MockMvcResultMatchers.jsonPath("$.username").value("u1"))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("u1@e.dk"));
+            .andExpect(MockMvcResultMatchers.jsonPath("$.username").value("testNameUser"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("email@testUser.dk"));
   }
 
   @Test
