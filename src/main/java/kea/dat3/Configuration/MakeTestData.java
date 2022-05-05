@@ -20,16 +20,21 @@ public class MakeTestData implements ApplicationRunner {
     }
 
     public void makeUsers() {
-        Person user = new Person("email@testUser.dk", "gitteUser", "test", "12342121", "testNameUser", "testPassowrdUser");
+        System.out.println("Jeg er her");
+        Person customer = new Person("email@testCustumer.dk", "gitteCustumer", "test", "12342121", "testNameCustumer", "testPassowrdCustumer");
         Person admin = new Person("email@testAdmin.dk", "gitteAdmin", "test", "22342122", "testNameAdmin", "testPassowrdAdmin");
-        Person user_admin = new Person("email@testUserAdmin.dk", "gitteUserAdmin", "test", "32342123", "testNameUserAdmin", "testPassowrdUserAdmin");
-        user.addRole(Role.CUSTUMER);
+        Person staff = new Person("email@testStaff.dk", "gitteStaff", "test", "32342123", "testNameAdmin", "testPassowrdStaff");
+        Person userAdmin = new Person("email@testUserAdmin.dk", "gitteUserAdmin", "test", "42342124", "testNameUserAdmin", "testPassowrdUserAdmin");
+        customer.addRole(Role.CUSTUMER);
         admin.addRole(Role.ADMIN);
-        user_admin.addRole(Role.CUSTUMER);
-        user_admin.addRole(Role.ADMIN);
-        personRepository.save(user);
+        staff.addRole(Role.STAFF);
+        userAdmin.addRole(Role.CUSTUMER);
+        userAdmin.addRole(Role.ADMIN);
+        System.out.println(customer.getId());
+        personRepository.save(customer);
         personRepository.save(admin);
-        personRepository.save(user_admin);
+        personRepository.save(staff);
+        personRepository.save(userAdmin);
         System.out.println("CREATED " + personRepository.count() + " TEST PERSONS");
     }
 

@@ -9,7 +9,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,26 +20,26 @@ import java.util.List;
 public class Person implements UserWithPassword {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(nullable = false)
     private String email;
 
     @Column(nullable = false)
-    private String first_name;
+    private String firstName;
 
     @Column(nullable = false)
-    private String last_name;
+    private String lastName;
 
     private char active;
 
     private String phoneNumber;
 
     @CreationTimestamp
-    private LocalDateTime create_date;
+    private LocalDateTime createDate;
 
     @UpdateTimestamp
-    private LocalDateTime last_updated;
+    private LocalDateTime lastUpdated;
 
     @Column(nullable = false, length = 50)
     private String username;
@@ -49,6 +48,9 @@ public class Person implements UserWithPassword {
     // https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
     @Column(nullable = false, length = 72)
     private String password;
+
+    /*@OneToMany
+    private reservations;*/
 
     private boolean enabled;
 
@@ -68,11 +70,10 @@ public class Person implements UserWithPassword {
         this.password = pwEncoder.encode(password);
     }
 
-
-    public Person(String email,String first_name, String last_name, String phoneNumber, String username, String password) {
+    public Person(String email, String firstName, String lastName, String phoneNumber, String username, String password) {
         this.email = email;
-        this.first_name = first_name;
-        this.last_name = last_name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.username = username;
         this.password = password;
@@ -81,6 +82,9 @@ public class Person implements UserWithPassword {
     public Person(PersonRequest body) {
         this.email = body.getEmail();
         this.username = body.getUsername();
+        this.firstName = body.getFirstName();
+        this.lastName = body.getLastName();
+        this.phoneNumber = body.getPhoneNumber();
         this.password = pwEncoder.encode(body.getPassword());
         this.enabled = true;
     }

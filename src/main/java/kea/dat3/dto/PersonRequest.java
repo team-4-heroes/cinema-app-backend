@@ -16,7 +16,6 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 public class PersonRequest {
 
-
     @NotBlank
     @Size(min = UserWithPassword.USER_NAME_MIN_SIZE, max = UserWithPassword.USER_NAME_MAX_SIZE)
     private String username;
@@ -29,4 +28,12 @@ public class PersonRequest {
     @NotBlank
     @Size(min = UserWithPassword.PASSWORD_MIN_SIZE, max = UserWithPassword.PASSWORD_MAX_SIZE)
     private String password;
+
+    @NotBlank
+    private String firstName;
+
+    @NotBlank
+    private String lastName;
+
+    private String phoneNumber;
 }

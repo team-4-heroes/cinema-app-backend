@@ -28,9 +28,12 @@ public class PersonService {
         if(personRepository.existsByEmail(body.getEmail())){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Email is used by another person");
         }
+        if(personRepository.existsByPhoneNumber(body.getPhoneNumber())){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Phonenumber is already in use");
+        }
 
         Person person = new Person(body);
-        // All new users are by default given the role USER
+        // All new users are by default given the role CUSTOMER
         person.addRole(Role.CUSTUMER);
         personRepository.save(person);
         return new PersonResponse(person);
@@ -49,6 +52,11 @@ public class PersonService {
 
     public PersonResponse editPerson(PersonRequest body, String id) {
         Person person = personRepository.findById(id).orElseThrow();
+        person.setFirstName(body.getFirstName());
+        person.setLastName(body.getLastName());
+        person.setPhoneNumber(body.getPhoneNumber());
+        person.setEmail(body.getEmail());
+        person.setPassword(body.getPassword());
         return new PersonResponse(personRepository.save(person));
     }
 
