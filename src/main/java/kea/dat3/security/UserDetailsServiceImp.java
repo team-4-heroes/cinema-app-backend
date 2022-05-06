@@ -21,7 +21,7 @@ public class UserDetailsServiceImp implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        final Optional<Person> optionalUser = userRepository.findById(username);
+        final Optional<Person> optionalUser = userRepository.findByUsername(username);
         return optionalUser.map(UserDetailsImp::new).orElseThrow(() -> new BadCredentialsException(""));
     }
 

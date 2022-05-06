@@ -53,8 +53,24 @@ public class PersonService {
         return new PersonResponse(person);
     }
 
+    public PersonResponse getPerson(String username) {
+        Person person = personRepository.findByUsername(username).orElseThrow(
+                ()->new ResponseStatusException(HttpStatus.NOT_FOUND,"Person with id '"+username+"' not found"));
+        return new PersonResponse(person);
+    }
+
     public PersonResponse editPerson(PersonRequest body, long id) {
         Person person = personRepository.findById(id).orElseThrow();
+        person.setFirstName(body.getFirstName());
+        person.setLastName(body.getLastName());
+        person.setPhoneNumber(body.getPhoneNumber());
+        person.setEmail(body.getEmail());
+        person.setPassword(body.getPassword());
+        return new PersonResponse(personRepository.save(person));
+    }
+
+    public PersonResponse editPerson(PersonRequest body, String username) {
+        Person person = personRepository.findByUsername(username).orElseThrow();
         person.setFirstName(body.getFirstName());
         person.setLastName(body.getLastName());
         person.setPhoneNumber(body.getPhoneNumber());
@@ -68,4 +84,8 @@ public class PersonService {
         personRepository.delete(person);
     }
 
+    public void deletePerson(String username) {
+        Person person = personRepository.findByUsername(username).orElseThrow();
+        personRepository.delete(person);
+    }
 }

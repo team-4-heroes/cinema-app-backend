@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Setter
 
 public class PersonResponse {
-    long id;
+    Long id;
     String username;
     List<String> roleNames;
     String email;
