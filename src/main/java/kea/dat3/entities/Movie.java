@@ -62,8 +62,9 @@ public class Movie {
         this.releaseYear = getReleaseYear();
         this.length = body.getLength();
         this.basePrice = body.getBasePrice();
-        // access factors
-        // genres
+        this.ageLimit = body.getAgeLimit();
+        this.screenings = body.getScreenings();
+        this.genres = body.getGenres();
     }
 
     public Movie(String title, String description, int releaseYear, int length, double basePrice) {
