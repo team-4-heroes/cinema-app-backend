@@ -1,6 +1,7 @@
 package kea.dat3.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import kea.dat3.entities.Movie;
 import kea.dat3.entities.Room;
 import kea.dat3.entities.Screening;
 import lombok.Getter;
@@ -15,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 public class ScreeningResponse {
 
-    // private Movie movie;
+    private Movie movie;
 
     private String roomName;
 
@@ -32,6 +33,6 @@ public class ScreeningResponse {
         this.roomName = screening.getRoom().getName();
         this.created = screening.getCreated();
         this.updated = screening.getUpdated();
-        // this.movie = screening.getMovie();
+        this.movie = screening.getMovie();
     }
 }

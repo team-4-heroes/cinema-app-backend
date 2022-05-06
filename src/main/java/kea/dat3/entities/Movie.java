@@ -1,5 +1,6 @@
 package kea.dat3.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import kea.dat3.dto.MovieRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -25,15 +27,19 @@ public class Movie {
 
     private String description;
 
-    @Size(max = 4)
+    //@Size(max = 3000)
     private int releaseYear;
 
-    @Size(max = 3)
+    //@Size(max = 500)
     private int length; // in minutes
 
     // TODO: Map of AccessFactors here
 
     private double basePrice;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "movie") //, fetch = FetchType.EAGER)
+    Set<Screening> screenings = new HashSet<>();
 
     /*@OneToMany(mappedBy = "genre")
     Set<MovieGenre> movieGenres;
@@ -49,5 +55,13 @@ public class Movie {
         this.basePrice = body.getBasePrice();
         // access factors
         // genres
+    }
+
+    public Movie(String title, String description, int releaseYear, int length, double basePrice) {
+        this.title = title;
+        this.description = description;
+        this.releaseYear = releaseYear;
+        this.length = length;
+        this.basePrice = basePrice;
     }
 }

@@ -22,7 +22,8 @@ public class Screening {
 
     private LocalDateTime startTime;
 
-    // private Movie movie;
+    @ManyToOne
+    private Movie movie;
 
     @ManyToOne
     private Room room;
@@ -35,11 +36,12 @@ public class Screening {
     public Screening(ScreeningRequest screeningReq) {
         this.room = screeningReq.getRoom();
         this.startTime = screeningReq.getStartTime();
-        // this.movie = screeningReq.getMovie
+        this.movie = screeningReq.getMovie();
     }
 
-    public Screening(LocalDateTime startTime, Room room) {
+    public Screening(LocalDateTime startTime, Room room, Movie movie) {
         this.startTime = startTime;
         this.room = room;
+        this.movie = movie;
     }
 }
