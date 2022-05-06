@@ -30,17 +30,17 @@ public class PersonController {
     }
 
     @GetMapping("/{username}")
-    public PersonResponse getPerson(@PathVariable String username)  {
-        return personService.getPerson(username);
+    public PersonResponse getPerson(@PathVariable long id)  {
+        return personService.getPerson(id);
     }
 
     @PutMapping("/{username}")
-    public PersonResponse editPerson(@RequestBody PersonRequest body, @PathVariable String username){
-        return personService.editPerson(body, username);
+    public PersonResponse editPerson(@RequestBody PersonRequest body, @PathVariable long id){
+        return personService.editPerson(body, id);
     }
 
     @DeleteMapping("/{username}")
-    public void deletePerson(@PathVariable String username){
-        personService.deletePerson(username);
+    public void deletePerson(@PathVariable long id){
+        personService.deletePerson(id);
     }
 }

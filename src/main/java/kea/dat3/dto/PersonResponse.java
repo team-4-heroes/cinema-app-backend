@@ -14,14 +14,22 @@ import java.util.stream.Collectors;
 @Setter
 
 public class PersonResponse {
+    long id;
     String username;
     List<String> roleNames;
     String email;
+    String firstName;
+    String lastName;
+    String phoneNumber;
 
     public PersonResponse(Person person) {
+        this.id = person.getId();
         this.username = person.getUsername();
         this.roleNames = person.getRoles().stream().map(role -> role.toString()).collect(Collectors.toList());
         this.email = person.getEmail();
+        this.firstName = person.getFirstName();
+        this.lastName = person.getLastName();
+        this.phoneNumber = person.getPhoneNumber();
     }
 
     public static List<PersonResponse> getPersonsFromEntities(List<Person> persons) {

@@ -37,10 +37,11 @@ public class DummyRoleControllerTest {
   @BeforeEach
   public void setupPersonControllerTest() {
     personRepository.deleteAll();
-    Person user = new Person("user@e.dk", "user", "test12");
-    user.addRole(Role.USER);
-    Person admin = new Person("admin@e.dk", "admin", "test12");
+    Person user = new Person("email@testUser.dk", "gitteUser", "test", "12342121", "testNameUser", "testPassowrdUser");
+    Person admin = new Person("email@testAdmin.dk", "gitteAdmin", "test", "22342122", "testNameAdmin", "testPassowrdAdmin");
+    Person user_admin = new Person("email@testUserAdmin.dk", "gitteUserAdmin", "test", "32342123", "testNameUserAdmin", "testPassowrdUserAdmin");
     admin.addRole(Role.ADMIN);
+    user.addRole(Role.CUSTUMER);
     personRepository.save(user);
     personRepository.save(admin);
   }
