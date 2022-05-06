@@ -1,9 +1,7 @@
 package kea.dat3.Configuration;
 
-import kea.dat3.entities.Person;
-import kea.dat3.entities.Role;
-import kea.dat3.entities.Room;
-import kea.dat3.entities.Screening;
+import kea.dat3.entities.*;
+import kea.dat3.repositories.MovieRepository;
 import kea.dat3.repositories.PersonRepository;
 import kea.dat3.repositories.RoomRepository;
 import kea.dat3.repositories.ScreeningRepository;
@@ -22,11 +20,13 @@ public class MakeTestData implements ApplicationRunner {
     PersonRepository personRepository;
     ScreeningRepository screeningRepository;
     RoomRepository roomRepository;
+    MovieRepository movieRepository;
 
-    public MakeTestData(PersonRepository personRepository, ScreeningRepository screeningRepository, RoomRepository roomRepository) {
+    public MakeTestData(PersonRepository personRepository, ScreeningRepository screeningRepository, RoomRepository roomRepository, MovieRepository movieRepository) {
         this.personRepository = personRepository;
         this.screeningRepository = screeningRepository;
         this.roomRepository = roomRepository;
+        this.movieRepository = movieRepository;
     }
 
     public void makeUsers() {
@@ -51,7 +51,8 @@ public class MakeTestData implements ApplicationRunner {
     public void makeScreenings() {
         LocalDateTime startTime = LocalDateTime.of(2022,10,1,10,0);
         Room room = roomRepository.save(new Room("testRoom"));
-        Screening screening = new Screening(startTime, room);
+        Movie movie = movieRepository.save(new Movie("film titel","beskrivelse",2000,100,100));
+        Screening screening = new Screening(startTime, room, movie);
         screeningRepository.save(screening);
     }
 

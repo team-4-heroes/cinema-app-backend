@@ -1,5 +1,6 @@
 package kea.dat3.dto;
 
+import kea.dat3.entities.Movie;
 import kea.dat3.entities.Room;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,5 +16,5 @@ import java.time.LocalDateTime;
 public class ScreeningRequest {
     private LocalDateTime startTime;
     private Room room;
-    // private Movie movie;
+    private Movie movie;
 }
