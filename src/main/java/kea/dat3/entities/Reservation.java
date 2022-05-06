@@ -21,8 +21,8 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    //@OneToOne
-    //Screening screening;
+    @ManyToOne
+    Screening screening;
 
     @OneToMany(mappedBy = "reservation")
     private Set<ReservedSeat> reservedSeats = new HashSet<>();
@@ -39,8 +39,5 @@ public class Reservation {
         this.reservedSeats = body.getDesiredSeats();
         this.customer = body.getCustomer();
     }
-
-    //@ManyToOne
-    //Screening screening;
 
 }
