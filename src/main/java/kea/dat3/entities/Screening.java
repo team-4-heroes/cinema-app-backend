@@ -1,0 +1,45 @@
+package kea.dat3.entities;
+
+import kea.dat3.dto.ScreeningRequest;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+public class Screening {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    private LocalDateTime startTime;
+
+    // private Movie movie;
+
+    @ManyToOne
+    private Room room;
+
+    @CreationTimestamp
+    private LocalDateTime created;
+    @UpdateTimestamp
+    private LocalDateTime updated;
+
+    public Screening(ScreeningRequest screeningReq) {
+        this.room = screeningReq.getRoom();
+        this.startTime = screeningReq.getStartTime();
+        // this.movie = screeningReq.getMovie
+    }
+
+    public Screening(LocalDateTime startTime, Room room) {
+        this.startTime = startTime;
+        this.room = room;
+    }
+}
