@@ -1,5 +1,6 @@
 package kea.dat3.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import kea.dat3.dto.MovieRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -37,7 +37,11 @@ public class Movie {
 
     private double basePrice;
 
-    // Set<AccessFactor> accessFactor
+    // private set<AccessFactor> accessFactors;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "movie") //, fetch = FetchType.EAGER)
+    Set<Screening> screenings = new HashSet<>();
 
     @ManyToMany()
     @JoinTable(name = "movie_genre",
@@ -59,5 +63,13 @@ public class Movie {
         this.basePrice = body.getBasePrice();
         // access factors
         // genres
+    }
+
+    public Movie(String title, String description, int releaseYear, int length, double basePrice) {
+        this.title = title;
+        this.description = description;
+        this.releaseYear = releaseYear;
+        this.length = length;
+        this.basePrice = basePrice;
     }
 }

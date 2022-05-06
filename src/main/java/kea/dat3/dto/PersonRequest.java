@@ -1,5 +1,6 @@
 package kea.dat3.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import kea.dat3.security.UserWithPassword;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,9 +13,13 @@ import javax.validation.constraints.Size;
 
 @Getter
 @Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 @AllArgsConstructor
 public class PersonRequest {
+
+
+    private Long id;
 
     @NotBlank
     @Size(min = UserWithPassword.USER_NAME_MIN_SIZE, max = UserWithPassword.USER_NAME_MAX_SIZE)

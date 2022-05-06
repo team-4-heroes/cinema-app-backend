@@ -31,16 +31,11 @@ class PersonServiceTest {
 
     @Test
     void addPerson() {
-        /*Person testPerson = new Person("email@test.dk", "gitte", "Sørensen", "22489032", "gitteTest", "123");
-        Person testPerson2 = new Person("email@test.dk", "gitte", "Sørensen", "22489032", "gitteTest", "123");
+        Person testPerson = new Person("email@test.dk", "gitte", "Sørensen", "22489032", "gitteTest", "123");
         long id = 100;
-        testPerson.setId(id);
         Mockito.when(personRepository.save(any(Person.class))).thenReturn(testPerson);
-        PersonResponse personRes = personService.addPerson(new PersonRequest(testPerson.getUsername(), testPerson.getFirstName(), testPerson.getLastName(), testPerson.getPhoneNumber(), testPerson.getUsername(), testPerson.getPassword()));
-        PersonResponse personRes2 = personService.addPerson(new PersonRequest(testPerson2.getUsername(), testPerson2.getFirstName(), testPerson2.getLastName(), testPerson2.getPhoneNumber(), testPerson2.getUsername(), testPerson2.getPassword()));
-        System.out.println(testPerson.getId());
-        System.out.println(personRes.getId());
-        assertEquals(100, personRes.getId());*/
+        PersonResponse personRes = personService.addPerson(new PersonRequest(id ,testPerson.getUsername(), testPerson.getFirstName(), testPerson.getLastName(), testPerson.getPhoneNumber(), testPerson.getUsername(), testPerson.getPassword()));
+        assertEquals(100, personRes.getId());
     }
     @Test
     void getPersons() {

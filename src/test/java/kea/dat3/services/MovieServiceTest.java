@@ -28,8 +28,8 @@ class MovieServiceTest {
     @Mock
     MovieService service;
 
-    Movie CUT_1 = new Movie(100L, "abc", "descr", 2000, 120, 125d, Collections.emptySet(), LocalDateTime.now(), LocalDateTime.now());
-    Movie CUT_2 = new Movie(200L, "dfg", "descr", 2000, 120, 125d, Collections.emptySet(), LocalDateTime.now(), LocalDateTime.now());
+    Movie CUT_1 = new Movie(100L, "abc", "descr", 2000, 120, 125d, Collections.emptySet(), Collections.emptySet(), LocalDateTime.now(), LocalDateTime.now());
+    Movie CUT_2 = new Movie(200L, "dfg", "descr", 2000, 120, 125d, Collections.emptySet(), Collections.emptySet(), LocalDateTime.now(), LocalDateTime.now());
 
     @BeforeEach
     void setup() {

@@ -17,8 +17,8 @@ public class ReservedSeat {
     @OneToOne(mappedBy = "reservedSeat")
     Seat seat;
 
-    //@OneToOne
-    //Screening screening;
+    @OneToOne
+    Screening screening;
 
     @ManyToOne
     Reservation reservation;
