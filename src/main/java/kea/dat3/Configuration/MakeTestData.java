@@ -23,7 +23,7 @@ public class MakeTestData implements ApplicationRunner {
         System.out.println("Jeg er her");
         Person customer = new Person("email@testCustumer.dk", "gitteCustumer", "test", "12342121", "testNameCustumer", "testPassowrdCustumer");
         Person admin = new Person("email@testAdmin.dk", "gitteAdmin", "test", "22342122", "testNameAdmin", "testPassowrdAdmin");
-        Person staff = new Person("email@testStaff.dk", "gitteStaff", "test", "32342123", "testNameAdmin", "testPassowrdStaff");
+        Person staff = new Person("email@testStaff.dk", "gitteStaff", "test", "32342123", "testNameStaff", "testPassowrdStaff");
         Person userAdmin = new Person("email@testUserAdmin.dk", "gitteUserAdmin", "test", "42342124", "testNameUserAdmin", "testPassowrdUserAdmin");
         customer.addRole(Role.CUSTUMER);
         admin.addRole(Role.ADMIN);
