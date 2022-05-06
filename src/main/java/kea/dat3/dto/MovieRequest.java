@@ -5,14 +5,28 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.Size;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class MovieRequest {
+
     private String title;
+
+    private String description;
+
+    @Size(max = 4)
     private int releaseYear;
-    private int length;
-    // private Set<AccessFactor> accessFactors
-    private double price;
+
+    @Size(max = 3)
+    private int length; // in minutes
+
+    // TODO: Genres here
+
+    // TODO: Age limits and descriptors (AccessFactors) here
+
+    private double basePrice;
+
 }
