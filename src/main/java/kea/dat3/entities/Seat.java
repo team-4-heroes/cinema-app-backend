@@ -4,8 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -13,13 +12,17 @@ import javax.persistence.Id;
 @NoArgsConstructor
 public class Seat {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
-    String row;
+    @OneToOne
+    ReservedSeat reservedSeat;
+
+    String rowLetter;
     int number;
 
     public Seat(String row, int number) {
-        this.row = row;
+        this.rowLetter = row;
         this.number = number;
     }
 

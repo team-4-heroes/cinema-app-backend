@@ -14,14 +14,17 @@ public class ReservedSeat {
     @Id
     long id;
 
-    @OneToOne
+    @OneToOne(mappedBy = "reservedSeat")
     Seat seat;
+
+    //@OneToOne
+    //Screening screening;
 
     @ManyToOne
     Reservation reservation;
 
     public ReservedSeat(Seat seat, Reservation reservation) {
         this.reservation = reservation;
-        this.seat = seat;
+        //this.seat = seat;
     }
 }
