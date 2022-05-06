@@ -32,12 +32,15 @@ class PersonServiceTest {
     @Test
     void addPerson() {
         /*Person testPerson = new Person("email@test.dk", "gitte", "Sørensen", "22489032", "gitteTest", "123");
-        testPerson.setId(100);
+        Person testPerson2 = new Person("email@test.dk", "gitte", "Sørensen", "22489032", "gitteTest", "123");
+        long id = 100;
+        testPerson.setId(id);
         Mockito.when(personRepository.save(any(Person.class))).thenReturn(testPerson);
         PersonResponse personRes = personService.addPerson(new PersonRequest(testPerson.getUsername(), testPerson.getFirstName(), testPerson.getLastName(), testPerson.getPhoneNumber(), testPerson.getUsername(), testPerson.getPassword()));
+        PersonResponse personRes2 = personService.addPerson(new PersonRequest(testPerson2.getUsername(), testPerson2.getFirstName(), testPerson2.getLastName(), testPerson2.getPhoneNumber(), testPerson2.getUsername(), testPerson2.getPassword()));
+        System.out.println(testPerson.getId());
+        System.out.println(personRes.getId());
         assertEquals(100, personRes.getId());*/
-
-
     }
     @Test
     void getPersons() {
@@ -52,8 +55,10 @@ class PersonServiceTest {
     @Test
     void getPerson() {
         Person person = new Person("email@test.dk", "gitte", "Sørensen", "22489032", "gitteTest", "123");
-        Mockito.when(personRepository.findById("gitteTest")).thenReturn(Optional.of(person));
-        PersonResponse personRes = personService.getPerson("gitteTest");
+        long id = 100;
+        person.setId(id);
+        Mockito.when(personRepository.findById(id)).thenReturn(Optional.of(person));
+        PersonResponse personRes = personService.getPerson(id);
         assertEquals("gitteTest", personRes.getUsername());
     }
 

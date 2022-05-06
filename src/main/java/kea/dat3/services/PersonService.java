@@ -36,6 +36,10 @@ public class PersonService {
         newPerson.addRole(Role.CUSTUMER);
         personRepository.save(newPerson);
         return new PersonResponse(newPerson);
+
+        /*
+        Person newPerson = personRepository.save(new Person(body));
+        return new PersonResponse(newPerson);*/
     }
 
     public List<PersonResponse> getPersons() {
@@ -43,13 +47,13 @@ public class PersonService {
         return PersonResponse.getPersonsFromEntities(persons);
     }
 
-    public PersonResponse getPerson(String id) {
+    public PersonResponse getPerson(long id) {
         Person person = personRepository.findById(id).orElseThrow(
                 ()->new ResponseStatusException(HttpStatus.NOT_FOUND,"Person with id '"+id+"' not found"));
         return new PersonResponse(person);
     }
 
-    public PersonResponse editPerson(PersonRequest body, String id) {
+    public PersonResponse editPerson(PersonRequest body, long id) {
         Person person = personRepository.findById(id).orElseThrow();
         person.setFirstName(body.getFirstName());
         person.setLastName(body.getLastName());
@@ -59,7 +63,7 @@ public class PersonService {
         return new PersonResponse(personRepository.save(person));
     }
 
-    public void deletePerson(String id) {
+    public void deletePerson(long id) {
         Person person = personRepository.findById(id).orElseThrow();
         personRepository.delete(person);
     }

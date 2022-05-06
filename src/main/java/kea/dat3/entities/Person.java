@@ -20,9 +20,10 @@ import java.util.List;
 public class Person implements UserWithPassword {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
@@ -33,6 +34,7 @@ public class Person implements UserWithPassword {
 
     private char active;
 
+    @Column(unique = true)
     private String phoneNumber;
 
     @CreationTimestamp
@@ -41,7 +43,7 @@ public class Person implements UserWithPassword {
     @UpdateTimestamp
     private LocalDateTime lastUpdated;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 50, unique = true)
     private String username;
 
     // 72 == Max length of a bcrypt encoded password
