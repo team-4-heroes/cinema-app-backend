@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,6 +25,8 @@ public class MovieResponse {
     private int length;
     // private Map<AccessFactor> accessFactors; // age limits and warnings such as "VIOLENCE"
     private double price;
+    private LocalDateTime created;
+    private LocalDateTime updated;
     // private Set<Genre> genres;
 
     public MovieResponse(Movie movie) {
@@ -33,6 +36,8 @@ public class MovieResponse {
         this.releaseYear = movie.getReleaseYear();
         this.length = movie.getLength();
         this.price = movie.getBasePrice();
+        this.created = movie.getCreated();
+        this.updated = movie.getUpdated();
     }
 
     public static Set<MovieResponse> getMoviesFromEntities(List<Movie> movies) {

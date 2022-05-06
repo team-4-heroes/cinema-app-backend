@@ -22,7 +22,7 @@ public class MovieController {
     }
 
     @GetMapping("/{id}")
-    MovieResponse getMovie(@PathVariable Long id) throws Exception {
+    MovieResponse getMovie(@PathVariable Long id) {
         return movieService.getMovie(id);
     }
 
