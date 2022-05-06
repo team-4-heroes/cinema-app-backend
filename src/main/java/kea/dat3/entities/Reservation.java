@@ -27,9 +27,9 @@ public class Reservation {
     @OneToMany(mappedBy = "reservation")
     private Set<ReservedSeat> reservedSeats = new HashSet<>();
 
-    @ManyToOne
-    Person customer;
-
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Person customer;
+    
     public Reservation(Set<ReservedSeat> reservedSeats, Person customer) {
         this.reservedSeats = reservedSeats;
         this.customer = customer;

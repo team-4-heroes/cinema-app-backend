@@ -35,12 +35,15 @@ public class MakeTestData implements ApplicationRunner {
         Person admin = new Person("email@testAdmin.dk", "gitteAdmin", "test", "22342122", "testNameAdmin", "testPassowrdAdmin");
         Person staff = new Person("email@testStaff.dk", "gitteStaff", "test", "32342123", "testNameStaff", "testPassowrdStaff");
         Person userAdmin = new Person("email@testUserAdmin.dk", "gitteUserAdmin", "test", "42342124", "testNameUserAdmin", "testPassowrdUserAdmin");
+
         customer.addRole(Role.CUSTUMER);
         admin.addRole(Role.ADMIN);
         staff.addRole(Role.STAFF);
         userAdmin.addRole(Role.CUSTUMER);
         userAdmin.addRole(Role.ADMIN);
-        System.out.println(customer.getId());
+
+        System.out.println(admin.getId());
+
         personRepository.save(customer);
         personRepository.save(admin);
         personRepository.save(staff);

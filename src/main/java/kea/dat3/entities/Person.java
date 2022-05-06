@@ -1,5 +1,6 @@
 package kea.dat3.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import kea.dat3.security.UserWithPassword;
 import kea.dat3.dto.PersonRequest;
 import lombok.Getter;
@@ -11,7 +12,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -20,8 +23,8 @@ import java.util.List;
 public class Person implements UserWithPassword {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
-    private long id;
+    @Column()
+    private Long id;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -51,8 +54,9 @@ public class Person implements UserWithPassword {
     @Column(nullable = false, length = 72)
     private String password;
 
-    /*@OneToMany
-    private reservations;*/
+    @JsonIgnore
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade=CascadeType.REMOVE)
+    private Set<Reservation> reservation = new HashSet<Reservation>();
 
     private boolean enabled;
 
@@ -82,6 +86,7 @@ public class Person implements UserWithPassword {
     }
 
     public Person(PersonRequest body) {
+        this.id = body.getId();
         this.email = body.getEmail();
         this.username = body.getUsername();
         this.firstName = body.getFirstName();
