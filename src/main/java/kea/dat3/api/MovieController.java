@@ -15,7 +15,7 @@ import java.util.Set;
 public class MovieController {
 
     MovieService movieService;
-    
+
     @GetMapping
     Set<MovieResponse> getMovies() {
         return movieService.getMovies();
