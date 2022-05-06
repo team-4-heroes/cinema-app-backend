@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, Long> {
 
-    Optional<Movie> getMovieByDescriptionContainingAndAndTitleContaining(String keyword);
+    // Optional<Movie> getMovieByDescriptionContainingAndAndTitleContaining(String keyword);
 }
