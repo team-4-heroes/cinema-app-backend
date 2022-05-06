@@ -52,7 +52,7 @@ class MovieServiceTest {
         service.deleteMovie(id);
         Mockito.verify(repository).delete(any(Movie.class));
     }
-    
+
     @Test
     void deleteMovie_idDoesNotExist() {
         var id = 300L;

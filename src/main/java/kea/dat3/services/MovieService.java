@@ -5,11 +5,12 @@ import kea.dat3.dto.MovieResponse;
 import kea.dat3.entities.Movie;
 import kea.dat3.repositories.MovieRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.util.List;
 import java.util.Set;
 
+@Service
 public class MovieService {
 
     private MovieRepository movieRepository;
@@ -24,14 +25,15 @@ public class MovieService {
         return mResponses;
    }
 
-    public Movie getMovie(Long id) {
-        return movieRepository.findById(id).orElseThrow(
+    public MovieResponse getMovie(Long id) {
+        Movie movie =  movieRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND,"List with id '"+id+"' not found"));
+        return new MovieResponse(movie);
     }
 
     public MovieResponse addMovie(MovieRequest body) {
         Movie movie = new Movie(body);
-        return new MovieResponse(movie);
+        return new MovieResponse(movieRepository.save(movie));
     }
 
     public MovieResponse editMovie(Long id, MovieRequest body) {
