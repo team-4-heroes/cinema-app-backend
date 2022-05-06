@@ -2,6 +2,7 @@ package kea.dat3.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import kea.dat3.dto.MovieRequest;
+import kea.dat3.entities.pegi.AgeLimit;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,7 +38,7 @@ public class Movie {
 
     private double basePrice;
 
-    // private set<AccessFactor> accessFactors;
+    AgeLimit ageLimit;
 
     @JsonIgnore
     @OneToMany(mappedBy = "movie") //, fetch = FetchType.EAGER)

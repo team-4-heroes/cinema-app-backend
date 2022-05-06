@@ -2,6 +2,7 @@ package kea.dat3.services;
 
 import kea.dat3.dto.MovieResponse;
 import kea.dat3.entities.Movie;
+import kea.dat3.entities.pegi.AgeLimit;
 import kea.dat3.repositories.MovieRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,8 +29,8 @@ class MovieServiceTest {
     @Mock
     MovieService service;
 
-    Movie CUT_1 = new Movie(100L, "abc", "descr", 2000, 120, 125d, Collections.emptySet(), Collections.emptySet(), LocalDateTime.now(), LocalDateTime.now());
-    Movie CUT_2 = new Movie(200L, "dfg", "descr", 2000, 120, 125d, Collections.emptySet(), Collections.emptySet(), LocalDateTime.now(), LocalDateTime.now());
+    Movie CUT_1 = new Movie(100L, "abc", "descr", 2000, 120, 125d, AgeLimit.PEGI_3, Collections.emptySet(), Collections.emptySet(), LocalDateTime.now(), LocalDateTime.now());
+    Movie CUT_2 = new Movie(200L, "dfg", "descr", 2000, 120, 125d, AgeLimit.PEGI_7, Collections.emptySet(), Collections.emptySet(), LocalDateTime.now(), LocalDateTime.now());
 
     @BeforeEach
     void setup() {

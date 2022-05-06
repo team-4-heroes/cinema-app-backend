@@ -1,9 +1,9 @@
-package kea.dat3.entities.movieAccessFactors;
+package kea.dat3.entities.pegi;
 
 import lombok.Getter;
 
 @Getter
-public enum ContentDescriptor implements AccessFactor {
+public enum ContentDescriptor {
 
 
     VIOLENCE("VIOLENCE"),
@@ -12,8 +12,7 @@ public enum ContentDescriptor implements AccessFactor {
     GAMBLING("GAMBLING"),
     SEX("SEX"),
     DRUGS("DRUGS"),
-    DISCRIMINATION("DISCRIMINATION"),
-    IN_GAME_PURCHASES("IN GAME PURCHASES"); // Not relevant to movies, but is a part of the descriptor set
+    DISCRIMINATION("DISCRIMINATION");
 
     private final String name;
 
