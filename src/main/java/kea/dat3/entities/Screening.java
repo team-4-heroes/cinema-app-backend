@@ -9,6 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -23,6 +24,9 @@ public class Screening {
     private LocalDateTime startTime;
 
     // private Movie movie;
+
+    @OneToMany(mappedBy = "screening")
+    Set<Reservation> reservation;
 
     @ManyToOne
     private Room room;

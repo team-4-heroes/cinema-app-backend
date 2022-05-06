@@ -2,6 +2,7 @@ package kea.dat3.dto;
 
 import kea.dat3.entities.Person;
 import kea.dat3.entities.ReservedSeat;
+import kea.dat3.entities.Screening;
 import kea.dat3.entities.Seat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,6 +17,6 @@ import java.util.Set;
 @AllArgsConstructor
 public class ReservationRequest {
     Person customer;
-    //Screening screening;
+    Screening screening;
     Set<ReservedSeat> desiredSeats;
 }
