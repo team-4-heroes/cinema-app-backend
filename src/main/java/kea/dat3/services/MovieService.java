@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 public class MovieService {
-/*
+
     private MovieRepository movieRepository;
 
     public MovieService(MovieRepository movieRepository) {
@@ -22,7 +22,6 @@ public class MovieService {
         List<Movie> movies = movieRepository.findAll();
         Set<MovieResponse> mResponses = MovieResponse.getMoviesFromEntities(movies);
         return mResponses;
-
    }
 
     public Movie getMovie(Long id) {
@@ -35,14 +34,15 @@ public class MovieService {
         return new MovieResponse(movie);
     }
 
-    public Movie editMovie(Long id, Movie movie) {
+    public MovieResponse editMovie(Long id, MovieRequest body) {
+        Movie movie = new Movie(body);
         movie.setId(id);
-        return movieRepository.save(movie);
+        return new MovieResponse(movieRepository.save(movie));
     }
 
     public void deleteMovie(Long id) {
         movieRepository.delete(movieRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Movie with id '"+id+"' not found")));
         System.out.println("Movie with id '"+id+"' deleted");
-    }*/
+    }
 }
