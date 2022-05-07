@@ -36,7 +36,7 @@ public class MovieResponse {
         this.title = movie.getTitle();
         this.description = movie.getDescription();
         this.releaseYear = movie.getReleaseYear();
-        this.length = movie.getLength();
+        this.length = movie.getLengthInMinutes();
         this.price = movie.getBasePrice();
         this.ageLimit = movie.getAgeLimit();
         this.screenings = movie.getScreenings();

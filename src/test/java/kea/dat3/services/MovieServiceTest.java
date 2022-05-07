@@ -30,7 +30,8 @@ class MovieServiceTest {
     MovieService service;
 
     Movie CUT_1 = new Movie(100L, "abc", "descr", 2000, 120, 125d, AgeLimit.PEGI_3, Collections.emptySet(), Collections.emptySet(), LocalDateTime.now(), LocalDateTime.now());
-    Movie CUT_2 = new Movie(200L, "dfg", "descr", 2000, 120, 125d, AgeLimit.PEGI_7, Collections.emptySet(), Collections.emptySet(), LocalDateTime.now(), LocalDateTime.now());
+    Movie CUT_2 = new Movie(200L, "dfg", "bladescrbla", 2001, 120, 125d, AgeLimit.PEGI_7, Collections.emptySet(), Collections.emptySet(), LocalDateTime.now(), LocalDateTime.now());
+    Movie CUT_3 = new Movie(200L, "dfg", "bla", 2001, 120, 125d, AgeLimit.PEGI_7, Collections.emptySet(), Collections.emptySet(), LocalDateTime.now(), LocalDateTime.now());
 
     @BeforeEach
     void setup() {
@@ -45,6 +46,23 @@ class MovieServiceTest {
         ));
         Set<MovieResponse> mResponses = service.getMovies();
         assertEquals(2, mResponses.size());
+    }
+
+    @Test
+    void getMoviesByKeyword() {
+        String expected = "descr";
+        Mockito.when(repository.findByDescriptionContaining(expected)).thenReturn(List.of(CUT_1, CUT_2));
+        Set<MovieResponse> mResponses = service.getMoviesByKeyword(expected);
+        assertEquals(2, mResponses.size());
+    }
+
+    @Test
+    void getMoviesByReleaseYear_movieIsFound() {
+        int expected = 2000;
+
+        Mockito.when(repository.findByReleaseYear(expected)).thenReturn(List.of(CUT_1));
+        Set<MovieResponse> mResponses = service.getMoviesByReleaseYear(expected);
+        assertEquals(1, mResponses.size());
     }
 
     @Test

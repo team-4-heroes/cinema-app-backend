@@ -4,12 +4,10 @@ import kea.dat3.dto.MovieRequest;
 import kea.dat3.dto.MovieResponse;
 import kea.dat3.entities.Movie;
 import kea.dat3.services.MovieService;
-import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
-@AllArgsConstructor
 @RestController
 @RequestMapping("api/movies")
 public class MovieController {
@@ -24,6 +22,11 @@ public class MovieController {
     @GetMapping("/{id}")
     MovieResponse getMovie(@PathVariable Long id) {
         return movieService.getMovie(id);
+    }
+
+    @GetMapping("/keyword")
+    Set<MovieResponse> getMoviesByKeyword(@RequestParam String keyword) {
+        return movieService.getMoviesByKeyword(keyword);
     }
 
     @PutMapping

@@ -20,10 +20,19 @@ public class MovieService {
     }
 
    public Set<MovieResponse> getMovies() {
-        List<Movie> movies = movieRepository.findAll();
-        Set<MovieResponse> mResponses = MovieResponse.getMoviesFromEntities(movies);
-        return mResponses;
+       List<Movie> movies = movieRepository.findAll();
+       return getMovieResponses(movies);
    }
+
+    public Set<MovieResponse> getMoviesByKeyword(String keyword) {
+        List<Movie> movies = movieRepository.findByDescriptionContaining(keyword);
+        return getMovieResponses(movies);
+    }
+
+    public Set<MovieResponse> getMoviesByReleaseYear(int releaseYear) {
+        List<Movie> movies = movieRepository.findByReleaseYear(releaseYear);
+        return getMovieResponses(movies);
+    }
 
     public MovieResponse getMovie(Long id) {
         Movie movie =  movieRepository.findById(id).orElseThrow(
@@ -46,5 +55,9 @@ public class MovieService {
         movieRepository.delete(movieRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Movie with id '"+id+"' not found")));
         System.out.println("Movie with id '"+id+"' deleted");
+    }
+
+    private Set<MovieResponse> getMovieResponses(List<Movie> movies) {
+        return MovieResponse.getMoviesFromEntities(movies);
     }
 }
