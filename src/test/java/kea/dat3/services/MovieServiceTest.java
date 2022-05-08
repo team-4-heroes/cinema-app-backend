@@ -51,7 +51,7 @@ class MovieServiceTest {
     @Test
     void getMoviesByKeyword() {
         String expected = "descr";
-        Mockito.when(repository.findByDescriptionContaining(expected)).thenReturn(List.of(CUT_1, CUT_2));
+        Mockito.when(repository.findByTitleContainingOrDescriptionContainingAllIgnoreCase(expected, expected)).thenReturn(List.of(CUT_1, CUT_2));
         Set<MovieResponse> mResponses = service.getMoviesByKeyword(expected);
         assertEquals(2, mResponses.size());
     }

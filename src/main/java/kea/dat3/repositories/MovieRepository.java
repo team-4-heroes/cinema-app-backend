@@ -8,7 +8,7 @@ import java.util.List;
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, Long> {
 
-    List<Movie> findByDescriptionContaining(String keyword); // add title into search
+    List<Movie> findByTitleContainingOrDescriptionContainingAllIgnoreCase(String titleKeyword, String descriptionKeyword);
 
     List<Movie> findByReleaseYear(int releaseYear);
 }

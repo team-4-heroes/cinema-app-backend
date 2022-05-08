@@ -25,7 +25,7 @@ public class MovieService {
    }
 
     public Set<MovieResponse> getMoviesByKeyword(String keyword) {
-        List<Movie> movies = movieRepository.findByDescriptionContaining(keyword);
+        List<Movie> movies = movieRepository.findByTitleContainingOrDescriptionContainingAllIgnoreCase(keyword, keyword);
         return getMovieResponses(movies);
     }
 

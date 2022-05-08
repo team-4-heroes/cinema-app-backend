@@ -4,7 +4,6 @@ import kea.dat3.dto.MovieResponse;
 import kea.dat3.entities.Movie;
 import kea.dat3.entities.pegi.AgeLimit;
 import kea.dat3.repositories.MovieRepository;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,8 +24,8 @@ class MovieServiceInMemoryTest {
     @Autowired
     MovieRepository repository;
 
-    Movie CUT_1 = new Movie(100L, "abc", "descr", 2000, 120, 125d, AgeLimit.PEGI_3, Collections.emptySet(), Collections.emptySet(), LocalDateTime.now(), LocalDateTime.now());
-    Movie CUT_2 = new Movie(200L, "dfg", "bladescrbla", 2001, 120, 125d, AgeLimit.PEGI_7, Collections.emptySet(), Collections.emptySet(), LocalDateTime.now(), LocalDateTime.now());
+    Movie CUT_1 = new Movie(100L, "abc", "123thorIsBadass", 2000, 120, 125d, AgeLimit.PEGI_3, Collections.emptySet(), Collections.emptySet(), LocalDateTime.now(), LocalDateTime.now());
+    Movie CUT_2 = new Movie(200L, "Thor", "bladescrbla", 2001, 120, 125d, AgeLimit.PEGI_7, Collections.emptySet(), Collections.emptySet(), LocalDateTime.now(), LocalDateTime.now());
     Movie CUT_3 = new Movie(300L, "hij", "bla", 2003, 120, 125d, AgeLimit.PEGI_7, Collections.emptySet(), Collections.emptySet(), LocalDateTime.now(), LocalDateTime.now());
 
 
@@ -40,14 +40,19 @@ class MovieServiceInMemoryTest {
 
     @Test
     void getMoviesByKeyword() {
-        var keyword = "descr";
+        var keyword = "thor";
 
         Set<MovieResponse> mResponses = service.getMoviesByKeyword(keyword);
         assertEquals(2, mResponses.size());
-        //1) go through results and check that description contains keyword
-        //2) change test data so title contains keyword, update checks
-        //3) change query to search both title and description
+        assertTrue(mResponses.stream().allMatch(m -> verifyContainsKeyword(keyword, m)));
+    }
 
+    private boolean verifyContainsKeyword(String keyword, MovieResponse m) {
+        return containsIgnoreCase(m.getDescription(), keyword) || containsIgnoreCase(m.getTitle(), keyword);
+    }
+
+    private boolean containsIgnoreCase(String s, String keyword) {
+        return s.toLowerCase(Locale.ROOT).contains(keyword.toLowerCase(Locale.ROOT));
     }
 
     @Test
