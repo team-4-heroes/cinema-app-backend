@@ -25,7 +25,7 @@ public class RoomController {
 
     @PostMapping
     public RoomResponse addRoom(RoomRequest roomRequest) {
-        return roomService.addScreening(roomRequest);
+        return roomService.addRoom(roomRequest);
     }
 
     @GetMapping

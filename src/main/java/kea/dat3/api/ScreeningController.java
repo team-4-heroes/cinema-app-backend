@@ -2,11 +2,10 @@ package kea.dat3.api;
 
 import kea.dat3.dto.ScreeningRequest;
 import kea.dat3.dto.ScreeningResponse;
+import kea.dat3.entities.Screening;
 import kea.dat3.services.ScreeningService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,12 +20,17 @@ public class ScreeningController {
     }
 
     @PostMapping
-    public ScreeningResponse addScreening(ScreeningRequest screeningRequest) {
+    public ScreeningResponse addScreening(@RequestBody ScreeningRequest screeningRequest) {
         return screeningService.addScreening(screeningRequest);
     }
 
     @GetMapping
-    public List<ScreeningResponse> getScreenings(){
-        return screeningService.getScreenings();
+    public List<ScreeningResponse> getScreenings(Pageable pageable){
+        return screeningService.getScreenings(pageable);
+    }
+
+    @GetMapping("/{id}")
+    public ScreeningResponse getScreening(@PathVariable long id) {
+        return screeningService.getScreening(id);
     }
 }

@@ -1,20 +1,21 @@
 package kea.dat3.dto;
 
 import kea.dat3.entities.Movie;
-import kea.dat3.entities.Room;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ScreeningRequest {
-    private LocalDateTime startTime;
-    private Room room;
-    private Movie movie;
+public class GenreRequest {
+
+private String name;
+
+    private Set<Movie> movies = new HashSet<>();
 }
