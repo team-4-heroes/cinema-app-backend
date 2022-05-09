@@ -40,8 +40,8 @@ public class ActorResponse {
         this.created = actor.getCreated();
         this.updated = actor.getUpdated();
 
-        public static Set<ActorResponse> getActorsFromEntities(List<Actor> actors) {
+        /*public static Set<ActorResponse> getActorsFromEntities(List<Actor> actors) {
             return actors.stream().map(actor-> new ActorResponse(actor)).collect(Collectors.toSet());
-        }
+        }*/
     }
 }

@@ -2,13 +2,16 @@ package kea.dat3.services;
 
 import kea.dat3.dto.MovieResponse;
 import kea.dat3.entities.Movie;
+import kea.dat3.entities.MovieFactory;
 import kea.dat3.entities.pegi.AgeLimit;
 import kea.dat3.repositories.MovieRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import javax.validation.ConstraintViolationException;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Locale;
@@ -45,6 +48,31 @@ class MovieServiceInMemoryTest {
         Set<MovieResponse> mResponses = service.getMoviesByKeyword(keyword);
         assertEquals(2, mResponses.size());
         assertTrue(mResponses.stream().allMatch(m -> verifyContainsKeyword(keyword, m)));
+    }
+
+    @Test
+    void addMovie_releaseYearOutOfBounds() {
+        var lowYear = 10;
+        var highYear = 1000000;
+        var yearZero = 0;
+
+        var CUT_4 = MovieFactory.create_releaseYearOnly(lowYear); // TODO: Shouldn't error already occur when Movie is created with incorrect value?
+        var CUT_5 = MovieFactory.create_releaseYearOnly(highYear);
+        var CUT_6 = MovieFactory.create_releaseYearOnly(yearZero);
+        Assertions.assertThrows(ConstraintViolationException.class, () -> repository.save(CUT_4));
+        Assertions.assertThrows(ConstraintViolationException.class, () -> repository.save(CUT_5));
+        Assertions.assertThrows(ConstraintViolationException.class, () -> repository.save(CUT_6));
+    }
+
+    @Test
+    void addMovie_lengthInMinutesOutOfBounds() {
+        var highLength = 1000;
+        var zeroLength = 0;
+        var CUT_7 = MovieFactory.create_lengthOnly(highLength);
+        var CUT_8 = MovieFactory.create_lengthOnly(zeroLength);
+
+        Assertions.assertThrows(ConstraintViolationException.class, () -> repository.save(CUT_7));
+        Assertions.assertThrows(ConstraintViolationException.class, () -> repository.save(CUT_8));
     }
 
     private boolean verifyContainsKeyword(String keyword, MovieResponse m) {
