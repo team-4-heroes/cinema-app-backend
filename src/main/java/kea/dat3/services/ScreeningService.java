@@ -39,7 +39,7 @@ public class ScreeningService {
         Screening screening;
         long roomId = screeningReq.getRoom().getId();
         LocalDateTime start = screeningReq.getStartTime();
-        LocalDateTime end = start.plusMinutes(screeningReq.getMovie().getLength());
+        LocalDateTime end = start.plusMinutes(screeningReq.getMovie().getLengthInMinutes());
         if (screeningRepository.isRoomAvailableForScreening(roomId, start, end)) {
             screening = screeningRepository.save(new Screening(screeningReq));
         } else {

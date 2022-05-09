@@ -29,11 +29,11 @@ public class Movie {
 
     private String description;
 
-    @Max(3000)
-    @Min(1900)
+    //@Max(3000)
+    //@Min(1900)
     private int releaseYear;
 
-    @Max(900)
+    //@Max(900)
     private int lengthInMinutes;
 
     private double basePrice;
