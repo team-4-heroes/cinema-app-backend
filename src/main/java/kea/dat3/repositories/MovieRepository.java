@@ -11,4 +11,6 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
     List<Movie> findByTitleContainingOrDescriptionContainingAllIgnoreCase(String titleKeyword, String descriptionKeyword);
 
     List<Movie> findByReleaseYear(int releaseYear);
+
+    // TODO: Nice to have search findByActor
 }
