@@ -24,9 +24,9 @@ class MovieServiceInMemoryTest {
     @Autowired
     MovieRepository repository;
 
-    Movie CUT_1 = new Movie(100L, "abc", "123thorIsBadass", 2000, 120, 125d, AgeLimit.PEGI_3, Collections.emptySet(), Collections.emptySet(), LocalDateTime.now(), LocalDateTime.now());
-    Movie CUT_2 = new Movie(200L, "Thor", "bladescrbla", 2001, 120, 125d, AgeLimit.PEGI_7, Collections.emptySet(), Collections.emptySet(), LocalDateTime.now(), LocalDateTime.now());
-    Movie CUT_3 = new Movie(300L, "hij", "bla", 2003, 120, 125d, AgeLimit.PEGI_7, Collections.emptySet(), Collections.emptySet(), LocalDateTime.now(), LocalDateTime.now());
+    Movie CUT_1 = new Movie(100L, "abc", "123thorIsBadass", 2000, 120, 125d, AgeLimit.PEGI_3, Collections.emptySet(), Collections.emptySet(), Collections.emptySet(), LocalDateTime.now(), LocalDateTime.now());
+    Movie CUT_2 = new Movie(200L, "Thor", "bladescrbla", 2001, 120, 125d, AgeLimit.PEGI_7, Collections.emptySet(), Collections.emptySet(), Collections.emptySet(), LocalDateTime.now(), LocalDateTime.now());
+    Movie CUT_3 = new Movie(300L, "hij", "bla", 2003, 120, 125d, AgeLimit.PEGI_7, Collections.emptySet(), Collections.emptySet(), Collections.emptySet(), LocalDateTime.now(), LocalDateTime.now());
 
 
     @BeforeEach

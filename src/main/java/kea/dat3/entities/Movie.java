@@ -7,8 +7,6 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,16 +27,19 @@ public class Movie {
 
     private String description;
 
-    @Max(3000)
-    @Min(1900)
+    //@Size(min = 1900, max = 3000) TODO: How to define these values, instead of min and max digits?
     private int releaseYear;
 
-    @Max(900)
+    //@Size(min = 1, max = 900)
     private int lengthInMinutes;
 
     private double basePrice;
 
     private AgeLimit ageLimit;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "movie")
+    private Set<Actor> actors = new HashSet<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "movie") //, fetch = FetchType.EAGER)
