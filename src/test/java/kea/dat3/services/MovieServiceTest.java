@@ -42,7 +42,7 @@ class MovieServiceTest {
     void addActorToMovie() {
         var movieId = m_3.getId();
         var actorId = 444L;
-        var actor = new Actor(actorId, "Tricia", "Hilfner", LocalDateTime.now(), new HashSet<>(), LocalDateTime.now(), LocalDateTime.now());
+        var actor = new Actor(actorId, "Tricia", "Helfer", LocalDateTime.now(), new HashSet<>(), LocalDateTime.now(), LocalDateTime.now());
 
         Mockito.when(movieRepository.save(m_3)).thenReturn(m_3);
         Mockito.when(movieRepository.findById(movieId)).thenReturn(Optional.of(m_3));

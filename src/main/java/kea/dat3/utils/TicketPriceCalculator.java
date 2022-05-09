@@ -1,29 +1,25 @@
 package kea.dat3.utils;
 
-import lombok.AllArgsConstructor;
+import kea.dat3.entities.ReservedSeat;
+import kea.dat3.entities.Screening;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class TicketPriceCalculator {
 
-/*  ReservationService has total price for reservation, using util method calculateTotalPrice
-    Movie and Seat are needed for this
-    Reservation has list reservedSeats
-    Reservation has Screening, which contains Movie
+    public static double calculateTotalPrice(Screening screening, Set<ReservedSeat> seats) {
+        var basePrice = screening.getMovie().getBasePrice();
+        var seatTypes = seats.stream().map(s -> s.getSeat().getSeatType()).collect(Collectors.toList());
 
-    private double calculateSingleTicketPrice(Reservation reservation) {
+
+        return 0;
     }
-
-    public static double calculateTotalPrice(Reservation reservation) {
-    }
-
-    public static Map<Seat, Long> getIndividualPricesForTicketsOnReservation(Reservation reservation)
-
-    // this would be needed IRL but not in scope of this project
-*/
 
 }

@@ -1,6 +1,5 @@
 package kea.dat3.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import kea.dat3.dto.ReservationRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,7 +28,9 @@ public class Reservation {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Person customer;
-    
+
+    // TODO: Add -> private double totalPrice = TicketPriceCalculator.calculateTotalPrice(screening, reservedSeats);
+
     public Reservation(Set<ReservedSeat> reservedSeats, Person customer) {
         this.reservedSeats = reservedSeats;
         this.customer = customer;
@@ -39,5 +40,4 @@ public class Reservation {
         this.reservedSeats = body.getDesiredSeats();
         this.customer = body.getCustomer();
     }
-
 }
