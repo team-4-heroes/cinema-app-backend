@@ -2,7 +2,6 @@ package kea.dat3.api;
 
 import kea.dat3.dto.MovieRequest;
 import kea.dat3.dto.MovieResponse;
-import kea.dat3.entities.Movie;
 import kea.dat3.services.MovieService;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +26,11 @@ public class MovieController {
     @GetMapping("/keyword")
     Set<MovieResponse> getMoviesByKeyword(@RequestParam String keyword) {
         return movieService.getMoviesByKeyword(keyword);
+    }
+
+    @PostMapping("/add-actor")
+    MovieResponse addActorToMovie(@PathVariable Long movieId, @PathVariable Long actorId) {
+        return movieService.addActorToMovie(movieId, actorId);
     }
 
     // TODO: getMoviesByActor

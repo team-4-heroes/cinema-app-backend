@@ -36,13 +36,13 @@ public class Actor {
     @UpdateTimestamp
     private LocalDateTime updated;
 
-    Actor(String firstName, String lastName, LocalDateTime birthDate) {
+    public Actor(String firstName, String lastName, LocalDateTime birthDate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
     }
 
-    Actor(ActorRequest body) {
+    public Actor(ActorRequest body) {
         this.firstName = body.getFirstName();
         this.lastName = body.getLastName();
         this.birthDate = getBirthDate();

@@ -3,17 +3,17 @@ package kea.dat3.entities;
 import kea.dat3.entities.pegi.AgeLimit;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
+import java.util.HashSet;
 
 public class MovieFactory {
 
-    private static String standardTitleOrDescription = "xxx";
-    private static int standardLength = 120;
-    private static int standardPrice = 150;
-    private static int standardReleaseYear = 150;
+    private static final String standardTitleOrDescription = "xxx";
+    private static final int standardLength = 120;
+    private static final int standardPrice = 150;
+    private static final int standardReleaseYear = 150;
 
     public static Movie create(Long id, String title, String description, int releaseYear, int lengthInMinutes, double basePrice, AgeLimit ageLimit) {
-        return new Movie(id, title, description, releaseYear, lengthInMinutes, basePrice, ageLimit, Collections.emptySet(), Collections.emptySet(), Collections.emptySet(), LocalDateTime.now(), LocalDateTime.now());
+        return new Movie(id, title, description, releaseYear, lengthInMinutes, basePrice, ageLimit, new HashSet<>(), new HashSet<>(), new HashSet<>(), LocalDateTime.now(), LocalDateTime.now());
     }
 
     public static Movie create_titleAndDescriptionOnly(String title, String description) {

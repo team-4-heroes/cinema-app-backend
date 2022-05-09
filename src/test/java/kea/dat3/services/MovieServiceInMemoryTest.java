@@ -1,9 +1,8 @@
 package kea.dat3.services;
 
 import kea.dat3.dto.MovieResponse;
-import kea.dat3.entities.Movie;
 import kea.dat3.entities.MovieFactory;
-import kea.dat3.entities.pegi.AgeLimit;
+import kea.dat3.repositories.ActorRepository;
 import kea.dat3.repositories.MovieRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,12 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import javax.validation.ConstraintViolationException;
-import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.Locale;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
 class MovieServiceInMemoryTest {
@@ -25,11 +23,14 @@ class MovieServiceInMemoryTest {
     MovieService service;
 
     @Autowired
-    MovieRepository repository;
+    MovieRepository movieRepository;
+
+    @Autowired
+    ActorRepository actorRepository;
 
     @BeforeEach
     void setup() {
-        service = new MovieService(repository);
+        service = new MovieService(movieRepository, actorRepository);
     }
 
     @Test
@@ -37,12 +38,12 @@ class MovieServiceInMemoryTest {
         var keyword = "thor";
 
         var CUT_1 = MovieFactory.create_titleAndDescriptionOnly("xxx", "123thorIsBadass456");
-        var CUT_2= MovieFactory.create_titleAndDescriptionOnly("Thor", "xxx");
-        var CUT_3= MovieFactory.create_titleAndDescriptionOnly("xxx", "xxx");
+        var CUT_2 = MovieFactory.create_titleAndDescriptionOnly("Thor", "xxx");
+        var CUT_3 = MovieFactory.create_titleAndDescriptionOnly("xxx", "xxx");
 
-        repository.save(CUT_1);
-        repository.save(CUT_2);
-        repository.save(CUT_3);
+        movieRepository.save(CUT_1);
+        movieRepository.save(CUT_2);
+        movieRepository.save(CUT_3);
 
         Set<MovieResponse> mResponses = service.getMoviesByKeyword(keyword);
         assertEquals(2, mResponses.size());
@@ -54,7 +55,7 @@ class MovieServiceInMemoryTest {
         var year = 2000;
 
         var CUT_1 = MovieFactory.create_releaseYearOnly(year);
-        repository.save(CUT_1);
+        movieRepository.save(CUT_1);
 
         Set<MovieResponse> mResponses = service.getMoviesByReleaseYear(year);
         assertEquals(1, mResponses.size());
@@ -66,7 +67,7 @@ class MovieServiceInMemoryTest {
         var yearSaved = 2022;
 
         var CUT_1 = MovieFactory.create_releaseYearOnly(yearSaved);
-        repository.save(CUT_1);
+        movieRepository.save(CUT_1);
 
         assertTrue(service.getMoviesByReleaseYear(yearNotSaved).isEmpty());
     }
@@ -77,13 +78,13 @@ class MovieServiceInMemoryTest {
         var highYear = 1000000;
         var yearZero = 0;
 
-        var CUT_1 = MovieFactory.create_releaseYearOnly(lowYear); // TODO: Shouldn't error already occur when Movie is created with incorrect value?
+        var CUT_1 = MovieFactory.create_releaseYearOnly(lowYear);
         var CUT_2 = MovieFactory.create_releaseYearOnly(highYear);
         var CUT_3 = MovieFactory.create_releaseYearOnly(yearZero);
 
-        Assertions.assertThrows(ConstraintViolationException.class, () -> repository.save(CUT_1));
-        Assertions.assertThrows(ConstraintViolationException.class, () -> repository.save(CUT_2));
-        Assertions.assertThrows(ConstraintViolationException.class, () -> repository.save(CUT_3));
+        Assertions.assertThrows(ConstraintViolationException.class, () -> movieRepository.save(CUT_1));
+        Assertions.assertThrows(ConstraintViolationException.class, () -> movieRepository.save(CUT_2));
+        Assertions.assertThrows(ConstraintViolationException.class, () -> movieRepository.save(CUT_3));
     }
 
     @Test
@@ -93,8 +94,8 @@ class MovieServiceInMemoryTest {
         var CUT_1 = MovieFactory.create_lengthOnly(highLength);
         var CUT_2 = MovieFactory.create_lengthOnly(zeroLength);
 
-        Assertions.assertThrows(ConstraintViolationException.class, () -> repository.save(CUT_1));
-        Assertions.assertThrows(ConstraintViolationException.class, () -> repository.save(CUT_2));
+        Assertions.assertThrows(ConstraintViolationException.class, () -> movieRepository.save(CUT_1));
+        Assertions.assertThrows(ConstraintViolationException.class, () -> movieRepository.save(CUT_2));
     }
 
     private boolean verifyContainsKeyword(String keyword, MovieResponse m) {

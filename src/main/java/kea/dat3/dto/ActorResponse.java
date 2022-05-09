@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -31,7 +32,7 @@ public class ActorResponse {
 
     private LocalDateTime updated;
 
-    ActorResponse(Actor actor) {
+    public ActorResponse(Actor actor) {
         this.id = actor.getId();
         this.firstName = actor.getFirstName();
         this.lastName = actor.getLastName();
@@ -39,9 +40,9 @@ public class ActorResponse {
         this.movies = actor.getMovies();
         this.created = actor.getCreated();
         this.updated = actor.getUpdated();
+    }
 
-        /*public static Set<ActorResponse> getActorsFromEntities(List<Actor> actors) {
-            return actors.stream().map(actor-> new ActorResponse(actor)).collect(Collectors.toSet());
-        }*/
+    public static Set<ActorResponse> getActorsFromEntities(List<Actor> actors) {
+        return actors.stream().map(actor-> new ActorResponse(actor)).collect(Collectors.toSet());
     }
 }
