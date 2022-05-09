@@ -37,9 +37,6 @@ public class ReservationController {
     }
 
     //Update
-
-    //Delete
-
     @PutMapping("/{reservation.id}/add-seat")
     Reservation addSeatToReservation(@PathVariable Long id,  Reservation reservation, ReservedSeat seat) {
         id = reservation.getId();
@@ -48,4 +45,8 @@ public class ReservationController {
         reservation.setReservedSeats(reservations);
         return reservation;
     }
+
+    //Delete
+
+
 }

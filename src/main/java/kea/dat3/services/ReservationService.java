@@ -26,28 +26,28 @@ public class ReservationService {
         return reservedSeatRepository.getSeatsWithNoReservations(screeningId);
     }
 
+    //TODO Metode til at finde sæder der ikke er ledige i et ReservationRequest
+    public Set<ReservedSeat> returnUnavailableSeatsSet(ReservationRequest body) {
+        Set<ReservedSeat> desiredSeats = body.getDesiredSeats();
+        Set<ReservedSeat> alreadyReserved = reservedSeatRepository.getReservedSeats(body.getScreening().getId());
+        Set<ReservedSeat> notAvailable = new HashSet<>();
+
+        alreadyReserved.forEach(reservedSeat -> {
+            if (desiredSeats.contains(reservedSeat)) {
+                notAvailable.add(reservedSeat);
+            }
+        });
+        return notAvailable;
+    }
 
     public ReservationResponse createReservation(ReservationRequest body) {
         Reservation reservation = new Reservation(body);
 
-        //Get Set<> of seats customer wants from ReservationRequest
-        Set<ReservedSeat> desiredSeats = body.getDesiredSeats();
-        //Check if seat has reference to Screening, create list of seats with reference to screening (if any)
-        Set<ReservedSeat> alreadyReserved = reservedSeatRepository.getReservedSeats(body.getScreening().getId());
-        Set<ReservedSeat> notAvailable = new HashSet<>();
-        alreadyReserved.forEach(reservedSeat -> {
-            if (desiredSeats.contains(reservedSeat)) {
-                notAvailable.add(reservedSeat);
-
-            }
-        });
-        //Now we have list with unavailable seats
-        //We also checked if request contains alreadyReserved seats.
-        //Create Reservation
-        if (notAvailable.size() == 0) {
+        if (returnUnavailableSeatsSet(body).size() == 0) {
             reservationRepository.save(reservation);
         } else {
             //TODO: throw Error seatsUnavailable
+
         }
 
         return new ReservationResponse(reservation);
