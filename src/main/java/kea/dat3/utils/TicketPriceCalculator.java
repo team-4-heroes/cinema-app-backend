@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -15,11 +14,9 @@ import java.util.stream.Collectors;
 public class TicketPriceCalculator {
 
     public static double calculateTotalPrice(Screening screening, Set<ReservedSeat> seats) {
-        var basePrice = screening.getMovie().getBasePrice();
-        var seatTypes = seats.stream().map(s -> s.getSeat().getSeatType()).collect(Collectors.toList());
+        var baseMoviePrice = screening.getMovie().getBasePrice();
+        var total = seats.stream().map(s -> s.getSeat().getSeatType().getPriceMultiplier() * baseMoviePrice).reduce(0d, Double::sum);
 
-
-        return 0;
+        return total;
     }
-
 }

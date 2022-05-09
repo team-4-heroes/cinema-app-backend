@@ -1,6 +1,7 @@
 package kea.dat3.entities;
 
 import kea.dat3.dto.ReservationRequest;
+import kea.dat3.utils.TicketPriceCalculator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,7 +30,14 @@ public class Reservation {
     @ManyToOne(fetch = FetchType.EAGER)
     private Person customer;
 
-    // TODO: Add -> private double totalPrice = TicketPriceCalculator.calculateTotalPrice(screening, reservedSeats);
+    private double totalPrice;
+
+    public Reservation(Screening screening, Set<ReservedSeat> reservedSeats, Person customer) {
+        this.screening = screening;
+        this.reservedSeats = reservedSeats;
+        this.customer = customer;
+        this.totalPrice = TicketPriceCalculator.calculateTotalPrice(screening, reservedSeats);
+    }
 
     public Reservation(Set<ReservedSeat> reservedSeats, Person customer) {
         this.reservedSeats = reservedSeats;
@@ -39,5 +47,6 @@ public class Reservation {
     public Reservation(ReservationRequest body) {
         this.reservedSeats = body.getDesiredSeats();
         this.customer = body.getCustomer();
+        this.totalPrice = TicketPriceCalculator.calculateTotalPrice(body.getScreening(), reservedSeats);
     }
 }
