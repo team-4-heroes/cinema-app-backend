@@ -27,7 +27,7 @@ public class RoomService {
         return rooms.stream().map(room -> new RoomResponse(room)).collect(Collectors.toList());
     }
 
-    public RoomResponse addScreening(RoomRequest roomRequest) {
+    public RoomResponse addRoom(RoomRequest roomRequest) {
         Room room = roomRepository.save(new Room(roomRequest));
         return new RoomResponse(room);
     }

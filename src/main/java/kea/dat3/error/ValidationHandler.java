@@ -36,5 +36,15 @@ public class ValidationHandler extends ResponseEntityExceptionHandler {
     errorBody.put("message", String.join(",",errors));
     return new ResponseEntity<Object>(errorBody, HttpStatus.BAD_REQUEST);
   }
+
+  @ExceptionHandler(Client4xxException.class)
+  public ResponseEntity<Map<String, String>> handleException(HttpServletRequest request, Client4xxException e) {
+    Map<String, String> errorResponse = new HashMap<>();
+    errorResponse.put("path", request.getRequestURI());
+    errorResponse.put("error", e.getLocalizedMessage());
+    errorResponse.put("status", ""+e.getStatus().value());
+    return new ResponseEntity<>(errorResponse, e.getStatus());
+  }
+
 }
 

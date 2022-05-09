@@ -22,34 +22,33 @@ public class ReservationService {
         this.reservedSeatRepository = reservedSeatRepository;
     }
 
+    public Set<ReservedSeat> getSeatsWithNoReservations(Long screeningId) {
+        return reservedSeatRepository.getSeatsWithNoReservations(screeningId);
+    }
 
-    public ReservationResponse createReservation(ReservationRequest body) {
-        //check if seat is taken
-        //get list of seasts from request body
-        Reservation reservation = new Reservation(body);
-        reservationRepository.save(reservation);
-
+    //TODO Metode til at finde sæder der ikke er ledige i et ReservationRequest
+    public Set<ReservedSeat> returnUnavailableSeatsSet(ReservationRequest body) {
         Set<ReservedSeat> desiredSeats = body.getDesiredSeats();
-        //Check if seat has reference to Screening
         Set<ReservedSeat> alreadyReserved = reservedSeatRepository.getReservedSeats(body.getScreening().getId());
         Set<ReservedSeat> notAvailable = new HashSet<>();
-        alreadyReserved.stream().forEach(reservedSeat -> {
+
+        alreadyReserved.forEach(reservedSeat -> {
             if (desiredSeats.contains(reservedSeat)) {
                 notAvailable.add(reservedSeat);
             }
         });
+        return notAvailable;
+    }
 
-            //Pick each seat from list ->
-            //s.checkIfAvailable; possible
-            //check if seat is available in Screening HashSet<> -> if not in set, is reserved
-            //create reservedSeat if not ->
+    public ReservationResponse createReservation(ReservationRequest body) {
+        Reservation reservation = new Reservation(body);
 
-            //Put each reservedSeat into a collective reservation
+        if (returnUnavailableSeatsSet(body).size() == 0) {
+            reservationRepository.save(reservation);
+        } else {
+            //TODO: throw Error seatsUnavailable
 
-            //add to db
-
-
-        //Put reservation i db
+        }
 
         return new ReservationResponse(reservation);
     }
