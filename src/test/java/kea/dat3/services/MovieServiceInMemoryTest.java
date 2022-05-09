@@ -27,27 +27,48 @@ class MovieServiceInMemoryTest {
     @Autowired
     MovieRepository repository;
 
-    Movie CUT_1 = new Movie(100L, "abc", "123thorIsBadass", 2000, 120, 125d, AgeLimit.PEGI_3, Collections.emptySet(), Collections.emptySet(), Collections.emptySet(), LocalDateTime.now(), LocalDateTime.now());
-    Movie CUT_2 = new Movie(200L, "Thor", "bladescrbla", 2001, 120, 125d, AgeLimit.PEGI_7, Collections.emptySet(), Collections.emptySet(), Collections.emptySet(), LocalDateTime.now(), LocalDateTime.now());
-    Movie CUT_3 = new Movie(300L, "hij", "bla", 2003, 120, 125d, AgeLimit.PEGI_7, Collections.emptySet(), Collections.emptySet(), Collections.emptySet(), LocalDateTime.now(), LocalDateTime.now());
-
-
     @BeforeEach
     void setup() {
         service = new MovieService(repository);
-        repository.deleteAll();
-        repository.save(CUT_1);
-        repository.save(CUT_2);
-        repository.save(CUT_3);
     }
 
     @Test
     void getMoviesByKeyword() {
         var keyword = "thor";
 
+        var CUT_1 = MovieFactory.create_titleAndDescriptionOnly("xxx", "123thorIsBadass456");
+        var CUT_2= MovieFactory.create_titleAndDescriptionOnly("Thor", "xxx");
+        var CUT_3= MovieFactory.create_titleAndDescriptionOnly("xxx", "xxx");
+
+        repository.save(CUT_1);
+        repository.save(CUT_2);
+        repository.save(CUT_3);
+
         Set<MovieResponse> mResponses = service.getMoviesByKeyword(keyword);
         assertEquals(2, mResponses.size());
         assertTrue(mResponses.stream().allMatch(m -> verifyContainsKeyword(keyword, m)));
+    }
+
+    @Test
+    void getMoviesByReleaseYear_movieIsFound() {
+        var year = 2000;
+
+        var CUT_1 = MovieFactory.create_releaseYearOnly(year);
+        repository.save(CUT_1);
+
+        Set<MovieResponse> mResponses = service.getMoviesByReleaseYear(year);
+        assertEquals(1, mResponses.size());
+    }
+
+    @Test
+    void getMoviesByReleaseYear_movieIsNotFound() {
+        var yearNotSaved = 2000;
+        var yearSaved = 2022;
+
+        var CUT_1 = MovieFactory.create_releaseYearOnly(yearSaved);
+        repository.save(CUT_1);
+
+        assertTrue(service.getMoviesByReleaseYear(yearNotSaved).isEmpty());
     }
 
     @Test
@@ -56,23 +77,24 @@ class MovieServiceInMemoryTest {
         var highYear = 1000000;
         var yearZero = 0;
 
-        var CUT_4 = MovieFactory.create_releaseYearOnly(lowYear); // TODO: Shouldn't error already occur when Movie is created with incorrect value?
-        var CUT_5 = MovieFactory.create_releaseYearOnly(highYear);
-        var CUT_6 = MovieFactory.create_releaseYearOnly(yearZero);
-        Assertions.assertThrows(ConstraintViolationException.class, () -> repository.save(CUT_4));
-        Assertions.assertThrows(ConstraintViolationException.class, () -> repository.save(CUT_5));
-        Assertions.assertThrows(ConstraintViolationException.class, () -> repository.save(CUT_6));
+        var CUT_1 = MovieFactory.create_releaseYearOnly(lowYear); // TODO: Shouldn't error already occur when Movie is created with incorrect value?
+        var CUT_2 = MovieFactory.create_releaseYearOnly(highYear);
+        var CUT_3 = MovieFactory.create_releaseYearOnly(yearZero);
+
+        Assertions.assertThrows(ConstraintViolationException.class, () -> repository.save(CUT_1));
+        Assertions.assertThrows(ConstraintViolationException.class, () -> repository.save(CUT_2));
+        Assertions.assertThrows(ConstraintViolationException.class, () -> repository.save(CUT_3));
     }
 
     @Test
     void addMovie_lengthInMinutesOutOfBounds() {
         var highLength = 1000;
         var zeroLength = 0;
-        var CUT_7 = MovieFactory.create_lengthOnly(highLength);
-        var CUT_8 = MovieFactory.create_lengthOnly(zeroLength);
+        var CUT_1 = MovieFactory.create_lengthOnly(highLength);
+        var CUT_2 = MovieFactory.create_lengthOnly(zeroLength);
 
-        Assertions.assertThrows(ConstraintViolationException.class, () -> repository.save(CUT_7));
-        Assertions.assertThrows(ConstraintViolationException.class, () -> repository.save(CUT_8));
+        Assertions.assertThrows(ConstraintViolationException.class, () -> repository.save(CUT_1));
+        Assertions.assertThrows(ConstraintViolationException.class, () -> repository.save(CUT_2));
     }
 
     private boolean verifyContainsKeyword(String keyword, MovieResponse m) {
@@ -81,13 +103,5 @@ class MovieServiceInMemoryTest {
 
     private boolean containsIgnoreCase(String s, String keyword) {
         return s.toLowerCase(Locale.ROOT).contains(keyword.toLowerCase(Locale.ROOT));
-    }
-
-    @Test
-    void getMoviesByReleaseYear_movieIsFound() {
-        var year = 2000;
-
-        Set<MovieResponse> mResponses = service.getMoviesByReleaseYear(year);
-        assertEquals(1, mResponses.size());
     }
 }
