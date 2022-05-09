@@ -22,34 +22,33 @@ public class ReservationService {
         this.reservedSeatRepository = reservedSeatRepository;
     }
 
+    public Set<ReservedSeat> getSeatsWithNoReservations(Long screeningId) {
+        return reservedSeatRepository.getSeatsWithNoReservations(screeningId);
+    }
+
 
     public ReservationResponse createReservation(ReservationRequest body) {
-        //check if seat is taken
-        //get list of seasts from request body
         Reservation reservation = new Reservation(body);
-        reservationRepository.save(reservation);
 
+        //Get Set<> of seats customer wants from ReservationRequest
         Set<ReservedSeat> desiredSeats = body.getDesiredSeats();
-        //Check if seat has reference to Screening
+        //Check if seat has reference to Screening, create list of seats with reference to screening (if any)
         Set<ReservedSeat> alreadyReserved = reservedSeatRepository.getReservedSeats(body.getScreening().getId());
         Set<ReservedSeat> notAvailable = new HashSet<>();
-        alreadyReserved.stream().forEach(reservedSeat -> {
+        alreadyReserved.forEach(reservedSeat -> {
             if (desiredSeats.contains(reservedSeat)) {
                 notAvailable.add(reservedSeat);
+
             }
         });
-
-            //Pick each seat from list ->
-            //s.checkIfAvailable; possible
-            //check if seat is available in Screening HashSet<> -> if not in set, is reserved
-            //create reservedSeat if not ->
-
-            //Put each reservedSeat into a collective reservation
-
-            //add to db
-
-
-        //Put reservation i db
+        //Now we have list with unavailable seats
+        //We also checked if request contains alreadyReserved seats.
+        //Create Reservation
+        if (notAvailable.size() == 0) {
+            reservationRepository.save(reservation);
+        } else {
+            //TODO: throw Error seatsUnavailable
+        }
 
         return new ReservationResponse(reservation);
     }

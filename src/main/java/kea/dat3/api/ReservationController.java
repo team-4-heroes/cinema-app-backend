@@ -4,6 +4,7 @@ import kea.dat3.dto.ReservationRequest;
 import kea.dat3.dto.ReservationResponse;
 import kea.dat3.entities.Reservation;
 import kea.dat3.entities.ReservedSeat;
+import kea.dat3.repositories.ReservedSeatRepository;
 import kea.dat3.services.ReservationService;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +15,7 @@ import java.util.Set;
 public class ReservationController {
     ReservationService reservationService;
 
-    public ReservationController (ReservationService reservationService) {
+    public ReservationController (ReservationService reservationService, ReservedSeatRepository reservedSeatRepository) {
         this.reservationService = reservationService;
     }
 
@@ -25,6 +26,15 @@ public class ReservationController {
     }
 
     //Read
+    @GetMapping("/{screeningId}")
+    public Set<ReservedSeat> seeAvailableSeats(@PathVariable Long screeningId) {
+        return reservationService.getSeatsWithNoReservations(screeningId);
+    }
+
+    @GetMapping("/howManySeatsAvailableForScreening/{screeningId}")
+    public int numberOfAvailableSeats(@PathVariable Long screeningId) {
+        return reservationService.getSeatsWithNoReservations(screeningId).size();
+    }
 
     //Update
 
