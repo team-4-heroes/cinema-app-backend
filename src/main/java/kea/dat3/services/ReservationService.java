@@ -54,7 +54,7 @@ public class ReservationService {
         return new ReservationResponse(reservation);
     }
 
-    public Reservation createReservationAlternativeMethod(ReservationRequest body) {
+    public ReservationResponse createReservationAlternativeMethod(ReservationRequest body) {
         Reservation res = new Reservation(body);
         /*TODO
            Simplify -> take reservedSeat ids form body, run through screening's list of seats,
@@ -64,9 +64,9 @@ public class ReservationService {
                 throw new Client4xxException("Seat " + rs.getSeat() + "taken");
             }
             else {
-                body.getDesiredSeats().add(rs);
+                res.getReservedSeats().add(rs);
             }
         });
-        return res;
+        return new ReservationResponse(res);
     }
 }

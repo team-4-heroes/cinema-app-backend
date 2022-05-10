@@ -52,12 +52,12 @@ public class Screening {
         this.startTime = startTime;
         this.room = room;
         this.movie = movie;
-        //TODO Get room's list of seats
+        //Get room's list of seats
         this.screeningSeats = buildScreeningSeats(room.getSeats());
     }
 
     public Set<ReservedSeat> buildScreeningSeats(Set<Seat> seats) {
-        //TODO Create seats for the room
+        //Create seats for the screening
         Set<ReservedSeat> screeningSeats = new HashSet<>();
         for (Seat s : seats) {
             ReservedSeat rs = new ReservedSeat(s);
