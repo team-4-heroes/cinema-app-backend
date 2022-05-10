@@ -23,6 +23,9 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @OneToMany(mappedBy = "room")
+    private Set<Seat> seats = new HashSet<>();
+
     private String name;
 
     @JsonIgnore
@@ -38,6 +41,12 @@ public class Room {
         this.name = name;
     }
 
+    public Room(String name, int seatsPerRow) {
+        this.name = name;
+        this.seatsPerRow = seatsPerRow;
+        this.seats = buildSeats(this);
+    }
+
     public Room(RoomRequest roomRequest) {
         this.name = roomRequest.getName();
     }
@@ -46,4 +55,29 @@ public class Room {
         screenings.add(screening);
     }
 
+
+    //Take number seatsPerRow
+    int seatsPerRow = 10;
+    //Take char[] rowLetter
+    char rowLetters[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
+
+    public Set<Seat> buildSeats(Room room) {
+        //TODO Create seats for the room
+        Set<Seat> seats = new HashSet<>();
+        for (int i = 1; i <= room.seatsPerRow; i++) {
+            for (int j = 0; j < room.rowLetters.length; j++) {
+                Seat s = new Seat(room.rowLetters[j], i, room);
+                seats.add(s);
+            }
+        }
+        return seats;
+    }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
