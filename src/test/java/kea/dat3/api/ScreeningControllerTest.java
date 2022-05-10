@@ -1,17 +1,13 @@
 package kea.dat3.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import kea.dat3.dto.PersonRequest;
 import kea.dat3.dto.ScreeningRequest;
 import kea.dat3.entities.Movie;
-import kea.dat3.entities.Person;
 import kea.dat3.entities.Room;
 import kea.dat3.entities.Screening;
 import kea.dat3.repositories.MovieRepository;
-import kea.dat3.repositories.PersonRepository;
 import kea.dat3.repositories.RoomRepository;
 import kea.dat3.repositories.ScreeningRepository;
-import kea.dat3.services.PersonService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,12 +48,12 @@ public class ScreeningControllerTest {
 
     @Test
     void testAddScreeningWhenRoomOccupied() throws Exception {
-        LocalDateTime startTime = LocalDateTime.of(2022,10,1,10,0);
+        LocalDateTime startTime = LocalDateTime.of(2022, 10, 1, 10, 0);
         Room room = roomRepository.save(new Room("testRoom"));
-        Movie movie = movieRepository.save(new Movie("film titel","beskrivelse",2000,100,100));
+        Movie movie = movieRepository.save(new Movie("film titel", "beskrivelse", 2000, 100, 100));
         Screening screening = new Screening(startTime, room, movie);
         screeningRepository.save(screening);
-        ScreeningRequest screeningRequest = new ScreeningRequest(startTime,room,movie);
+        ScreeningRequest screeningRequest = new ScreeningRequest(startTime, room, movie);
         System.out.println(objectMapper.writeValueAsString(screeningRequest));
         mockMvc.perform(MockMvcRequestBuilders.post("/api/screenings")
                         .contentType("application/json")
@@ -71,21 +67,22 @@ public class ScreeningControllerTest {
         // Verify that only one screening actually ended in the database
         assertEquals(1, screeningRepository.count());
     }
-/*
-    @Test
-    void testAddPerson() throws Exception {
-        PersonRequest personRequest = new PersonRequest("first", "last", 88888888, null, "testUser", "test@mail.dk", "s3cr3etpass");
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/persons/register")
-                        .contentType("application/json")
-                        .accept("application/json")
-                        .content(objectMapper.writeValueAsString(personRequest)))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists());
-        // Verify that it actually ended in the database
-        assertEquals(1, personRepository.count());
-    }
-*/
+
+    /*
+        @Test
+        void testAddPerson() throws Exception {
+            PersonRequest personRequest = new PersonRequest("first", "last", 88888888, null, "testUser", "test@mail.dk", "s3cr3etpass");
+            mockMvc.perform(MockMvcRequestBuilders.post("/api/persons/register")
+                            .contentType("application/json")
+                            .accept("application/json")
+                            .content(objectMapper.writeValueAsString(personRequest)))
+                    .andDo(print())
+                    .andExpect(status().isOk())
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists());
+            // Verify that it actually ended in the database
+            assertEquals(1, personRepository.count());
+        }
+    */
     @Test
     void testScreeningNotFound() throws Exception {
         // request a nonexistent person and verify HTTP Status and error response
@@ -94,7 +91,7 @@ public class ScreeningControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.path").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.error").value("Screening unavailable"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.error").value("Unavailable screening"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.status").value("404"));
     }
 
