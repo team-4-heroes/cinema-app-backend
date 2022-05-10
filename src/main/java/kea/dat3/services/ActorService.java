@@ -3,6 +3,7 @@ package kea.dat3.services;
 import kea.dat3.dto.ActorRequest;
 import kea.dat3.dto.ActorResponse;
 import kea.dat3.entities.Actor;
+import kea.dat3.error.ActorNotFoundException;
 import kea.dat3.repositories.ActorRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,8 @@ public class ActorService {
     }
 
     public ActorResponse getActor(Long id) {
-        return new ActorResponse(actorRepository.getById(id));
+        var actor = actorRepository.findById(id).orElseThrow(() -> new ActorNotFoundException(id));
+        return new ActorResponse(actor);
     }
 
     public Set<ActorResponse> getActorsByName(String firstName, String lastName) {
