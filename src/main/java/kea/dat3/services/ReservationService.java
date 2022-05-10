@@ -60,6 +60,8 @@ public class ReservationService {
            Simplify -> take reservedSeat ids form body, run through screening's list of seats,
            set reference to reservation if not set, otherwise throw error showing sets already with reservation*/
         body.getDesiredSeats().forEach(rs -> {
+            //FIXME smarter to get list of ids then reserve each seat with this id?
+            //reservedSeatRepository.getById(rs.getId());
             if (rs.getReservation() !=  null) {
                 throw new Client4xxException("Seat " + rs.getSeat() + "taken");
             }
