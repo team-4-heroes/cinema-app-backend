@@ -38,8 +38,12 @@ public class ValidationHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<Object>(errorBody, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({ResponseStatusException.class, Client4xxException.class})
+    @ExceptionHandler(Client4xxException.class) //TODO: Remove?
     public ResponseEntity<Map<String, String>> handleException(HttpServletRequest request, Client4xxException e) {
+        return buildResponseEntity(request, e);
+    }
+
+    private ResponseEntity<Map<String, String>> buildResponseEntity(HttpServletRequest request, Client4xxException e) { //TODO: Remove?
         Map<String, String> errorResponse = new HashMap<>();
         errorResponse.put("path", request.getRequestURI());
         errorResponse.put("error", e.getLocalizedMessage());
@@ -47,5 +51,17 @@ public class ValidationHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorResponse, e.getStatus());
     }
 
+    @ExceptionHandler({ResponseStatusException.class})
+    public ResponseEntity<Map<String, String>> handleException(HttpServletRequest request, ResponseStatusException e) {
+        return buildResponseEntity(request, e);
+    }
+
+    private ResponseEntity<Map<String, String>> buildResponseEntity(HttpServletRequest request, ResponseStatusException e) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("path", request.getRequestURI());
+        errorResponse.put("error", e.getLocalizedMessage());
+        errorResponse.put("status", "" + e.getStatus().value());
+        return new ResponseEntity<>(errorResponse, e.getStatus());
+    }
 }
 
