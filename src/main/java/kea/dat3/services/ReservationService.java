@@ -4,13 +4,17 @@ import kea.dat3.dto.ReservationRequest;
 import kea.dat3.dto.ReservationResponse;
 import kea.dat3.entities.Reservation;
 import kea.dat3.entities.ReservedSeat;
+import kea.dat3.entities.Screening;
 import kea.dat3.error.SeatOccupiedException;
+import kea.dat3.repositories.PersonRepository;
 import kea.dat3.repositories.ReservationRepository;
 import kea.dat3.repositories.ReservedSeatRepository;
+import kea.dat3.repositories.ScreeningRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import static java.lang.Long.valueOf;
@@ -19,10 +23,14 @@ import static java.lang.Long.valueOf;
 public class ReservationService {
     ReservationRepository reservationRepository;
     ReservedSeatRepository reservedSeatRepository;
+    ScreeningRepository screeningRepository;
+    PersonRepository personRepository;
 
-    public ReservationService(ReservationRepository reservationRepository, ReservedSeatRepository reservedSeatRepository) {
+    public ReservationService(ReservationRepository reservationRepository, ReservedSeatRepository reservedSeatRepository, ScreeningRepository screeningRepository, PersonRepository personRepository) {
         this.reservationRepository = reservationRepository;
         this.reservedSeatRepository = reservedSeatRepository;
+        this.screeningRepository = screeningRepository;
+        this.personRepository = personRepository;
     }
 
     public Set<ReservedSeat> getSeatsWithNoReservations(Long screeningId) {
@@ -34,16 +42,17 @@ public class ReservationService {
     }
 
     public ReservationResponse createReservationAlternativeMethod(ReservationRequest body) {
-        Reservation res = new Reservation();
+        Reservation res = new Reservation(
+                screeningRepository.findById(body.getScreeningId()).get(),
+                new HashSet<ReservedSeat>(),
+                personRepository.findById(body.getPersonId()).get());
             for (Integer n : body.getDesiredSeats()) {
                 ReservedSeat rs = reservedSeatRepository.findById(valueOf(n)).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
-                //Add rs to list ls if no reservation
                 if (rs.getReservation() !=  null) {
                 throw new SeatOccupiedException(valueOf(n));
                 }
             res.getReservedSeats().add(rs);
         }
-        //Check if list desiredSeats.size == ls.size
         reservationRepository.save(res);
         return new ReservationResponse(res);
     }
