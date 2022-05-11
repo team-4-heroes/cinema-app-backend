@@ -2,7 +2,6 @@ package kea.dat3.api;
 
 import kea.dat3.dto.ScreeningRequest;
 import kea.dat3.dto.ScreeningResponse;
-import kea.dat3.entities.Screening;
 import kea.dat3.services.ScreeningService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +18,7 @@ public class ScreeningController {
         this.screeningService = screeningService;
     }
 
+    // @RolesAllowed("ADMIN") todo: uncomment and fix test
     @PostMapping
     public ScreeningResponse addScreening(@RequestBody ScreeningRequest screeningRequest) {
         return screeningService.addScreening(screeningRequest);
@@ -26,11 +26,21 @@ public class ScreeningController {
 
     @GetMapping
     public List<ScreeningResponse> getScreenings(Pageable pageable){
-        return screeningService.getScreenings(pageable);
+        return screeningService.findAll(pageable);
     }
 
     @GetMapping("/{id}")
     public ScreeningResponse getScreening(@PathVariable long id) {
-        return screeningService.getScreening(id);
+        return screeningService.findById(id);
+    }
+
+    @PutMapping("/{id}")
+    public ScreeningResponse putScreening(@PathVariable long id, @RequestBody ScreeningRequest screeningRequest) {
+        return screeningService.updateScreening(id, screeningRequest);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteScreening(@PathVariable long id) {
+        screeningService.deleteScreening(id);
     }
 }

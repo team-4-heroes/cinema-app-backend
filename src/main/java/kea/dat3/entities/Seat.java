@@ -19,11 +19,20 @@ public class Seat {
     ReservedSeat reservedSeat;
 
     String rowLetter;
+
     int number;
+
+    SeatType seatType;
 
     public Seat(String row, int number) {
         this.rowLetter = row;
         this.number = number;
+    }
+
+    public Seat(String rowLetter, int number, SeatType seatType) {
+        this.rowLetter = rowLetter;
+        this.number = number;
+        this.seatType = seatType;
     }
 
     //roomId

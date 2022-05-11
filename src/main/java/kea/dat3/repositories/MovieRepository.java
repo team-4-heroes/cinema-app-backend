@@ -12,5 +12,5 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     List<Movie> findByReleaseYear(int releaseYear);
 
-    // TODO: Nice to have search findByActor
+    // TODO: Nice to have - searchByActor
 }

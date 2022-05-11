@@ -5,16 +5,21 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.util.HashSet;
+
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GenreRequest {
+public class ActorRequest {
 
-private String name;
+    private String firstName;
 
-    private Set<Movie> movies = new HashSet<>();
+    private String lastName;
+
+    private LocalDateTime birthDate;
+
+    private Set<Movie> movies;
 }
