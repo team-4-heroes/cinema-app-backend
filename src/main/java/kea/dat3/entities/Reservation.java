@@ -1,6 +1,7 @@
 package kea.dat3.entities;
 
 import kea.dat3.dto.ReservationRequest;
+import kea.dat3.repositories.PersonRepository;
 import kea.dat3.utils.TicketPriceCalculator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -43,6 +44,7 @@ public class Reservation {
         this.reservedSeats = reservedSeats;
         this.customer = customer;
     }
+
 
     public Reservation(ReservationRequest body) {
         this.reservedSeats = body.getDesiredSeats();

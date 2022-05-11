@@ -4,13 +4,16 @@ import kea.dat3.dto.ReservationRequest;
 import kea.dat3.dto.ReservationResponse;
 import kea.dat3.entities.Reservation;
 import kea.dat3.entities.ReservedSeat;
-import kea.dat3.entities.Seat;
+import kea.dat3.error.Client4xxException;
 import kea.dat3.repositories.ReservationRepository;
 import kea.dat3.repositories.ReservedSeatRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.util.HashSet;
 import java.util.Set;
+
+import static java.lang.Long.valueOf;
 
 @Service
 public class ReservationService {
@@ -26,30 +29,22 @@ public class ReservationService {
         return reservedSeatRepository.getSeatsWithNoReservations(screeningId);
     }
 
-    //TODO Metode til at finde sæder der ikke er ledige i et ReservationRequest
-    public Set<ReservedSeat> returnUnavailableSeatsSet(ReservationRequest body) {
-        Set<ReservedSeat> desiredSeats = body.getDesiredSeats();
-        Set<ReservedSeat> alreadyReserved = reservedSeatRepository.getReservedSeats(body.getScreening().getId());
-        Set<ReservedSeat> notAvailable = new HashSet<>();
-
-        alreadyReserved.forEach(reservedSeat -> {
-            if (desiredSeats.contains(reservedSeat)) {
-                notAvailable.add(reservedSeat);
-            }
-        });
-        return notAvailable;
+    public Set<ReservedSeat> getReservedSeats(Long screeningId) {
+        return reservedSeatRepository.getReservedSeats(screeningId);
     }
 
-    public ReservationResponse createReservation(ReservationRequest body) {
-        Reservation reservation = new Reservation(body);
-
-        if (returnUnavailableSeatsSet(body).size() == 0) {
-            reservationRepository.save(reservation);
-        } else {
-            //TODO: throw Error seatsUnavailable
-
+    public ReservationResponse createReservationAlternativeMethod(ReservationRequest body) {
+        Reservation res = new Reservation();
+            for (Integer n : body.getDesiredSeats()) {
+                ReservedSeat rs = reservedSeatRepository.findById(valueOf(n)).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                //Add rs to list ls if no reservation
+                if (rs.getReservation() !=  null) {
+                throw new Client4xxException("Seat taken");
+                }
+            res.getReservedSeats().add(rs);
         }
-
-        return new ReservationResponse(reservation);
+        //Check if list desiredSeats.size == ls.size
+        reservationRepository.save(res);
+        return new ReservationResponse(res);
     }
 }
