@@ -60,12 +60,13 @@ class PersonControllerTest {
   @Test
   void testPersonNotFound() throws Exception {
     // request a nonexistent person and verify HTTP Status and error response
-    MvcResult result = mockMvc.perform(MockMvcRequestBuilders
+    mockMvc.perform(MockMvcRequestBuilders
                     .get("/api/persons/xxx")
                     .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound())
-            .andReturn();
-    assertEquals("Person with id 'xxx' not found",result.getResponse().getErrorMessage());
+            .andExpect(MockMvcResultMatchers.jsonPath("$.path").exists())
+            .andExpect(MockMvcResultMatchers.jsonPath("$.error").value("Person with id 'xxx' not found"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.status").value("404"));
   }
 
 }

@@ -51,15 +51,16 @@ public class ValidationHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorResponse, e.getStatus());
     }
 
-    @ExceptionHandler({ResponseStatusException.class})
+    @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<Map<String, String>> handleException(HttpServletRequest request, ResponseStatusException e) {
+        System.out.println("In response statusException");
         return buildResponseEntity(request, e);
     }
 
     private ResponseEntity<Map<String, String>> buildResponseEntity(HttpServletRequest request, ResponseStatusException e) {
         Map<String, String> errorResponse = new HashMap<>();
         errorResponse.put("path", request.getRequestURI());
-        errorResponse.put("error", e.getLocalizedMessage());
+        errorResponse.put("error", e.getReason());
         errorResponse.put("status", "" + e.getStatus().value());
         return new ResponseEntity<>(errorResponse, e.getStatus());
     }
