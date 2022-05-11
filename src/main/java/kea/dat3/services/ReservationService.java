@@ -4,7 +4,7 @@ import kea.dat3.dto.ReservationRequest;
 import kea.dat3.dto.ReservationResponse;
 import kea.dat3.entities.Reservation;
 import kea.dat3.entities.ReservedSeat;
-import kea.dat3.error.Client4xxException;
+import kea.dat3.error.SeatOccupiedException;
 import kea.dat3.repositories.ReservationRepository;
 import kea.dat3.repositories.ReservedSeatRepository;
 import org.springframework.http.HttpStatus;
@@ -39,7 +39,7 @@ public class ReservationService {
                 ReservedSeat rs = reservedSeatRepository.findById(valueOf(n)).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
                 //Add rs to list ls if no reservation
                 if (rs.getReservation() !=  null) {
-                throw new Client4xxException("Seat taken");
+                throw new SeatOccupiedException(valueOf(n));
                 }
             res.getReservedSeats().add(rs);
         }
