@@ -2,6 +2,7 @@ package kea.dat3.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import kea.dat3.dto.ReservationRequest;
+import kea.dat3.repositories.PersonRepository;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,11 +34,6 @@ public class Reservation {
     public Reservation(Set<ReservedSeat> reservedSeats, Person customer) {
         this.reservedSeats = reservedSeats;
         this.customer = customer;
-    }
-
-    public Reservation(ReservationRequest body) {
-        this.reservedSeats = body.getDesiredSeats();
-        this.customer = body.getCustomer();
     }
 
 }

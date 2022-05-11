@@ -13,9 +13,9 @@ public interface ReservedSeatRepository extends JpaRepository<ReservedSeat, Long
     @Query("select rs from ReservedSeat rs where rs.id = :desiredSeat")
     ReservedSeat getById(@Param("desiredSeat") int desiredSeat);
 
-    @Query("select rs from ReservedSeat rs where rs.screening = :screeningId")
+    @Query("select rs from ReservedSeat rs where rs.screening = :screeningId and rs.reservation is not null")
     Set<ReservedSeat> getReservedSeats(@Param("screeningId") Long screeningId);
 
-    @Query("select rs from ReservedSeat rs where rs.screening.id <> :screeningId")
+    @Query("select rs from ReservedSeat rs where rs.screening.id = :screeningId and rs.reservation is null")
     Set<ReservedSeat> getSeatsWithNoReservations(@Param("screeningId") Long screeningId);
 }

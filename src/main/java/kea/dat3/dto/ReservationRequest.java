@@ -9,14 +9,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReservationRequest {
-    Person customer;
-    Screening screening;
-    Set<Integer> desiredSeats;//TODO change to list of integers corresponding to reservedSeat.id
+    Long personId;
+    Long screeningId;
+    List<Integer> desiredSeats;//TODO change to list of integers corresponding to reservedSeat.id
 }
