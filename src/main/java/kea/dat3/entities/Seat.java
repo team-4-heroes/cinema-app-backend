@@ -25,18 +25,21 @@ public class Seat {
     @JoinColumn(name = "room_id")
     private Room room;
 
+    private SeatType seatType;
+
     public Seat(char row, int number, Room room) {
         this.room = room;
+    }
 
-    String rowLetter;
-
-    int number;
-
-    SeatType seatType;
-
-    public Seat(String row, int number) {
+    public Seat(char row, int number) {
         this.rowLetter = row;
         this.number = number;
+    }
+
+    public Seat(char rowLetter, int number, SeatType seatType) {
+        this.rowLetter = rowLetter;
+        this.number = number;
+        this.seatType = seatType;
     }
 
     @Override
@@ -47,14 +50,8 @@ public class Seat {
                 ", rowLetter=" + rowLetter +
                 ", number=" + number +
                 ", room=" + room +
+                ", seatType=" + seatType +
                 '}';
     }
 
-    public Seat(String rowLetter, int number, SeatType seatType) {
-        this.rowLetter = rowLetter;
-        this.number = number;
-        this.seatType = seatType;
-    }
-
-    //roomId
 }

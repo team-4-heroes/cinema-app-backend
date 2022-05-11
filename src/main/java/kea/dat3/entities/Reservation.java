@@ -45,10 +45,10 @@ public class Reservation {
         this.customer = customer;
     }
 
-
+/*
     public Reservation(ReservationRequest body) {
         this.reservedSeats = body.getDesiredSeats();
         this.customer = body.getCustomer();
         this.totalPrice = TicketPriceCalculator.calculateTotalPrice(body.getScreening(), reservedSeats);
-    }
+    } */
 }
