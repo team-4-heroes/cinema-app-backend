@@ -3,7 +3,7 @@ package kea.dat3.services;
 import kea.dat3.dto.ScreeningRequest;
 import kea.dat3.dto.ScreeningResponse;
 import kea.dat3.entities.Screening;
-import kea.dat3.error.Client4xxException;
+import kea.dat3.error.*;
 import kea.dat3.repositories.MovieRepository;
 import kea.dat3.repositories.RoomRepository;
 import kea.dat3.repositories.ScreeningRepository;
@@ -36,39 +36,37 @@ public class ScreeningService {
     }
 
     public ScreeningResponse findById(long id) {
-        return new ScreeningResponse(screeningRepository.findById(id).orElseThrow(()->notFoundException()));
+        return new ScreeningResponse(screeningRepository.findById(id).orElseThrow(()->new ScreeningNotFoundException(id)));
     }
 
     public ScreeningResponse addScreening(ScreeningRequest screeningReq) {
         // check if chosen room and movie exists in DB
-        if (!roomRepository.existsById(screeningReq.getRoom().getId())) {
-            throw new Client4xxException("Room nonexistent", HttpStatus.NOT_FOUND);
+        Long movieId = screeningReq.getMovie().getId();
+        Long roomId = screeningReq.getRoom().getId();
+        if (roomId == null || !roomRepository.existsById(roomId)) {
+            throw new RoomNotFoundException(roomId);
         }
-        if (!movieRepository.existsById(screeningReq.getMovie().getId())) {
-            throw new Client4xxException("Movie nonexistent", HttpStatus.NOT_FOUND);
+        if (movieId == null || !movieRepository.existsById(movieId)) {
+            throw new MovieNotFoundException(movieId);
         }
         Screening screening;
-        long roomId = screeningReq.getRoom().getId();
         LocalDateTime start = screeningReq.getStartTime();
         LocalDateTime end = start.plusMinutes(screeningReq.getMovie().getLengthInMinutes());
         if (screeningRepository.isRoomAvailableForScreening(roomId, start, end)) {
             screening = screeningRepository.save(new Screening(screeningReq));
         } else {
-            throw new Client4xxException("Room occupied", HttpStatus.CONFLICT);
+            throw new RoomOccupiedException(roomId);
         }
         return new ScreeningResponse(screening);
     }
     // TODO: test this
     public ScreeningResponse updateScreening(long id, ScreeningRequest screeningRequest) {
-        if (!screeningRepository.existsById(id)) throw notFoundException();
+        if (!screeningRepository.existsById(id)) throw new ScreeningNotFoundException(id);
         return new ScreeningResponse(screeningRepository.save(new Screening(screeningRequest)));
     }
     // does it return 404 if screening not found
     public void deleteScreening(long id) {
-        if (!screeningRepository.existsById(id)) throw notFoundException();
+        if (!screeningRepository.existsById(id)) throw new ScreeningNotFoundException(id);
         screeningRepository.deleteById(id);
-    }
-    public Client4xxException notFoundException() {
-        return new Client4xxException("No screening with this id", HttpStatus.NOT_FOUND);
     }
 }

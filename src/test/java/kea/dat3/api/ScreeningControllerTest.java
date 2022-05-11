@@ -78,7 +78,7 @@ public class ScreeningControllerTest {
     public void testAddScreeningWhenRoomOccupied(int minutes) throws Exception {
         ScreeningRequest screeningReq = new ScreeningRequest(s.getStartTime().plusMinutes(minutes), s.getRoom(), s.getMovie());
         // Check that server answer with msg and statusCode
-        addScreeningFail(screeningReq, "Room occupied", "409");
+        addScreeningFail(screeningReq, "Room with id '"+s.getRoom().getId()+"' occupied", "409");
         // Verify only one screening actually ended in the database
         assertEquals(1, screeningRepository.count());
     }
@@ -88,7 +88,7 @@ public class ScreeningControllerTest {
         Room room = new Room("notSavedRoom");
         ScreeningRequest screeningReq = new ScreeningRequest(s.getStartTime().plusMinutes(200), room, s.getMovie());
         // Check that server answer with msg and statusCode
-        addScreeningFail(screeningReq, "Room nonexistent", "404");
+        addScreeningFail(screeningReq, "Room with id 'null' not found", "404");
         // Verify only one screening actually ended in the database
         assertEquals(1, screeningRepository.count());
     }
@@ -102,7 +102,7 @@ public class ScreeningControllerTest {
                 .andDo(print())
                 .andExpect(status().isNotFound())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.path").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.error").value("No screening with this id"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.error").value("Screening with id '"+nonExistentId+"' not found"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.status").value("404"));
     }
 
@@ -114,7 +114,7 @@ public class ScreeningControllerTest {
                 .andDo(print())
                 .andExpect(status().isNotFound())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.path").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.error").value("No screening with this id"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.error").value("Screening with id '"+nonExistentId+"' not found"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.status").value("404"));
     }
     private void addScreeningFail(ScreeningRequest screeningRequest, String msg, String statusCode) throws Exception {
@@ -122,7 +122,7 @@ public class ScreeningControllerTest {
                         .contentType("application/json")
                         .accept("application/json")
                         .content(objectMapper.writeValueAsString(screeningRequest)))
-                //.andDo(print())
+                .andDo(print())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.path").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.error").value(msg))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.status").value(statusCode));

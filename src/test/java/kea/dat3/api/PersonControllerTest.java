@@ -65,7 +65,7 @@ class PersonControllerTest {
                     .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound())
             .andExpect(MockMvcResultMatchers.jsonPath("$.path").exists())
-            .andExpect(MockMvcResultMatchers.jsonPath("$.error").value("Person with id 'xxx' not found"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.error").value("Person with id/username 'xxx' not found"))
             .andExpect(MockMvcResultMatchers.jsonPath("$.status").value("404"));
   }
 
