@@ -12,13 +12,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -60,12 +56,13 @@ class PersonControllerTest {
   @Test
   void testPersonNotFound() throws Exception {
     // request a nonexistent person and verify HTTP Status and error response
-    MvcResult result = mockMvc.perform(MockMvcRequestBuilders
+    mockMvc.perform(MockMvcRequestBuilders
                     .get("/api/persons/xxx")
                     .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound())
-            .andReturn();
-    assertEquals("Person with id 'xxx' not found",result.getResponse().getErrorMessage());
+            .andExpect(MockMvcResultMatchers.jsonPath("$.path").exists())
+            .andExpect(MockMvcResultMatchers.jsonPath("$.error").value("Person with id/username 'xxx' not found"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.status").value("404"));
   }
 
 }

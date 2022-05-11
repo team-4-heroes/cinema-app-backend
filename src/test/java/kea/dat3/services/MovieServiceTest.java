@@ -1,8 +1,11 @@
 package kea.dat3.services;
 
 import kea.dat3.dto.MovieResponse;
+import kea.dat3.entities.Actor;
 import kea.dat3.entities.Movie;
+import kea.dat3.entities.MovieFactory;
 import kea.dat3.entities.pegi.AgeLimit;
+import kea.dat3.repositories.ActorRepository;
 import kea.dat3.repositories.MovieRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +15,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -24,25 +27,44 @@ import static org.mockito.ArgumentMatchers.any;
 class MovieServiceTest {
 
     @Mock
-    MovieRepository repository;
+    MovieRepository movieRepository;
 
     @Mock
+    ActorRepository actorRepository;
+
     MovieService service;
 
-    Movie CUT_1 = new Movie(100L, "abc", "descr", 2000, 120, 125d, AgeLimit.PEGI_3, Collections.emptySet(), Collections.emptySet(), LocalDateTime.now(), LocalDateTime.now());
-    Movie CUT_2 = new Movie(200L, "dfg", "bladescrbla", 2001, 120, 125d, AgeLimit.PEGI_7, Collections.emptySet(), Collections.emptySet(), LocalDateTime.now(), LocalDateTime.now());
-    Movie CUT_3 = new Movie(200L, "dfg", "bla", 2001, 120, 125d, AgeLimit.PEGI_7, Collections.emptySet(), Collections.emptySet(), LocalDateTime.now(), LocalDateTime.now());
+    Movie m_1 = MovieFactory.create(100L, "Aeryn", "thisLadyIsHot", 2000, 120, 125d, AgeLimit.PEGI_18);
+    Movie m_2 = MovieFactory.create(200L, "xxx", "aerynIsEpicc", 2001, 120, 125d, AgeLimit.PEGI_7);
+    Movie m_3 = MovieFactory.create(300L, "Battlestar Galactica", "robot takeover", 2001, 120, 125d, AgeLimit.PEGI_7);
+
+    @Test
+    void addActorToMovie() {
+        var movieId = m_3.getId();
+        var actorId = 444L;
+        var actor = new Actor(actorId, "Tricia", "Helfer", LocalDateTime.now(), new HashSet<>(), LocalDateTime.now(), LocalDateTime.now());
+
+        Mockito.when(movieRepository.save(m_3)).thenReturn(m_3);
+        Mockito.when(movieRepository.findById(movieId)).thenReturn(Optional.of(m_3));
+        Mockito.when(actorRepository.findById(actor.getId())).thenReturn(Optional.of(actor));
+
+        var actualMovie = service.addActorToMovie(movieId, actor.getId());
+
+        //Mockito.verify(movieRepository).; // TODO: verify that repository was called
+        assertTrue(!actualMovie.getActors().isEmpty());
+        assertTrue(actualMovie.getActors().contains(actor));
+    }
 
     @BeforeEach
     void setup() {
-        service = new MovieService(repository);
+        service = new MovieService(movieRepository, actorRepository);
     }
 
     @Test
     void getMovies() {
-        Mockito.when(repository.findAll()).thenReturn(List.of(
-            new Movie(),
-            new Movie()
+        Mockito.when(movieRepository.findAll()).thenReturn(List.of(
+                new Movie(),
+                new Movie()
         ));
         Set<MovieResponse> mResponses = service.getMovies();
         assertEquals(2, mResponses.size());
@@ -50,17 +72,17 @@ class MovieServiceTest {
 
     @Test
     void getMoviesByKeyword() {
-        String expected = "descr";
-        Mockito.when(repository.findByTitleContainingOrDescriptionContainingAllIgnoreCase(expected, expected)).thenReturn(List.of(CUT_1, CUT_2));
+        var expected = "aeryn";
+        Mockito.when(movieRepository.findByTitleContainingOrDescriptionContainingAllIgnoreCase(expected, expected)).thenReturn(List.of(m_1, m_2));
         Set<MovieResponse> mResponses = service.getMoviesByKeyword(expected);
         assertEquals(2, mResponses.size());
     }
 
     @Test
     void getMoviesByReleaseYear_movieIsFound() {
-        int expected = 2000;
+        var expected = 2000;
 
-        Mockito.when(repository.findByReleaseYear(expected)).thenReturn(List.of(CUT_1));
+        Mockito.when(movieRepository.findByReleaseYear(expected)).thenReturn(List.of(m_1));
         Set<MovieResponse> mResponses = service.getMoviesByReleaseYear(expected);
         assertEquals(1, mResponses.size());
     }
@@ -69,9 +91,9 @@ class MovieServiceTest {
     void deleteMovie_idExists() {
         var id = 100L;
 
-        Mockito.when(repository.findById(id)).thenReturn(Optional.of(CUT_1));
+        Mockito.when(movieRepository.findById(id)).thenReturn(Optional.of(m_1));
         service.deleteMovie(id);
-        Mockito.verify(repository).delete(any(Movie.class));
+        Mockito.verify(movieRepository).delete(any(Movie.class));
     }
 
     @Test

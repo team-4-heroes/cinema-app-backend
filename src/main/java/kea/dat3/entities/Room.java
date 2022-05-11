@@ -21,7 +21,7 @@ public class Room {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @OneToMany(mappedBy = "room")
     private Set<Seat> seats = new HashSet<>();

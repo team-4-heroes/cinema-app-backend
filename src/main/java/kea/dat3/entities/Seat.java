@@ -27,6 +27,14 @@ public class Seat {
 
     public Seat(char row, int number, Room room) {
         this.room = room;
+
+    String rowLetter;
+
+    int number;
+
+    SeatType seatType;
+
+    public Seat(String row, int number) {
         this.rowLetter = row;
         this.number = number;
     }
@@ -41,4 +49,12 @@ public class Seat {
                 ", room=" + room +
                 '}';
     }
+
+    public Seat(String rowLetter, int number, SeatType seatType) {
+        this.rowLetter = rowLetter;
+        this.number = number;
+        this.seatType = seatType;
+    }
+
+    //roomId
 }

@@ -9,6 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,7 +17,6 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 public class Movie {
@@ -25,20 +25,28 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     private String title;
 
     private String description;
 
-    //@Max(3000)
-    //@Min(1900)
+    @Min(value = 1900)
+    @Max(value = 3000)
     private int releaseYear;
 
-    //@Max(900)
+    @Min(value = 1)
+    @Max(value = 900)
     private int lengthInMinutes;
 
     private double basePrice;
 
     private AgeLimit ageLimit;
+
+    @ManyToMany()
+    @JoinTable(name = "movie_actor",
+        joinColumns = @JoinColumn(name = "movie_id"),
+        inverseJoinColumns = @JoinColumn(name = "actor_id"))
+    private Set<Actor> actors = new HashSet<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "movie") //, fetch = FetchType.EAGER)
