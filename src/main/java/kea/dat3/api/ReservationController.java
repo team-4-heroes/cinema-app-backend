@@ -15,14 +15,14 @@ import java.util.Set;
 public class ReservationController {
     ReservationService reservationService;
 
-    public ReservationController (ReservationService reservationService, ReservedSeatRepository reservedSeatRepository) {
+    public ReservationController (ReservationService reservationService) {
         this.reservationService = reservationService;
     }
 
     //Create
     @PostMapping
     public ReservationResponse addReservation(@RequestBody ReservationRequest body) {
-        return reservationService.createReservation(body);
+        return reservationService.createReservationAlternativeMethod(body);
     }
 
     //Read
@@ -37,14 +37,6 @@ public class ReservationController {
     }
 
     //Update
-    @PutMapping("/{reservation.id}/add-seat")
-    Reservation addSeatToReservation(@PathVariable Long id,  Reservation reservation, ReservedSeat seat) {
-        id = reservation.getId();
-        Set<ReservedSeat> reservations = reservation.getReservedSeats();
-        reservations.add(seat);
-        reservation.setReservedSeats(reservations);
-        return reservation;
-    }
 
     //Delete
 

@@ -1,15 +1,12 @@
 package kea.dat3.services;
 
-import ch.qos.logback.core.net.server.Client;
 import kea.dat3.dto.ReservationRequest;
 import kea.dat3.dto.ReservationResponse;
 import kea.dat3.entities.Reservation;
 import kea.dat3.entities.ReservedSeat;
-import kea.dat3.entities.Seat;
 import kea.dat3.error.Client4xxException;
 import kea.dat3.repositories.ReservationRepository;
 import kea.dat3.repositories.ReservedSeatRepository;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -30,8 +27,12 @@ public class ReservationService {
         return reservedSeatRepository.getSeatsWithNoReservations(screeningId);
     }
 
+    public Set<ReservedSeat> getReservedSeats(Long screeningId) {
+        return reservedSeatRepository.getReservedSeats(screeningId);
+    }
+
     //TODO Metode til at finde sæder der ikke er ledige i et ReservationRequest
-    public Set<ReservedSeat> returnUnavailableSeatsSet(ReservationRequest body) {
+    /*public Set<ReservedSeat> returnUnavailableSeatsSet(ReservationRequest body) {
         Set<ReservedSeat> desiredSeats = body.getDesiredSeats();
         Set<ReservedSeat> alreadyReserved = reservedSeatRepository.getReservedSeats(body.getScreening().getId());
         Set<ReservedSeat> notAvailable = new HashSet<>();
@@ -52,23 +53,23 @@ public class ReservationService {
             throw new Client4xxException("seats " + returnUnavailableSeatsSet(body) + " unavailable", HttpStatus.BAD_REQUEST);
         }
         return new ReservationResponse(reservation);
-    }
+    }*/
 
     public ReservationResponse createReservationAlternativeMethod(ReservationRequest body) {
         Reservation res = new Reservation(body);
         /*TODO
-           Simplify -> take reservedSeat ids form body, run through screening's list of seats,
+           Simplify -> take reservedSeat ids from body, run through screening's list of seats,
            set reference to reservation if not set, otherwise throw error showing sets already with reservation*/
-        body.getDesiredSeats().forEach(rs -> {
+        for (Integer n : body.getDesiredSeats()) {
             //FIXME smarter to get list of ids then reserve each seat with this id?
-            //reservedSeatRepository.getById(rs.getId());
+            ReservedSeat rs = reservedSeatRepository.getById(n);
             if (rs.getReservation() !=  null) {
                 throw new Client4xxException("Seat " + rs.getSeat() + "taken");
             }
             else {
                 res.getReservedSeats().add(rs);
             }
-        });
+        };
         return new ReservationResponse(res);
     }
 }

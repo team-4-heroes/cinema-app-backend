@@ -18,5 +18,5 @@ import java.util.Set;
 public class ReservationRequest {
     Person customer;
     Screening screening;
-    Set<ReservedSeat> desiredSeats;//TODO change to list of integers corresponding to reservedSeat.id
+    Set<Integer> desiredSeats;//TODO change to list of integers corresponding to reservedSeat.id
 }
