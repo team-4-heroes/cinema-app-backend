@@ -72,7 +72,7 @@ public class Movie {
         this.title = body.getTitle();
         this.description = body.getDescription();
         this.releaseYear = getReleaseYear();
-        this.lengthInMinutes = body.getLength();
+        this.lengthInMinutes = body.getLengthInMinutes();
         this.basePrice = body.getBasePrice();
         this.ageLimit = body.getAgeLimit();
         this.screenings = body.getScreenings();
