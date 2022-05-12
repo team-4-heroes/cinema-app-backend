@@ -3,9 +3,13 @@ package kea.dat3.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import kea.dat3.dto.MovieRequest;
 import kea.dat3.entities.pegi.AgeLimit;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -44,8 +48,8 @@ public class Movie {
 
     @ManyToMany()
     @JoinTable(name = "movie_actor",
-        joinColumns = @JoinColumn(name = "movie_id"),
-        inverseJoinColumns = @JoinColumn(name = "actor_id"))
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "actor_id"))
     private Set<Actor> actors = new HashSet<>();
 
     @JsonIgnore
@@ -54,8 +58,8 @@ public class Movie {
 
     @ManyToMany()
     @JoinTable(name = "movie_genre",
-        joinColumns = @JoinColumn(name = "movie_id"),
-        inverseJoinColumns = @JoinColumn(name = "genre_id"))
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private Set<Genre> genres = new HashSet<>();
 
     @CreationTimestamp
@@ -75,11 +79,11 @@ public class Movie {
         this.genres = body.getGenres();
     }
 
-    public Movie(String title, String description, int releaseYear, int length, double basePrice) {
+    public Movie(String title, String description, int releaseYear, int lengthInMinutes, double basePrice) {
         this.title = title;
         this.description = description;
         this.releaseYear = releaseYear;
-        this.lengthInMinutes = length;
+        this.lengthInMinutes = lengthInMinutes;
         this.basePrice = basePrice;
     }
 }

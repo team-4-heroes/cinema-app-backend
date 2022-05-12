@@ -1,5 +1,6 @@
 package kea.dat3.services;
 
+import kea.dat3.dto.MovieDetailResponse;
 import kea.dat3.dto.MovieResponse;
 import kea.dat3.entities.Actor;
 import kea.dat3.entities.Movie;
@@ -74,7 +75,7 @@ class MovieServiceTest {
     void getMoviesByKeyword() {
         var expected = "aeryn";
         Mockito.when(movieRepository.findByTitleContainingOrDescriptionContainingAllIgnoreCase(expected, expected)).thenReturn(List.of(m_1, m_2));
-        Set<MovieResponse> mResponses = service.getMoviesByKeyword(expected);
+        Set<MovieDetailResponse> mResponses = service.getMoviesByKeyword(expected);
         assertEquals(2, mResponses.size());
     }
 
@@ -83,7 +84,7 @@ class MovieServiceTest {
         var expected = 2000;
 
         Mockito.when(movieRepository.findByReleaseYear(expected)).thenReturn(List.of(m_1));
-        Set<MovieResponse> mResponses = service.getMoviesByReleaseYear(expected);
+        Set<MovieDetailResponse> mResponses = service.getMoviesByReleaseYear(expected);
         assertEquals(1, mResponses.size());
     }
 
