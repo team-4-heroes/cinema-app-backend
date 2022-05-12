@@ -1,8 +1,9 @@
 package kea.dat3.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import kea.dat3.dto.ReservationRequest;
-import kea.dat3.entities.*;
+import kea.dat3.entities.Movie;
+import kea.dat3.entities.Room;
+import kea.dat3.entities.Screening;
 import kea.dat3.repositories.*;
 import kea.dat3.services.MovieService;
 import kea.dat3.services.ReservationService;
@@ -16,8 +17,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -66,7 +65,8 @@ public class ReservationControllerTest {
 
     }
 
-    //Test make reservation with unavailable seats (expected = error)
-    public void testMakeReservationExpectFail() {}
+    //TODO: Test make reservation with unavailable seats (expected = error)
+    public void testMakeReservationExpectFail() {
+    }
 
 }
