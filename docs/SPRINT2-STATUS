@@ -4,6 +4,7 @@
 **Christian**: <br />
 - Create Azure VM with MySql database
 - Full CRUD for Reservation, ReservedSeat, Seat.<br /><br />
+- Further logic for creating Reservations
 **He**: <br />
 - Create Azure App Service and Static Web App
 - Full CRUD for Movie and related classes.<br /><br />
