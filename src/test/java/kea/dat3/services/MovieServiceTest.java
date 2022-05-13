@@ -50,8 +50,7 @@ class MovieServiceTest {
         Mockito.when(actorRepository.findById(actor.getId())).thenReturn(Optional.of(actor));
 
         var actualMovie = service.addActorToMovie(movieId, actor.getId());
-
-        //Mockito.verify(movieRepository).; // TODO: verify that repository was called
+        
         assertTrue(!actualMovie.getActors().isEmpty());
         assertTrue(actualMovie.getActors().contains(actor));
     }
