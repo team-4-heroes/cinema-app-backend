@@ -1,35 +1,41 @@
 # Sprint 2 Status
 
-## Tasks completed in sprint 2:<br />
-**Christian**: <br />
-- Full CRUD for Reservation, ReservedSeat, Seat.<br /><br />
+## Tasks completed in sprint 2
+**Christian**: 
+- Full CRUD for Reservation, ReservedSeat, Seat.
 - Further logic for creating Reservations
-**He**: <br />
+
+**He**: 
 - Connect actor to movie entities
 - Crated Movie genre and price
 - Error handling and test of Movie
 - Changed error handling to use ResponseStatusException
-**Peter**: <br />
+
+**Peter**: 
 - ShowScreenings frontend
 - Tests of ScreeningController
-**Simon**: <br />
+
+**Simon**: 
 - ClientPageSignup
 - FavIcon
 
-## Sprint 3 goals:<br /> 
+## Sprint 3 Goals<br /> 
 1. Create frontend for core functionality (focus on creating a screening schedule and a reservation)<br />
 2. Add tests and corrections to backend if needed<br />
 
 ## List of tasks to be completed during sprint 3:<br />
-**Christian**: <br />
+**Christian**: 
 - page-create-reservation
-- page-show-reservations<br /><br />
-**He**: <br />
+- page-show-reservations
+**He**:
 - page-manage-movie
-- page-movie-search<br /><br />
-**Peter**: <br />
-- page-add-screening<br /><br />
-**Simon**: <br />
+- page-movie-search
+
+**Peter**:
+- page-add-screening
+
+**Simon**: 
 - page-manage-profile
+
 **Nice to Have**
 - Set up custom domain name
