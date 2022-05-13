@@ -20,7 +20,6 @@ public class ScreeningResponse {
 
     private String roomName;
 
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss",shape = JsonFormat.Shape.STRING)
     private LocalDateTime startTime;
 
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss",shape = JsonFormat.Shape.STRING)
