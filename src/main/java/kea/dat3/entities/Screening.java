@@ -69,4 +69,15 @@ public class Screening {
         }
         return screeningSeats;
     }
+
+    @Override
+    public String toString() {
+        return "Screening{" +
+                "id=" + id +
+                ", startTime=" + startTime +
+                ", movie=" + movie +
+                ", room=" + room +
+                ", updated=" + updated +
+                '}';
+    }
 }

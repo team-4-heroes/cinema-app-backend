@@ -49,12 +49,15 @@ public class ScreeningControllerTest {
 
     @BeforeEach
     public void setupScreeningControllerTest() {
+        movieRepository.deleteAll();
         screeningRepository.deleteAll();
+        roomRepository.deleteAll();
         LocalDateTime startTime = LocalDateTime.of(2022, 10, 1, 10, 0);
         Room room = roomRepository.save(new Room("testRoom"));
         Movie movie = movieRepository.save(new Movie("film titel", "beskrivelse", 2000, 100, 100));
         s = new Screening(startTime, room, movie);
         screeningRepository.save(s);
+        //System.out.println(screeningRepository.count() +"Screenings:"+ screeningRepository.findAll());
     }
 
     @ParameterizedTest
@@ -69,8 +72,8 @@ public class ScreeningControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.movie").exists());
-        // Verify at least one of the screenings ended in the right place
-        assertTrue(screeningRepository.count() > 1);
+        // Verify the screening ended in the right place
+        assertEquals(2, screeningRepository.count());
     }
 
     @ParameterizedTest
@@ -79,7 +82,7 @@ public class ScreeningControllerTest {
         ScreeningRequest screeningReq = new ScreeningRequest(s.getStartTime().plusMinutes(minutes), s.getRoom(), s.getMovie());
         // Check that server answer with msg and statusCode
         addScreeningFail(screeningReq, "Room with id '" + s.getRoom().getId() + "' occupied", "409");
-        // Verify only one screening actually ended in the database
+        // Verify that no new screenings got added
         assertEquals(1, screeningRepository.count());
     }
 
@@ -116,6 +119,8 @@ public class ScreeningControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.path").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.error").value("Screening with id '" + nonExistentId + "' not found"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.status").value("404"));
+
+        assertEquals(1, screeningRepository.count());
     }
 
     private void addScreeningFail(ScreeningRequest screeningRequest, String msg, String statusCode) throws Exception {
