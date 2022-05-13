@@ -1,16 +1,14 @@
 package kea.dat3.Configuration;
 
 import kea.dat3.entities.*;
-import kea.dat3.repositories.MovieRepository;
-import kea.dat3.repositories.PersonRepository;
-import kea.dat3.repositories.RoomRepository;
-import kea.dat3.repositories.ScreeningRepository;
+import kea.dat3.repositories.*;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 
 import java.time.LocalDateTime;
+import java.time.Year;
 
 
 @Controller
@@ -21,12 +19,14 @@ public class MakeTestData implements ApplicationRunner {
     ScreeningRepository screeningRepository;
     RoomRepository roomRepository;
     MovieRepository movieRepository;
+    ActorRepository actorRepository;
 
-    public MakeTestData(PersonRepository personRepository, ScreeningRepository screeningRepository, RoomRepository roomRepository, MovieRepository movieRepository) {
+    public MakeTestData(PersonRepository personRepository, ScreeningRepository screeningRepository, RoomRepository roomRepository, MovieRepository movieRepository, ActorRepository actorRepository) {
         this.personRepository = personRepository;
         this.screeningRepository = screeningRepository;
         this.roomRepository = roomRepository;
         this.movieRepository = movieRepository;
+        this.actorRepository = actorRepository;
     }
 
     public void makeUsers() {
@@ -64,8 +64,30 @@ public class MakeTestData implements ApplicationRunner {
         }
     }
 
+    private void makeMovies() {
+        var m_1 = MovieBuilder.create("Lord of the Rings: Fellowship of the Ring", "Little hobbits go on a grand adventure and Gandalf dies", 2001)
+                .addActor("Viggo", "Mortensen", Year.of(1984))
+                .addLengthInMinutes(178)
+                .build();
+        var m_2 = MovieBuilder.create("Lord of the Rings: The Two Towers", "Things get hairy and the party splits. Also wizards.", 2002)
+                .addActor("Cate", "Blanchet", Year.of(1975))
+                .addActor("Miranda", "Otto", Year.of(1987))
+                .addLengthInMinutes(179)
+                .build();
+        var m_3 = MovieBuilder.create("Lord of the Rings: The Return of the King", "Split story. Slow crawl through Mordor and epic battles. Golumn save the day", 2003)
+                .addActor("Andy", "Serkis", Year.of(1969))
+                .addActor("John", "Rhys-Davies", Year.of(1969))
+                .addLengthInMinutes(201)
+                .build();
+
+        movieRepository.save(m_1);
+        movieRepository.save(m_2);
+        movieRepository.save(m_3);
+    }
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        makeMovies();
         makeUsers();
         makeScreenings();
     }
