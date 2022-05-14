@@ -24,12 +24,12 @@ public class RoomService {
 
     public List<RoomResponse> getRooms() {
         List<Room> rooms = roomRepository.findAll();
-        return rooms.stream().map(room -> new RoomResponse(room)).collect(Collectors.toList());
+        return rooms.stream().map(room -> new RoomResponse(room, false)).collect(Collectors.toList());
     }
 
     public RoomResponse addRoom(RoomRequest roomRequest) {
         Room room = roomRepository.save(new Room(roomRequest));
-        return new RoomResponse(room);
+        return new RoomResponse(room,true);
     }
 
 }

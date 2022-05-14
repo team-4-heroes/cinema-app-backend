@@ -35,6 +35,7 @@ public class MovieResponse {
     private LocalDateTime updated;
 
     public MovieResponse(Movie movie) {
+        this.id = movie.getId();
         this.title = movie.getTitle();
         this.description = movie.getDescription();
         this.releaseYear = movie.getReleaseYear();

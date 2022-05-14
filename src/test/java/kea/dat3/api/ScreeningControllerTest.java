@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @ActiveProfiles("test")
-@AutoConfigureMockMvc(addFilters = false)
+@AutoConfigureMockMvc //(addFilters = false)
 public class ScreeningControllerTest {
 
     @Autowired
@@ -63,7 +63,7 @@ public class ScreeningControllerTest {
     @ParameterizedTest
     @ValueSource(ints = {-130, 200}) // runs once with each value as the minutes parameter
     public void testAddScreening(int minutes) throws Exception {
-        ScreeningRequest screeningReq = new ScreeningRequest(s.getStartTime().plusMinutes(minutes), s.getRoom(), s.getMovie());
+        ScreeningRequest screeningReq = new ScreeningRequest(s.getStartTime().plusMinutes(minutes), s.getRoom().getId(), s.getMovie().getId());
         // Check that server answer with msg and statusCode
         mockMvc.perform(MockMvcRequestBuilders.post("/api/screenings")
                         .contentType("application/json")
@@ -71,7 +71,7 @@ public class ScreeningControllerTest {
                         .content(objectMapper.writeValueAsString(screeningReq)))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.movie").exists());
+                .andExpect(MockMvcResultMatchers.jsonPath("$.movieId").exists());
         // Verify the screening ended in the right place
         assertEquals(2, screeningRepository.count());
     }
@@ -79,7 +79,7 @@ public class ScreeningControllerTest {
     @ParameterizedTest
     @ValueSource(ints = {-100, 129}) // runs once with each value as the minutes parameter
     public void testAddScreeningWhenRoomOccupied(int minutes) throws Exception {
-        ScreeningRequest screeningReq = new ScreeningRequest(s.getStartTime().plusMinutes(minutes), s.getRoom(), s.getMovie());
+        ScreeningRequest screeningReq = new ScreeningRequest(s.getStartTime().plusMinutes(minutes), s.getRoom().getId(), s.getMovie().getId());
         // Check that server answer with msg and statusCode
         addScreeningFail(screeningReq, "Room with id '" + s.getRoom().getId() + "' occupied", "409");
         // Verify that no new screenings got added
@@ -88,10 +88,10 @@ public class ScreeningControllerTest {
 
     @Test
     public void testAddScreeningWhenRoomNonexistent() throws Exception {
-        Room room = new Room("notSavedRoom");
-        ScreeningRequest screeningReq = new ScreeningRequest(s.getStartTime().plusMinutes(200), room, s.getMovie());
+        // Room room = new Room("notSavedRoom");
+        ScreeningRequest screeningReq = new ScreeningRequest(s.getStartTime().plusMinutes(200), 0, s.getMovie().getId());
         // Check that server answer with msg and statusCode
-        addScreeningFail(screeningReq, "Room with id 'null' not found", "404");
+        addScreeningFail(screeningReq, "Room with id '0' not found", "404");
         // Verify only one screening actually ended in the database
         assertEquals(1, screeningRepository.count());
     }
