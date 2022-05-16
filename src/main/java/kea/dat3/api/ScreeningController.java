@@ -33,11 +33,11 @@ public class ScreeningController {
     public ScreeningResponse getScreening(@PathVariable long id) {
         return screeningService.findById(id);
     }
-
+/* //TODO: Fix
     @PutMapping("/{id}")
     public ScreeningResponse putScreening(@PathVariable long id, @RequestBody ScreeningRequest screeningRequest) {
         return screeningService.updateScreening(id, screeningRequest);
-    }
+    } */
 
     @DeleteMapping("/{id}")
     public void deleteScreening(@PathVariable long id) {

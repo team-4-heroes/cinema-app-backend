@@ -54,14 +54,14 @@ public class MakeTestData implements ApplicationRunner {
     public void makeScreenings() {
         Room room = roomRepository.save(new Room("testRoom"));
         String description = "This is a dummy description to see how it looks.";
-        for (int i=1; i<6; i++) {
+       /* for (int i=1; i<6; i++) {
             Movie movie = movieRepository.save(new Movie("Movie Title Here",description,2000+i,100,100));
             for (int j=1; j<4; j++) {
                 LocalDateTime startTime = LocalDateTime.of(2022, 10, 1, j * 3 + 8, 0);
                 Screening screening = new Screening(startTime, room, movie);
                 screeningRepository.save(screening);
             }
-        }
+        }*/
     }
 
     private void makeMovies() {

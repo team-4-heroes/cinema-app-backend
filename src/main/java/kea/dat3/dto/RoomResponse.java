@@ -15,6 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class RoomResponse {
 
+    private long id;
     private String name;
     private Set<Screening> screenings;
 
@@ -23,8 +24,9 @@ public class RoomResponse {
     @JsonFormat(pattern = "dd-MM-yyyy hh:mm:ss",shape = JsonFormat.Shape.STRING)
     private LocalDateTime updated;
 
-    public RoomResponse(Room room) {
+    public RoomResponse(Room room, boolean includeScreenings) {
+        this.id = room.getId();
         this.name = room.getName();
-        this.screenings = room.getScreenings();
+        if (includeScreenings) this.screenings = room.getScreenings();
     }
 }

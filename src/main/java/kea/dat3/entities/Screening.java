@@ -44,14 +44,14 @@ public class Screening {
     private LocalDateTime created;
     @UpdateTimestamp
     private LocalDateTime updated;
-
+/*
     public Screening(ScreeningRequest screeningReq) {
         this.room = screeningReq.getRoom();
         this.startTime = screeningReq.getStartTime();
         this.movie = screeningReq.getMovie();
         this.screeningSeats = buildScreeningSeats(screeningReq.getRoom().getSeats());
     }
-
+*/
     public Screening(LocalDateTime startTime, Room room, Movie movie) {
         this.startTime = startTime;
         this.room = room;
