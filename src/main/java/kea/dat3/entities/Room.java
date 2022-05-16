@@ -70,6 +70,7 @@ public class Room {
                 Seat s = new Seat();
                 s.setRowLetter(room.getRowLetters()[j]);
                 s.setNumber(i);
+                s.setRoom(room);
                 seats.add(s);
             }
         }

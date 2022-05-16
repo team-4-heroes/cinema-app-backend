@@ -29,11 +29,15 @@ public class MakeTestData implements ApplicationRunner {
         this.movieRepository = movieRepository;
     }
 
-    public void makeRooms() {
+    public void makeSeats() {
         Room r1 = new Room("Room1", 10);
         roomRepository.save(r1);
         System.out.println(r1.getSeats());
-
+        Movie m1 = new Movie("TestMovie", "A test movie for screenings", 1999, 120, 120);
+        movieRepository.save(m1);
+        Screening s1 = new Screening(LocalDateTime.now(), r1, m1);
+        screeningRepository.save(s1);
+        System.out.println(s1.getScreeningSeats());
     }
 
     public void makeUsers() {
@@ -70,6 +74,6 @@ public class MakeTestData implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         makeUsers();
         makeScreenings();
-        makeRooms();
+        makeSeats();
     }
 }

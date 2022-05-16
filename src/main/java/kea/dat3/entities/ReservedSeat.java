@@ -12,6 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class ReservedSeat {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
     @OneToOne(mappedBy = "reservedSeat")

@@ -36,10 +36,11 @@ public class Seat {
         this.number = number;
     }
 
-    public Seat(char rowLetter, int number, SeatType seatType) {
+    public Seat(char rowLetter, int number, SeatType seatType, Room room) {
         this.rowLetter = rowLetter;
         this.number = number;
         this.seatType = seatType;
+        this.room = room;
     }
 
     @Override
