@@ -29,6 +29,13 @@ public class MakeTestData implements ApplicationRunner {
         this.movieRepository = movieRepository;
     }
 
+    public void makeRooms() {
+        Room r1 = new Room("Room1", 10);
+        roomRepository.save(r1);
+        System.out.println(r1.getSeats());
+
+    }
+
     public void makeUsers() {
         System.out.println("Jeg er her");
         Person customer = new Person("email@testCustumer.dk", "gitteCustumer", "test", "12342121", "testNameCustumer", "testPassowrdCustumer");
@@ -63,5 +70,6 @@ public class MakeTestData implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         makeUsers();
         makeScreenings();
+        makeRooms();
     }
 }

@@ -9,7 +9,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -33,8 +34,8 @@ public class Screening {
     @ManyToOne
     private Room room;
 
-    @OneToMany
-    private Set<ReservedSeat> screeningSeats = new HashSet<>();
+    @OneToMany(mappedBy = "screening", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private List<ReservedSeat> screeningSeats = new ArrayList<>();
 
     @CreationTimestamp
     private LocalDateTime created;
@@ -45,7 +46,7 @@ public class Screening {
         this.room = screeningReq.getRoom();
         this.startTime = screeningReq.getStartTime();
         this.movie = screeningReq.getMovie();
-        this.screeningSeats = buildScreeningSeats(screeningReq.getRoom().getSeats());
+        this.screeningSeats = buildScreeningSeats(screeningReq.getRoom());
     }
 
     public Screening(LocalDateTime startTime, Room room, Movie movie) {
@@ -53,14 +54,15 @@ public class Screening {
         this.room = room;
         this.movie = movie;
         //Get room's list of seats
-        this.screeningSeats = buildScreeningSeats(room.getSeats());
+        this.screeningSeats = buildScreeningSeats(room);
     }
 
-    public Set<ReservedSeat> buildScreeningSeats(Set<Seat> seats) {
+    public List<ReservedSeat> buildScreeningSeats(Room room) {
         //Create seats for the screening
-        Set<ReservedSeat> screeningSeats = new HashSet<>();
-        for (Seat s : seats) {
+        List<ReservedSeat> screeningSeats = new ArrayList<>();
+        for (Seat s : room.getSeats()) {
             ReservedSeat rs = new ReservedSeat(s);
+            rs.setScreening(this);
             screeningSeats.add(rs);
         }
         return screeningSeats;

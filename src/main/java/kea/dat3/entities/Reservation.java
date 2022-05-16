@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -26,21 +28,21 @@ public class Reservation {
     Screening screening;
 
     @OneToMany(mappedBy = "reservation")
-    private Set<ReservedSeat> reservedSeats = new HashSet<>();
+    private List<ReservedSeat> reservedSeats = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Person customer;
 
     private double totalPrice;
 
-    public Reservation(Screening screening, Set<ReservedSeat> reservedSeats, Person customer) {
+    public Reservation(Screening screening, List<ReservedSeat> reservedSeats, Person customer) {
         this.screening = screening;
         this.reservedSeats = reservedSeats;
         this.customer = customer;
-        this.totalPrice = TicketPriceCalculator.calculateTotalPrice(screening, reservedSeats);
+        this.totalPrice = TicketPriceCalculator.calculateTotalPrice(screening, (Set<ReservedSeat>) reservedSeats);
     }
 
-    public Reservation(Set<ReservedSeat> reservedSeats, Person customer) {
+    public Reservation(List<ReservedSeat> reservedSeats, Person customer) {
         this.reservedSeats = reservedSeats;
         this.customer = customer;
     }
