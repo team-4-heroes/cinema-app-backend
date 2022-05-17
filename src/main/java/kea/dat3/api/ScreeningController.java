@@ -6,6 +6,7 @@ import kea.dat3.services.ScreeningService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 @RestController
@@ -18,7 +19,7 @@ public class ScreeningController {
         this.screeningService = screeningService;
     }
 
-    // @RolesAllowed("ADMIN") todo: uncomment and fix test
+    @RolesAllowed("ADMIN")
     @PostMapping
     public ScreeningResponse addScreening(@RequestBody ScreeningRequest screeningRequest) {
         return screeningService.addScreening(screeningRequest);
@@ -39,6 +40,7 @@ public class ScreeningController {
         return screeningService.updateScreening(id, screeningRequest);
     } */
 
+    @RolesAllowed("ADMIN")
     @DeleteMapping("/{id}")
     public void deleteScreening(@PathVariable long id) {
         screeningService.deleteScreening(id);
