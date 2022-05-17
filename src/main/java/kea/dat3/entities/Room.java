@@ -9,6 +9,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -25,11 +27,11 @@ public class Room {
 
     @OneToMany(mappedBy = "room")
     private Set<Seat> seats = new HashSet<>();
-
+    @Column(unique = true, length = 50, nullable = false)
     private String name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "room", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Screening> screenings = new HashSet<>();
 
     @CreationTimestamp

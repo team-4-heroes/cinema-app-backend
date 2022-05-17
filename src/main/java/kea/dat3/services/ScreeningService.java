@@ -35,7 +35,7 @@ public class ScreeningService {
 
     public List<ScreeningResponse> findAll(Pageable pageable) {
         Page<Screening> screenings = screeningRepository.findAll(pageable);
-        return screenings.stream().map(screening -> new ScreeningResponse(screening)).collect(Collectors.toList());
+        return screenings.stream().map(ScreeningResponse::new).collect(Collectors.toList());
     }
 
     public ScreeningResponse findById(long id) {
@@ -58,14 +58,15 @@ public class ScreeningService {
         }
         return new ScreeningResponse(screening);
     }
-    /*
-    // TODO: test this
-    public ScreeningResponse updateScreening(long id, ScreeningRequest screeningRequest) {
-        //if (!screeningRepository.existsById(id)) throw new ScreeningNotFoundException(id);
-        //return new ScreeningResponse(screeningRepository.save(new Screening(screeningRequest)));
-    } */
 
-    // does it return 404 if screening not found
+    public ScreeningResponse updateScreening(long id, ScreeningRequest screeningRequest) {
+        Screening screening = screeningRepository.findById(id).orElseThrow(() -> new ScreeningNotFoundException(id));
+        if (screeningRequest.getRoomId() > 0) screening.setRoom(roomRepository.getById(screeningRequest.getRoomId()));
+        if (screeningRequest.getMovieId() > 0) screening.setMovie(movieRepository.getById(screeningRequest.getMovieId()));
+        if (screeningRequest.getStartTime() != null) screening.setStartTime(screeningRequest.getStartTime());
+        return new ScreeningResponse(screeningRepository.save(screening));
+    }
+
     public void deleteScreening(long id) {
         if (!screeningRepository.existsById(id)) throw new ScreeningNotFoundException(id);
         screeningRepository.deleteById(id);
