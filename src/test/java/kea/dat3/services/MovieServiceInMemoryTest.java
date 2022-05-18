@@ -1,7 +1,7 @@
 package kea.dat3.services;
 
 import kea.dat3.dto.MovieDetailResponse;
-import kea.dat3.entities.MovieFactory;
+import kea.dat3.entities.builders.MovieFactory;
 import kea.dat3.repositories.ActorRepository;
 import kea.dat3.repositories.MovieRepository;
 import org.junit.jupiter.api.Assertions;

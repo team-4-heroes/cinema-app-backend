@@ -1,17 +1,22 @@
 package kea.dat3.Configuration;
 
 import kea.dat3.entities.*;
+import kea.dat3.entities.builders.ActorBuilder;
+import kea.dat3.entities.builders.GenreBuilder;
+import kea.dat3.entities.builders.MovieBuilder;
 import kea.dat3.entities.pegi.AgeLimit;
 import kea.dat3.repositories.*;
+import lombok.AllArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Year;
 
-
+@AllArgsConstructor
 @Controller
 @Profile("!test")
 public class MakeTestData implements ApplicationRunner {
@@ -21,14 +26,8 @@ public class MakeTestData implements ApplicationRunner {
     RoomRepository roomRepository;
     MovieRepository movieRepository;
     ActorRepository actorRepository;
+    GenreRepository genreRepository;
 
-    public MakeTestData(PersonRepository personRepository, ScreeningRepository screeningRepository, RoomRepository roomRepository, MovieRepository movieRepository, ActorRepository actorRepository) {
-        this.personRepository = personRepository;
-        this.screeningRepository = screeningRepository;
-        this.roomRepository = roomRepository;
-        this.movieRepository = movieRepository;
-        this.actorRepository = actorRepository;
-    }
 
     public void makeUsers() {
         System.out.println("Jeg er her");
@@ -84,8 +83,29 @@ public class MakeTestData implements ApplicationRunner {
         movieRepository.save(m_3);
     }
 
+    private void makeActors() {
+        var a_1 = ActorBuilder.create("Eva", "Green", LocalDate.of(1980, 7, 06)).build();
+        var a_2 = ActorBuilder.create("Eva", "Green", LocalDate.of(1980, 7, 06)).build();
+        var a_3 = ActorBuilder.create("Matthew", "McConaughey", LocalDate.of(1969, 11, 9)).build();
+
+        actorRepository.save(a_1);
+        actorRepository.save(a_2);
+        actorRepository.save(a_3);
+    }
+
+    private void makeGenres() {
+        var g_1 = GenreBuilder.create("Horror").addId(1000L).build();
+        var g_2 = GenreBuilder.create("Action").addId(2000L).build();
+        var g_3 = GenreBuilder.create("Sci-fi").addId(3000L).build();
+
+        genreRepository.save(g_1);
+        genreRepository.save(g_2);
+        genreRepository.save(g_3);
+    }
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        makeActors();
         makeMovies();
         makeUsers();
         makeScreenings();
