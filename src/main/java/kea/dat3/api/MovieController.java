@@ -1,5 +1,6 @@
 package kea.dat3.api;
 
+import kea.dat3.dto.MovieDetailResponse;
 import kea.dat3.dto.MovieRequest;
 import kea.dat3.dto.MovieResponse;
 import kea.dat3.services.MovieService;
@@ -22,29 +23,32 @@ public class MovieController {
     }
 
     @GetMapping("/{id}")
-    public MovieResponse getMovie(@PathVariable Long id) {
+    public MovieDetailResponse getMovie(@PathVariable Long id) {
         return movieService.getMovie(id);
     }
 
     @GetMapping("/keyword")
-    public Set<MovieResponse> getMoviesByKeyword(@RequestParam String keyword) {
+    public Set<MovieDetailResponse> getMoviesByKeyword(@RequestParam String keyword) {
         return movieService.getMoviesByKeyword(keyword);
     }
 
+    @GetMapping("/search-actor")
+    public Set<MovieDetailResponse> getMoviesByActor(@PathVariable Long actorId) {
+        return movieService.getMoviesByActor(actorId);
+    }
+
     @PostMapping("/add-actor")
-    public MovieResponse addActorToMovie(@PathVariable Long movieId, @PathVariable Long actorId) {
+    public MovieDetailResponse addActorToMovie(@PathVariable Long movieId, @PathVariable Long actorId) {
         return movieService.addActorToMovie(movieId, actorId);
     }
 
-    // TODO: getMoviesByActor
-
     @PutMapping
-    public MovieResponse addMovie(@RequestBody MovieRequest body) {
+    public MovieDetailResponse addMovie(@RequestBody MovieRequest body) {
         return movieService.addMovie(body);
     }
 
     @PatchMapping("/{id}")
-    public MovieResponse editMovie(@RequestBody MovieRequest body, @PathVariable Long id) {
+    public MovieDetailResponse editMovie(@RequestBody MovieRequest body, @PathVariable Long id) {
         return movieService.editMovie(id, body);
     }
 

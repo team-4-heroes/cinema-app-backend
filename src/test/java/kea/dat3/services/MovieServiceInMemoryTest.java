@@ -1,6 +1,6 @@
 package kea.dat3.services;
 
-import kea.dat3.dto.MovieResponse;
+import kea.dat3.dto.MovieDetailResponse;
 import kea.dat3.entities.MovieFactory;
 import kea.dat3.repositories.ActorRepository;
 import kea.dat3.repositories.MovieRepository;
@@ -45,7 +45,7 @@ class MovieServiceInMemoryTest {
         movieRepository.save(CUT_2);
         movieRepository.save(CUT_3);
 
-        Set<MovieResponse> mResponses = service.getMoviesByKeyword(keyword);
+        Set<MovieDetailResponse> mResponses = service.getMoviesByKeyword(keyword);
         assertEquals(2, mResponses.size());
         assertTrue(mResponses.stream().allMatch(m -> verifyContainsKeyword(keyword, m)));
     }
@@ -57,7 +57,7 @@ class MovieServiceInMemoryTest {
         var CUT_1 = MovieFactory.create_releaseYearOnly(year);
         movieRepository.save(CUT_1);
 
-        Set<MovieResponse> mResponses = service.getMoviesByReleaseYear(year);
+        Set<MovieDetailResponse> mResponses = service.getMoviesByReleaseYear(year);
         assertEquals(1, mResponses.size());
     }
 
@@ -98,7 +98,7 @@ class MovieServiceInMemoryTest {
         Assertions.assertThrows(ConstraintViolationException.class, () -> movieRepository.save(CUT_2));
     }
 
-    private boolean verifyContainsKeyword(String keyword, MovieResponse m) {
+    private boolean verifyContainsKeyword(String keyword, MovieDetailResponse m) {
         return containsIgnoreCase(m.getDescription(), keyword) || containsIgnoreCase(m.getTitle(), keyword);
     }
 

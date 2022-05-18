@@ -6,7 +6,9 @@ import kea.dat3.services.PersonService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -29,6 +31,14 @@ public class PersonController {
         return personService.getPersons();
     }
 
+    // This returns the user which requested it (you cannot get info about other users like below)
+    @RolesAllowed("CUSTUMER")
+    @GetMapping("/this")
+    public PersonResponse getThisPerson(Principal principal) {
+        return personService.getPerson(principal.getName());
+    }
+
+    // TODO: only admins
     @GetMapping("/{username}")
     public PersonResponse getPerson(@PathVariable String username)  {
         return personService.getPerson(username);

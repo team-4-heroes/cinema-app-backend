@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import javax.validation.constraints.Size;
+
 import java.util.Set;
 
 @Getter
@@ -20,11 +20,9 @@ public class MovieRequest {
 
     private String description;
 
-    @Size(max = 4)
     private int releaseYear;
 
-    @Size(max = 3)
-    private int length; // in minutes
+    private int lengthInMinutes; // in minutes
 
     private double basePrice;
 

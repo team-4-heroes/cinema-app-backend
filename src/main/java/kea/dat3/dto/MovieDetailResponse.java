@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Setter
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class MovieResponse {
+public class MovieDetailResponse {
 
     private Long id;
     private String title;
@@ -34,15 +34,22 @@ public class MovieResponse {
     private LocalDateTime created;
     private LocalDateTime updated;
 
-    public MovieResponse(Movie movie) {
+    public MovieDetailResponse(Movie movie) {
         this.id = movie.getId();
         this.title = movie.getTitle();
         this.description = movie.getDescription();
         this.releaseYear = movie.getReleaseYear();
         this.lengthInMinutes = movie.getLengthInMinutes();
+        this.price = movie.getBasePrice();
+        this.ageLimit = movie.getAgeLimit();
+        this.actors = movie.getActors();
+        this.screenings = movie.getScreenings();
+        this.genres = movie.getGenres();
+        this.created = movie.getCreated();
+        this.updated = movie.getUpdated();
     }
 
-    public static Set<MovieResponse> getMoviesFromEntities(List<Movie> movies) {
-        return movies.stream().map(movie -> new MovieResponse(movie)).collect(Collectors.toSet());
+    public static Set<MovieDetailResponse> getMoviesFromEntities(List<Movie> movies) {
+        return movies.stream().map(movie -> new MovieDetailResponse(movie)).collect(Collectors.toSet());
     }
 }

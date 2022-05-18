@@ -1,6 +1,5 @@
 package kea.dat3.entities;
 
-import kea.dat3.dto.ScreeningRequest;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +23,7 @@ public class Screening {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotNull
     private LocalDateTime startTime;
 
     @ManyToOne
@@ -42,13 +43,6 @@ public class Screening {
     @UpdateTimestamp
     private LocalDateTime updated;
 
-    public Screening(ScreeningRequest screeningReq) {
-        this.room = screeningReq.getRoom();
-        this.startTime = screeningReq.getStartTime();
-        this.movie = screeningReq.getMovie();
-        this.screeningSeats = buildScreeningSeats(screeningReq.getRoom());
-    }
-
     public Screening(LocalDateTime startTime, Room room, Movie movie) {
         this.startTime = startTime;
         this.room = room;
@@ -65,5 +59,16 @@ public class Screening {
             screeningSeats.add(rs);
         }
         return screeningSeats;
+    }
+
+    @Override
+    public String toString() {
+        return "Screening{" +
+                "id=" + id +
+                ", startTime=" + startTime +
+                ", movie=" + movie +
+                ", room=" + room +
+                ", updated=" + updated +
+                '}';
     }
 }
