@@ -28,7 +28,7 @@ public class Room {
     private Long id;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "room", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Seat> seats = new ArrayList<>();
 
     @Column(unique = true, length = 50, nullable = false)

@@ -20,13 +20,15 @@ public class MakeTestData implements ApplicationRunner {
     RoomRepository roomRepository;
     MovieRepository movieRepository;
     ActorRepository actorRepository;
+    ReservedSeatRepository reservedSeatRepository;
 
-    public MakeTestData(PersonRepository personRepository, ScreeningRepository screeningRepository, RoomRepository roomRepository, MovieRepository movieRepository, ActorRepository actorRepository) {
+    public MakeTestData(PersonRepository personRepository, ScreeningRepository screeningRepository, RoomRepository roomRepository, MovieRepository movieRepository, ActorRepository actorRepository, ReservedSeatRepository reservedSeatRepository) {
         this.personRepository = personRepository;
         this.screeningRepository = screeningRepository;
         this.roomRepository = roomRepository;
         this.movieRepository = movieRepository;
         this.actorRepository = actorRepository;
+        this.reservedSeatRepository = reservedSeatRepository;
     }
 
     public void makeSeats() {

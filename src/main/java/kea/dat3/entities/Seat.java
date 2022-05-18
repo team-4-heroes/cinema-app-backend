@@ -15,10 +15,11 @@ public class Seat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
-    @OneToOne
-    ReservedSeat reservedSeat;
+   // @OneToOne
+   // ReservedSeat reservedSeat;
 
     char rowLetter;
+
     int number;
 
     @ManyToOne
@@ -41,18 +42,6 @@ public class Seat {
         this.number = number;
         this.seatType = seatType;
         this.room = room;
-    }
-
-    @Override
-    public String toString() {
-        return "Seat{" +
-                "id=" + id +
-                ", reservedSeat=" + reservedSeat +
-                ", rowLetter=" + rowLetter +
-                ", number=" + number +
-                ", room=" + room +
-                ", seatType=" + seatType +
-                '}';
     }
 
 }
