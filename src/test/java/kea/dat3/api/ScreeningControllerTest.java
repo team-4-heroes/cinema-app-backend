@@ -69,7 +69,7 @@ public class ScreeningControllerTest {
         LocalDateTime startTime = LocalDateTime.of(2022, 10, 1, 10, 0);
         Room room = roomRepository.save(new Room("testRoom"));
         Movie movie = movieRepository.save(MovieBuilder.create("film titel", "beskrivelse", 2000)
-                .addLengthInMinutes(200)
+                .addLengthInMinutes(100) // Important that length fits with the test right below
                 .build());
         //new Movie("film titel", "beskrivelse", 2000, 100, 100));
         s = new Screening(startTime, room, movie);

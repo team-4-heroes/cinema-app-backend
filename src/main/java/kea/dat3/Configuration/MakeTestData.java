@@ -7,6 +7,7 @@ import kea.dat3.entities.builders.MovieBuilder;
 import kea.dat3.entities.pegi.AgeLimit;
 import kea.dat3.repositories.*;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Profile;
@@ -16,7 +17,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Year;
 
-@AllArgsConstructor
+//@AllArgsConstructor
+//@NoArgsConstructor
 @Controller
 @Profile("!test")
 public class MakeTestData implements ApplicationRunner {
@@ -55,7 +57,6 @@ public class MakeTestData implements ApplicationRunner {
     }
 
     public void makeUsers() {
-        System.out.println("Jeg er her");
         Person customer = new Person("email@testCustumer.dk", "gitteCustumer", "test", "12342121", "testNameCustumer", "testPassowrdCustumer");
         Person admin = new Person("email@testAdmin.dk", "gitteAdmin", "test", "22342122", "testNameAdmin", "testPassowrdAdmin");
         Person staff = new Person("email@testStaff.dk", "gitteStaff", "test", "32342123", "testNameStaff", "testPassowrdStaff");
