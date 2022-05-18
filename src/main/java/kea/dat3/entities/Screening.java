@@ -9,7 +9,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -34,8 +35,8 @@ public class Screening {
     @ManyToOne
     private Room room;
 
-    @OneToMany
-    private Set<ReservedSeat> screeningSeats = new HashSet<>();
+    @OneToMany(mappedBy = "screening", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private List<ReservedSeat> screeningSeats = new ArrayList<>();
 
     @CreationTimestamp
     private LocalDateTime created;
@@ -47,14 +48,14 @@ public class Screening {
         this.room = room;
         this.movie = movie;
         //Get room's list of seats
-        this.screeningSeats = buildScreeningSeats(room.getSeats());
+        this.screeningSeats = buildScreeningSeats(room);
     }
 
-    public Set<ReservedSeat> buildScreeningSeats(Set<Seat> seats) {
+    public List<ReservedSeat> buildScreeningSeats(Room room) {
         //Create seats for the screening
-        Set<ReservedSeat> screeningSeats = new HashSet<>();
-        for (Seat s : seats) {
-            ReservedSeat rs = new ReservedSeat(s);
+        List<ReservedSeat> screeningSeats = new ArrayList<>();
+        for (Seat s : room.getSeats()) {
+            ReservedSeat rs = new ReservedSeat(this, s);
             screeningSeats.add(rs);
         }
         return screeningSeats;

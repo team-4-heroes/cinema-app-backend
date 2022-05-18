@@ -12,7 +12,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -25,8 +27,10 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "room")
-    private Set<Seat> seats = new HashSet<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "room", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private List<Seat> seats = new ArrayList<>();
+
     @Column(unique = true, length = 50, nullable = false)
     private String name;
 
@@ -57,18 +61,20 @@ public class Room {
         screenings.add(screening);
     }
 
-
     //Take number seatsPerRow
-    int seatsPerRow = 10;
+    private int seatsPerRow = 10;
     //Take char[] rowLetter
-    char rowLetters[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
+    private char rowLetters[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
 
-    public Set<Seat> buildSeats(Room room) {
+    public static List<Seat> buildSeats(Room room) {
         //TODO Create seats for the room
-        Set<Seat> seats = new HashSet<>();
-        for (int i = 1; i <= room.seatsPerRow; i++) {
-            for (int j = 0; j < room.rowLetters.length; j++) {
-                Seat s = new Seat(room.rowLetters[j], i, room);
+        List<Seat> seats = new ArrayList<>();
+        for (int i = 1; i <= room.getSeatsPerRow(); i++) {
+            for (int j = 0; j < room.getRowLetters().length; j++) {
+                Seat s = new Seat();
+                s.setRowLetter(room.getRowLetters()[j]);
+                s.setNumber(i);
+                s.setRoom(room);
                 seats.add(s);
             }
         }

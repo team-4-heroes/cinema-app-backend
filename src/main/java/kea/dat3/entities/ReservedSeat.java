@@ -1,5 +1,6 @@
 package kea.dat3.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,18 +13,21 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class ReservedSeat {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
     @OneToOne(mappedBy = "reservedSeat")
     Seat seat;
 
+    @JsonIgnore
     @ManyToOne
     Screening screening;
 
     @ManyToOne
     Reservation reservation;
 
-    public ReservedSeat(Seat seat) {
+    public ReservedSeat(Screening screening, Seat seat) {
+        this.screening = screening;
         this.seat = seat;
     }
 
