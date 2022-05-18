@@ -28,14 +28,14 @@ public class Room {
     private Long id;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<Seat> seats = new ArrayList<>();
 
     @Column(unique = true, length = 50, nullable = false)
     private String name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Screening> screenings = new HashSet<>();
 
     @CreationTimestamp
