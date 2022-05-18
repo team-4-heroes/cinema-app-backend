@@ -16,16 +16,17 @@ import java.util.List;
 @NoArgsConstructor
 public class ScreeningResponse {
 
-    private Movie movie;
+    private long movieId;
+
+    private String movieTitle;
 
     private String roomName;
 
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss",shape = JsonFormat.Shape.STRING)
     private LocalDateTime startTime;
 
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss",shape = JsonFormat.Shape.STRING)
     private LocalDateTime created;
-    @JsonFormat(pattern = "dd-MM-yyyy hh:mm:ss",shape = JsonFormat.Shape.STRING)
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss",shape = JsonFormat.Shape.STRING)
     private LocalDateTime updated;
 
     public ScreeningResponse(Screening screening) {
@@ -33,6 +34,7 @@ public class ScreeningResponse {
         this.roomName = screening.getRoom().getName();
         this.created = screening.getCreated();
         this.updated = screening.getUpdated();
-        this.movie = screening.getMovie();
+        this.movieId = screening.getMovie().getId();
+        this.movieTitle = screening.getMovie().getTitle();
     }
 }

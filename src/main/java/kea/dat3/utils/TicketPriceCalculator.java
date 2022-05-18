@@ -14,7 +14,7 @@ public class TicketPriceCalculator {
 
     public static double calculateTotalPrice(Screening screening, Set<ReservedSeat> seats) {
         var baseMoviePrice = screening.getMovie().getBasePrice();
-        var total = seats.stream().map(s -> s.getSeat().getSeatType().getPriceMultiplier() * baseMoviePrice).reduce(0d, Double::sum);
+        var total = seats.stream().map(s -> s.getSeatType().getPriceMultiplier() * baseMoviePrice).reduce(0d, Double::sum);
 
         return total;
     }

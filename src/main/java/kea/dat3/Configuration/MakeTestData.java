@@ -28,6 +28,31 @@ public class MakeTestData implements ApplicationRunner {
     ActorRepository actorRepository;
     GenreRepository genreRepository;
 
+    ReservedSeatRepository reservedSeatRepository;
+
+    public MakeTestData(PersonRepository personRepository, ScreeningRepository screeningRepository, RoomRepository roomRepository, MovieRepository movieRepository, ActorRepository actorRepository, ReservedSeatRepository reservedSeatRepository) {
+        this.personRepository = personRepository;
+        this.screeningRepository = screeningRepository;
+        this.roomRepository = roomRepository;
+        this.movieRepository = movieRepository;
+        this.actorRepository = actorRepository;
+        this.reservedSeatRepository = reservedSeatRepository;
+    }
+
+    public void makeSeats() {
+        Room r1 = new Room("Room1", 10);
+        roomRepository.save(r1);
+        System.out.println(r1.getSeats());
+        Movie m1 = new Movie("TestMovie", "A test movie for screenings", 1999, 120, 120);
+        movieRepository.save(m1);
+        Screening s1 = new Screening(LocalDateTime.now(), r1, m1);
+        screeningRepository.save(s1);
+        for (ReservedSeat rs : s1.getScreeningSeats())
+            {
+                System.out.println(rs);
+            }
+        System.out.println(s1.getScreeningSeats());
+    }
 
     public void makeUsers() {
         System.out.println("Jeg er her");
@@ -52,11 +77,16 @@ public class MakeTestData implements ApplicationRunner {
     }
 
     public void makeScreenings() {
-        LocalDateTime startTime = LocalDateTime.of(2022, 10, 1, 10, 0);
         Room room = roomRepository.save(new Room("testRoom"));
-        Movie movie = movieRepository.save(new Movie("film titel", "beskrivelse", 2000, 100, 100));
-        Screening screening = new Screening(startTime, room, movie);
-        screeningRepository.save(screening);
+        String description = "This is a dummy description to see how it looks.";
+       /* for (int i=1; i<6; i++) {
+            Movie movie = movieRepository.save(new Movie("Movie Title Here",description,2000+i,100,100));
+            for (int j=1; j<4; j++) {
+                LocalDateTime startTime = LocalDateTime.of(2022, 10, 1, j * 3 + 8, 0);
+                Screening screening = new Screening(startTime, room, movie);
+                screeningRepository.save(screening);
+            }
+        }*/
     }
 
     private void makeMovies() {
@@ -109,5 +139,6 @@ public class MakeTestData implements ApplicationRunner {
         makeMovies();
         makeUsers();
         makeScreenings();
+        makeSeats();
     }
 }

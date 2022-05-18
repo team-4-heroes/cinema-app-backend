@@ -15,14 +15,15 @@ public class Seat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
-    @OneToOne
-    ReservedSeat reservedSeat;
+   // @OneToOne
+   // ReservedSeat reservedSeat;
 
     char rowLetter;
+
     int number;
 
     @ManyToOne
-    @JoinColumn(name = "room_id")
+    // @JoinColumn(name = "room_id")
     private Room room;
 
     private SeatType seatType;
@@ -36,22 +37,11 @@ public class Seat {
         this.number = number;
     }
 
-    public Seat(char rowLetter, int number, SeatType seatType) {
+    public Seat(char rowLetter, int number, SeatType seatType, Room room) {
         this.rowLetter = rowLetter;
         this.number = number;
         this.seatType = seatType;
-    }
-
-    @Override
-    public String toString() {
-        return "Seat{" +
-                "id=" + id +
-                ", reservedSeat=" + reservedSeat +
-                ", rowLetter=" + rowLetter +
-                ", number=" + number +
-                ", room=" + room +
-                ", seatType=" + seatType +
-                '}';
+        this.room = room;
     }
 
 }

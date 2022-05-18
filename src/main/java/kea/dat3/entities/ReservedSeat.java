@@ -1,5 +1,6 @@
 package kea.dat3.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,32 +13,42 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class ReservedSeat {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
-    @OneToOne(mappedBy = "reservedSeat")
-    Seat seat;
+    // @OneToOne(mappedBy = "reservedSeat")
+    // Seat seat;
 
+    @JsonIgnore
     @ManyToOne
     Screening screening;
 
     @ManyToOne
     Reservation reservation;
 
-    public ReservedSeat(Seat seat) {
-        this.seat = seat;
+    char rowLetter;
+    int number;
+
+    private SeatType seatType;
+
+    public ReservedSeat(Screening screening, int number, char rowLetter) {
+        this.screening = screening;
+        this.number = number;
+        this.rowLetter = rowLetter;
+        // this.seat = s;
     }
 
-    public ReservedSeat(Screening screening, Seat seat, Reservation reservation) {
+    public ReservedSeat(Screening screening, Reservation reservation, int number, char rowLetter) {
         this.screening = screening;
         this.reservation = reservation;
-        this.seat = seat;
+        this.number = number;
+        this.rowLetter = rowLetter;
     }
 
     @Override
     public String toString() {
         return "ReservedSeat{" +
                 "id=" + id +
-                ", seat=" + seat +
                 ", screening=" + screening +
                 ", reservation=" + reservation +
                 '}';

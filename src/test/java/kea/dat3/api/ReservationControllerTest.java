@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
 
+
 @SpringBootTest
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
@@ -36,6 +37,8 @@ public class ReservationControllerTest {
     ReservedSeatRepository reservedSeatRepository;
     @Autowired
     RoomRepository roomRepository;
+    @Autowired
+    SeatRepository seatRepository;
 
     //Services
     @Autowired
@@ -51,18 +54,23 @@ public class ReservationControllerTest {
     @BeforeEach
     public void setupReservationControllerTest() {
         //Test reservedSeat
+        movieRepository.deleteAll();
+        roomRepository.deleteAll();
+        Room r = new Room("Bob", 10);
+        Movie m = new Movie("Titel", "Beskrivelse", 1999, 120, 100);
+        Screening sc = new Screening(LocalDateTime.now(), r, m);
+        movieRepository.save(m);
+        roomRepository.save(r);
+
+        System.out.println("Room.getSeats(): " + r.getSeats());
+        System.out.println(sc.getScreeningSeats());
+        screeningRepository.save(sc);
 
     }
 
     //Test make reservation with all seats available (expected = ok)
-    @Test
-    public void testMakeReservationExpectOk() {
-        Room r = new Room("Bob", 10);
-        Movie m = new Movie("Titel", "Beskrivelse", 1999, 120, 100);
-        Screening s = new Screening(LocalDateTime.now(), r, m);
-        System.out.println("TEST");
-        System.out.println(s.getScreeningSeats().toString());
 
+    public void testMakeReservationExpectOk() {
     }
 
     //TODO: Test make reservation with unavailable seats (expected = error)
