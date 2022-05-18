@@ -11,6 +11,8 @@ public class MovieBuilder {
 
     private Movie movie;
 
+    private final String localHost = "http://localhost:8080/";
+
     private MovieBuilder() {
         // Private constructor to prevent MovieBuilder from being created from the outside
     }
@@ -42,6 +44,7 @@ public class MovieBuilder {
         movie.setDescription(s);
         movie.setReleaseYear(2000);
         movie.setLengthInMinutes(120);
+        movie.setPosterUrl(localHost);
         return this;
     }
 
@@ -82,13 +85,18 @@ public class MovieBuilder {
         return this;
     }
 
-    public MovieBuilder addActor(String firstName, String lastName, Year year) {
-        return addActor(ActorBuilder.create(firstName, lastName, LocalDate.of(year.getValue(), 1, 1)).build());
-    }
-
     public MovieBuilder addAgeLimit(AgeLimit ageLimit) {
         movie.setAgeLimit(ageLimit);
         return this;
+    }
+
+    public MovieBuilder addPosterUrlDefault() {
+        movie.setPosterUrl(localHost);
+        return this;
+    }
+
+    public MovieBuilder addActor(String firstName, String lastName, Year year) {
+        return addActor(ActorBuilder.create(firstName, lastName, LocalDate.of(year.getValue(), 1, 1)).build());
     }
 
     public MovieBuilder addActor(Actor actor) {
