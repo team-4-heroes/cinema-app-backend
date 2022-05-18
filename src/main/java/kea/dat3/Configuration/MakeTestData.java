@@ -1,6 +1,7 @@
 package kea.dat3.Configuration;
 
 import kea.dat3.entities.*;
+import kea.dat3.entities.pegi.AgeLimit;
 import kea.dat3.repositories.*;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -63,16 +64,19 @@ public class MakeTestData implements ApplicationRunner {
         var m_1 = MovieBuilder.create("Lord of the Rings: Fellowship of the Ring", "Little hobbits go on a grand adventure and Gandalf dies", 2001)
                 .addActor("Viggo", "Mortensen", Year.of(1984))
                 .addLengthInMinutes(178)
+                .addAgeLimit(AgeLimit.PEGI_3)
                 .build();
         var m_2 = MovieBuilder.create("Lord of the Rings: The Two Towers", "Things get hairy and the party splits. Also wizards.", 2002)
                 .addActor("Cate", "Blanchet", Year.of(1975))
                 .addActor("Miranda", "Otto", Year.of(1987))
                 .addLengthInMinutes(179)
+                .addAgeLimit(AgeLimit.PEGI_3)
                 .build();
         var m_3 = MovieBuilder.create("Lord of the Rings: The Return of the King", "Split story. Slow crawl through Mordor and epic battles. Golumn save the day", 2003)
                 .addActor("Andy", "Serkis", Year.of(1969))
                 .addActor("John", "Rhys-Davies", Year.of(1969))
                 .addLengthInMinutes(201)
+                .addAgeLimit(AgeLimit.PEGI_3)
                 .build();
 
         movieRepository.save(m_1);

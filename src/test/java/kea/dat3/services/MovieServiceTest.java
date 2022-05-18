@@ -39,22 +39,6 @@ class MovieServiceTest {
     Movie m_2 = MovieFactory.create(200L, "xxx", "aerynIsEpicc", 2001, 120, 125d, AgeLimit.PEGI_7);
     Movie m_3 = MovieFactory.create(300L, "Battlestar Galactica", "robot takeover", 2001, 120, 125d, AgeLimit.PEGI_7);
 
-    @Test
-    void addActorToMovie() {
-        var movieId = m_3.getId();
-        var actorId = 444L;
-        var actor = new Actor(actorId, "Tricia", "Helfer", LocalDateTime.now(), new HashSet<>(), LocalDateTime.now(), LocalDateTime.now());
-
-        Mockito.when(movieRepository.save(m_3)).thenReturn(m_3);
-        Mockito.when(movieRepository.findById(movieId)).thenReturn(Optional.of(m_3));
-        Mockito.when(actorRepository.findById(actor.getId())).thenReturn(Optional.of(actor));
-
-        var actualMovie = service.addActorToMovie(movieId, actor.getId());
-        
-        assertTrue(!actualMovie.getActors().isEmpty());
-        assertTrue(actualMovie.getActors().contains(actor));
-    }
-
     @BeforeEach
     void setup() {
         service = new MovieService(movieRepository, actorRepository);
@@ -85,6 +69,22 @@ class MovieServiceTest {
         Mockito.when(movieRepository.findByReleaseYear(expected)).thenReturn(List.of(m_1));
         Set<MovieDetailResponse> mResponses = service.getMoviesByReleaseYear(expected);
         assertEquals(1, mResponses.size());
+    }
+
+    @Test
+    void addActorToMovie() {
+        var movieId = m_3.getId();
+        var actorId = 444L;
+        var actor = new Actor(actorId, "Tricia", "Helfer", LocalDateTime.now(), new HashSet<>(), LocalDateTime.now(), LocalDateTime.now());
+
+        Mockito.when(movieRepository.save(m_3)).thenReturn(m_3);
+        Mockito.when(movieRepository.findById(movieId)).thenReturn(Optional.of(m_3));
+        Mockito.when(actorRepository.findById(actor.getId())).thenReturn(Optional.of(actor));
+
+        var actualMovie = service.addActorToMovie(movieId, actor.getId());
+
+        assertTrue(!actualMovie.getActors().isEmpty());
+        assertTrue(actualMovie.getActors().contains(actor));
     }
 
     @Test

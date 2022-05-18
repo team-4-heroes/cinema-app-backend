@@ -28,7 +28,7 @@ public class MovieDetailResponse {
     private int lengthInMinutes;
     private double price;
     private AgeLimit ageLimit;
-    private Set<Actor> actors;
+    private Set<Actor> actors;// return ActorResponse, which must not contain Movie (to avoid infinity query)
     private Set<Screening> screenings;
     private Set<Genre> genres;
     private LocalDateTime created;
@@ -42,9 +42,9 @@ public class MovieDetailResponse {
         this.lengthInMinutes = movie.getLengthInMinutes();
         this.price = movie.getBasePrice();
         this.ageLimit = movie.getAgeLimit();
-        this.actors = movie.getActors();
-        this.screenings = movie.getScreenings();
-        this.genres = movie.getGenres();
+        //this.actors = movie.getActors();
+        //this.screenings = movie.getScreenings();
+        //this.genres = movie.getGenres();
         this.created = movie.getCreated();
         this.updated = movie.getUpdated();
     }
