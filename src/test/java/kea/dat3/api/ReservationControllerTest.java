@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import kea.dat3.entities.Movie;
 import kea.dat3.entities.Room;
 import kea.dat3.entities.Screening;
+import kea.dat3.entities.builders.MovieBuilder;
 import kea.dat3.repositories.*;
 import kea.dat3.services.MovieService;
 import kea.dat3.services.ReservationService;
@@ -69,8 +70,16 @@ public class ReservationControllerTest {
     }
 
     //Test make reservation with all seats available (expected = ok)
-
+    @Test
     public void testMakeReservationExpectOk() {
+        Room r = new Room("Bob", 10);
+        Movie m = MovieBuilder.create("Titel", "Beskrivelse", 1999)
+                .addBasePrice(100)
+                .addLengthInMinutes(120)
+                .build();
+        Screening s = new Screening(LocalDateTime.now(), r, m);
+        System.out.println("TEST");
+        System.out.println(s.getScreeningSeats().toString());
     }
 
     //TODO: Test make reservation with unavailable seats (expected = error)

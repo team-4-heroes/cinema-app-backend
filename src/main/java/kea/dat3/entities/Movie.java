@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -37,6 +38,7 @@ public class Movie {
     @Min(value = 1900)
     @Max(value = 3000)
     private int releaseYear;
+    // Year releaseYear; Does not work with constraints
 
     @Min(value = 1)
     @Max(value = 900)
@@ -45,6 +47,9 @@ public class Movie {
     private double basePrice;
 
     private AgeLimit ageLimit;
+
+    @URL
+    private String posterUrl;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "movie_actor",
@@ -75,15 +80,15 @@ public class Movie {
         this.lengthInMinutes = body.getLengthInMinutes();
         this.basePrice = body.getBasePrice();
         this.ageLimit = body.getAgeLimit();
-        this.screenings = body.getScreenings();
-        this.genres = body.getGenres();
+        this.posterUrl = body.getPosterUrl();
     }
 
-    public Movie(String title, String description, int releaseYear, int lengthInMinutes, double basePrice) {
+    public Movie(String title, String description, int releaseYear, int lengthInMinutes, double basePrice, String posterUrl) {
         this.title = title;
         this.description = description;
         this.releaseYear = releaseYear;
         this.lengthInMinutes = lengthInMinutes;
         this.basePrice = basePrice;
+        this.posterUrl = posterUrl;
     }
 }

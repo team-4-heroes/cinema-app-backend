@@ -79,15 +79,9 @@ public class MakeTestData implements ApplicationRunner {
 
     public void makeScreenings() {
         Room room = roomRepository.save(new Room("testRoom"));
-        String description = "This is a dummy description to see how it looks.";
-       /* for (int i=1; i<6; i++) {
-            Movie movie = movieRepository.save(new Movie("Movie Title Here",description,2000+i,100,100));
-            for (int j=1; j<4; j++) {
-                LocalDateTime startTime = LocalDateTime.of(2022, 10, 1, j * 3 + 8, 0);
-                Screening screening = new Screening(startTime, room, movie);
-                screeningRepository.save(screening);
-            }
-        }*/
+        Movie movie = movieRepository.save(MovieBuilder.create().addAllDefaultAttributes().build());
+        Screening screening = new Screening(startTime, room, movie);
+        screeningRepository.save(screening);
     }
 
     private void makeMovies() {
@@ -95,18 +89,21 @@ public class MakeTestData implements ApplicationRunner {
                 .addActor("Viggo", "Mortensen", Year.of(1984))
                 .addLengthInMinutes(178)
                 .addAgeLimit(AgeLimit.PEGI_3)
+                .addPosterUrlDefault()
                 .build();
         var m_2 = MovieBuilder.create("Lord of the Rings: The Two Towers", "Things get hairy and the party splits. Also wizards.", 2002)
                 .addActor("Cate", "Blanchet", Year.of(1975))
                 .addActor("Miranda", "Otto", Year.of(1987))
                 .addLengthInMinutes(179)
                 .addAgeLimit(AgeLimit.PEGI_3)
+                .addPosterUrlDefault()
                 .build();
         var m_3 = MovieBuilder.create("Lord of the Rings: The Return of the King", "Split story. Slow crawl through Mordor and epic battles. Golumn save the day", 2003)
                 .addActor("Andy", "Serkis", Year.of(1969))
                 .addActor("John", "Rhys-Davies", Year.of(1969))
                 .addLengthInMinutes(201)
                 .addAgeLimit(AgeLimit.PEGI_3)
+                .addPosterUrlDefault()
                 .build();
 
         movieRepository.save(m_1);
@@ -137,6 +134,7 @@ public class MakeTestData implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         makeActors();
+        makeGenres();
         makeMovies();
         makeUsers();
         makeScreenings();

@@ -1,14 +1,10 @@
 package kea.dat3.dto;
 
-import kea.dat3.entities.Genre;
-import kea.dat3.entities.Screening;
 import kea.dat3.entities.pegi.AgeLimit;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Set;
 
 @Getter
 @Setter
@@ -28,7 +24,5 @@ public class MovieRequest {
 
     private AgeLimit ageLimit;
 
-    private Set<Screening> screenings;
-
-    private Set<Genre> genres;
+    private String posterUrl;
 }
