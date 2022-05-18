@@ -58,7 +58,7 @@ public class ReservationControllerTest {
         movieRepository.deleteAll();
         roomRepository.deleteAll();
         Room r = new Room("Bob", 10);
-        Movie m = new Movie("Titel", "Beskrivelse", 1999, 120, 100);
+        Movie m = new Movie("Titel", "Beskrivelse", 1999, 120, 100,"");
         Screening sc = new Screening(LocalDateTime.now(), r, m);
         movieRepository.save(m);
         roomRepository.save(r);

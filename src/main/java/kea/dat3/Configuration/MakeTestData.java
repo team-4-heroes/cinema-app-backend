@@ -29,15 +29,15 @@ public class MakeTestData implements ApplicationRunner {
     MovieRepository movieRepository;
     ActorRepository actorRepository;
     GenreRepository genreRepository;
-
     ReservedSeatRepository reservedSeatRepository;
 
-    public MakeTestData(PersonRepository personRepository, ScreeningRepository screeningRepository, RoomRepository roomRepository, MovieRepository movieRepository, ActorRepository actorRepository, ReservedSeatRepository reservedSeatRepository) {
+    public MakeTestData(PersonRepository personRepository, ScreeningRepository screeningRepository, RoomRepository roomRepository, MovieRepository movieRepository, ActorRepository actorRepository, GenreRepository genreRepository, ReservedSeatRepository reservedSeatRepository) {
         this.personRepository = personRepository;
         this.screeningRepository = screeningRepository;
         this.roomRepository = roomRepository;
         this.movieRepository = movieRepository;
         this.actorRepository = actorRepository;
+        this.genreRepository = genreRepository;
         this.reservedSeatRepository = reservedSeatRepository;
     }
 
@@ -45,13 +45,13 @@ public class MakeTestData implements ApplicationRunner {
         Room r1 = new Room("Room1", 10);
         roomRepository.save(r1);
         System.out.println(r1.getSeats());
-        Movie m1 = new Movie("TestMovie", "A test movie for screenings", 1999, 120, 120);
+        Movie m1 = new Movie("TestMovie", "A test movie for screenings", 1999, 120, 120,"https://no-poster-url");
         movieRepository.save(m1);
         Screening s1 = new Screening(LocalDateTime.now(), r1, m1);
         screeningRepository.save(s1);
         for (ReservedSeat rs : s1.getScreeningSeats())
             {
-                System.out.println(rs);
+                // System.out.println(rs);
             }
         System.out.println(s1.getScreeningSeats());
     }
@@ -80,6 +80,7 @@ public class MakeTestData implements ApplicationRunner {
     public void makeScreenings() {
         Room room = roomRepository.save(new Room("testRoom"));
         Movie movie = movieRepository.save(MovieBuilder.create().addAllDefaultAttributes().build());
+        LocalDateTime startTime = LocalDateTime.now();
         Screening screening = new Screening(startTime, room, movie);
         screeningRepository.save(screening);
     }
