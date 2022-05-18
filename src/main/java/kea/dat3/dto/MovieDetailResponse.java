@@ -25,8 +25,9 @@ public class MovieDetailResponse {
     private int lengthInMinutes;
     private double price;
     private AgeLimit ageLimit;
+    private String posterUrl;
     private Set<ActorResponse> actors;
-    //private Set<Screening> screenings;
+    private Set<ScreeningResponse> screenings;
     private Set<GenreResponse> genres;
     private LocalDateTime created;
     private LocalDateTime updated;
@@ -39,8 +40,9 @@ public class MovieDetailResponse {
         this.lengthInMinutes = movie.getLengthInMinutes();
         this.price = movie.getBasePrice();
         this.ageLimit = movie.getAgeLimit();
+        this.posterUrl = getPosterUrl();
         this.actors = ActorResponse.getActorsFromEntities(movie.getActors());
-        //this.screenings = movie.getScreenings();
+        this.screenings = ScreeningResponse.getScreeningsFromEntities(movie.getScreenings());
         this.genres = GenreResponse.getGenresFromEntities(movie.getGenres());
         this.created = movie.getCreated();
         this.updated = movie.getUpdated();
