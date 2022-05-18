@@ -3,10 +3,7 @@ package kea.dat3.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kea.dat3.dto.ScreeningRequest;
 import kea.dat3.entities.*;
-import kea.dat3.repositories.MovieRepository;
-import kea.dat3.repositories.PersonRepository;
-import kea.dat3.repositories.RoomRepository;
-import kea.dat3.repositories.ScreeningRepository;
+import kea.dat3.repositories.*;
 import kea.dat3.security.dto.LoginRequest;
 import kea.dat3.security.dto.LoginResponse;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,14 +43,15 @@ public class ScreeningControllerTest {
     ObjectMapper objectMapper;
     @Autowired
     PersonRepository personRepository;
+    @Autowired
+    ReservedSeatRepository reservedSeatRepository;
 
     Screening s;
     long nonExistentId = 999;
 
     @BeforeEach
     public void setupScreeningControllerTest() {
-        movieRepository.deleteAll();
-        screeningRepository.deleteAll();
+        movieRepository.deleteAll(); // cascades to screening
         roomRepository.deleteAll();
         personRepository.deleteAll();
         Person admin = new Person("email@testAdmin.dk", "gitteAdmin", "test", "22342122", "admin", "password");
