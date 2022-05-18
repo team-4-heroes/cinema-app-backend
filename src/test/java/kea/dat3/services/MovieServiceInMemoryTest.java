@@ -1,7 +1,7 @@
 package kea.dat3.services;
 
 import kea.dat3.dto.MovieDetailResponse;
-import kea.dat3.entities.MovieFactory;
+import kea.dat3.entities.builders.MovieFactory;
 import kea.dat3.repositories.ActorRepository;
 import kea.dat3.repositories.MovieRepository;
 import org.junit.jupiter.api.Assertions;
@@ -37,13 +37,13 @@ class MovieServiceInMemoryTest {
     void getMoviesByKeyword() {
         var keyword = "thor";
 
-        var CUT_1 = MovieFactory.create_titleAndDescriptionOnly("xxx", "123thorIsBadass456");
-        var CUT_2 = MovieFactory.create_titleAndDescriptionOnly("Thor", "xxx");
-        var CUT_3 = MovieFactory.create_titleAndDescriptionOnly("xxx", "xxx");
+        var m_1 = MovieFactory.create_titleAndDescriptionOnly("xxx", "123thorIsBadass456");
+        var m_2 = MovieFactory.create_titleAndDescriptionOnly("Thor", "xxx");
+        var m_3 = MovieFactory.create_titleAndDescriptionOnly("xxx", "xxx");
 
-        movieRepository.save(CUT_1);
-        movieRepository.save(CUT_2);
-        movieRepository.save(CUT_3);
+        movieRepository.save(m_1);
+        movieRepository.save(m_2);
+        movieRepository.save(m_3);
 
         Set<MovieDetailResponse> mResponses = service.getMoviesByKeyword(keyword);
         assertEquals(2, mResponses.size());

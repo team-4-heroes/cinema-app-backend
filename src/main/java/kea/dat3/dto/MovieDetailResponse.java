@@ -1,10 +1,7 @@
 package kea.dat3.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import kea.dat3.entities.Actor;
-import kea.dat3.entities.Genre;
 import kea.dat3.entities.Movie;
-import kea.dat3.entities.Screening;
 import kea.dat3.entities.pegi.AgeLimit;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,9 +25,9 @@ public class MovieDetailResponse {
     private int lengthInMinutes;
     private double price;
     private AgeLimit ageLimit;
-    private Set<Actor> actors;
-    private Set<Screening> screenings;
-    private Set<Genre> genres;
+    private Set<ActorResponse> actors;
+    //private Set<Screening> screenings;
+    private Set<GenreResponse> genres;
     private LocalDateTime created;
     private LocalDateTime updated;
 
@@ -42,9 +39,9 @@ public class MovieDetailResponse {
         this.lengthInMinutes = movie.getLengthInMinutes();
         this.price = movie.getBasePrice();
         this.ageLimit = movie.getAgeLimit();
-        this.actors = movie.getActors();
-        this.screenings = movie.getScreenings();
-        this.genres = movie.getGenres();
+        this.actors = ActorResponse.getActorsFromEntities(movie.getActors());
+        //this.screenings = movie.getScreenings();
+        this.genres = GenreResponse.getGenresFromEntities(movie.getGenres());
         this.created = movie.getCreated();
         this.updated = movie.getUpdated();
     }

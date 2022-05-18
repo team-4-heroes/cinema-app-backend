@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Set;
 
 @Getter
@@ -19,7 +19,7 @@ public class ActorRequest {
 
     private String lastName;
 
-    private LocalDateTime birthDate;
+    private LocalDate birthDate;
 
     private Set<Movie> movies;
 }

@@ -2,10 +2,19 @@ package kea.dat3.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kea.dat3.dto.ScreeningRequest;
+import kea.dat3.entities.Movie;
+import kea.dat3.entities.Room;
+import kea.dat3.entities.Screening;
+import kea.dat3.entities.builders.MovieBuilder;
+import kea.dat3.repositories.MovieRepository;
+import kea.dat3.repositories.RoomRepository;
+import kea.dat3.repositories.ScreeningRepository;
+
 import kea.dat3.entities.*;
 import kea.dat3.repositories.*;
 import kea.dat3.security.dto.LoginRequest;
 import kea.dat3.security.dto.LoginResponse;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -59,7 +68,10 @@ public class ScreeningControllerTest {
         personRepository.save(admin);
         LocalDateTime startTime = LocalDateTime.of(2022, 10, 1, 10, 0);
         Room room = roomRepository.save(new Room("testRoom"));
-        Movie movie = movieRepository.save(new Movie("film titel", "beskrivelse", 2000, 100, 100));
+        Movie movie = movieRepository.save(MovieBuilder.create("film titel", "beskrivelse", 2000)
+                .addLengthInMinutes(200)
+                .build());
+        //new Movie("film titel", "beskrivelse", 2000, 100, 100));
         s = new Screening(startTime, room, movie);
         screeningRepository.save(s);
     }

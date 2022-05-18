@@ -1,6 +1,10 @@
-package kea.dat3.entities;
+package kea.dat3.entities.builders;
 
-import java.time.LocalDateTime;
+import kea.dat3.entities.Actor;
+import kea.dat3.entities.Movie;
+import kea.dat3.entities.pegi.AgeLimit;
+
+import java.time.LocalDate;
 import java.time.Year;
 
 public class MovieBuilder {
@@ -31,7 +35,12 @@ public class MovieBuilder {
     }
 
     public MovieBuilder addActor(String firstName, String lastName, Year year) {
-        return addActor(new Actor(firstName, lastName, LocalDateTime.of(year.getValue(), 1, 1, 1, 1)));
+        return addActor(ActorBuilder.create(firstName, lastName, LocalDate.of(year.getValue(), 1, 1)).build());
+    }
+
+    public MovieBuilder addAgeLimit(AgeLimit ageLimit) {
+        movie.setAgeLimit(ageLimit);
+        return this;
     }
 
     public MovieBuilder addActor(Actor actor) {

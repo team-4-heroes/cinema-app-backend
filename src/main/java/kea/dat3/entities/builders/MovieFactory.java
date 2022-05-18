@@ -1,6 +1,8 @@
-package kea.dat3.entities;
+package kea.dat3.entities.builders;
 
+import kea.dat3.entities.Movie;
 import kea.dat3.entities.pegi.AgeLimit;
+
 import java.time.LocalDateTime;
 import java.util.HashSet;
 
