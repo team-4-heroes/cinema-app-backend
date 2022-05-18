@@ -51,12 +51,13 @@ public class ScreeningControllerTest {
     @BeforeEach
     public void setupScreeningControllerTest() {
         screeningRepository.deleteAll();
+        movieRepository.deleteAll();
         LocalDateTime startTime = LocalDateTime.of(2022, 10, 1, 10, 0);
         Room room = roomRepository.save(new Room("testRoom"));
         Movie movie = movieRepository.save(MovieBuilder.create("film titel", "beskrivelse", 2000)
-                .addLengthInMinutes(200)
+                .addLengthInMinutes(100)
+                .addBasePrice(100)
                 .build());
-        //new Movie("film titel", "beskrivelse", 2000, 100, 100));
         s = new Screening(startTime, room, movie);
         screeningRepository.save(s);
     }
@@ -122,6 +123,7 @@ public class ScreeningControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.status").value("404"));
     }
 
+    @Test
     private void addScreeningFail(ScreeningRequest screeningRequest, String msg, String statusCode) throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/screenings")
                         .contentType("application/json")

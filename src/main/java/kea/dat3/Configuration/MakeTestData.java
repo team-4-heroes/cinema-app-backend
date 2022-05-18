@@ -54,7 +54,7 @@ public class MakeTestData implements ApplicationRunner {
     public void makeScreenings() {
         LocalDateTime startTime = LocalDateTime.of(2022, 10, 1, 10, 0);
         Room room = roomRepository.save(new Room("testRoom"));
-        Movie movie = movieRepository.save(new Movie("film titel", "beskrivelse", 2000, 100, 100));
+        Movie movie = movieRepository.save(MovieBuilder.create().addAllDefaultAttributes().build());
         Screening screening = new Screening(startTime, room, movie);
         screeningRepository.save(screening);
     }
@@ -106,6 +106,7 @@ public class MakeTestData implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         makeActors();
+        makeGenres();
         makeMovies();
         makeUsers();
         makeScreenings();

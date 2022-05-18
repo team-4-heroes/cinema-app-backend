@@ -26,7 +26,6 @@ public class GenreBuilder {
         return this;
     }
 
-
     public Genre build() {
         var temp = genre;
         genre = null;

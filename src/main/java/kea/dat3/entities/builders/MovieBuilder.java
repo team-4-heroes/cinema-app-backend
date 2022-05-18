@@ -15,6 +15,13 @@ public class MovieBuilder {
         // Private constructor to prevent MovieBuilder from being created from the outside
     }
 
+    public static MovieBuilder create() {
+        var movieBuilder = new MovieBuilder();
+        var movie = new Movie();
+        movieBuilder.setMovie(movie);
+        return movieBuilder;
+    }
+
     public static MovieBuilder create(String title, String description, int releaseYear) {
         var movieBuilder = new MovieBuilder();
         var movie = new Movie();
@@ -27,6 +34,47 @@ public class MovieBuilder {
 
     private void setMovie(Movie movie) {
         this.movie = movie;
+    }
+
+    public MovieBuilder addAllDefaultAttributes() {
+        var s = "xxx";
+        movie.setTitle(s);
+        movie.setDescription(s);
+        movie.setReleaseYear(2000);
+        movie.setLengthInMinutes(120);
+        return this;
+    }
+
+    public MovieBuilder addReleaseYearAndLengthInMinutesDefault() {
+        movie.setReleaseYear(2000);
+        movie.setLengthInMinutes(120);
+        return this;
+    }
+
+    public MovieBuilder addTitleAndLengthInMinutesDefault() {
+        movie.setTitle("xxx");
+        movie.setLengthInMinutes(120);
+        return this;
+    }
+
+    public MovieBuilder addTitle(String title) {
+        movie.setTitle(title);
+        return this;
+    }
+
+    public MovieBuilder addDescription(String description) {
+        movie.setDescription(description);
+        return this;
+    }
+
+    public MovieBuilder addReleaseYear(int year) {
+        movie.setReleaseYear(year);
+        return this;
+    }
+
+    public MovieBuilder addBasePrice(double basePrice) {
+        movie.setBasePrice(basePrice);
+        return this;
     }
 
     public MovieBuilder addLengthInMinutes(int lengthInMinutes) {
