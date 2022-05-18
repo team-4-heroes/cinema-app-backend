@@ -37,6 +37,10 @@ public class MakeTestData implements ApplicationRunner {
         movieRepository.save(m1);
         Screening s1 = new Screening(LocalDateTime.now(), r1, m1);
         screeningRepository.save(s1);
+        for (ReservedSeat rs : s1.getScreeningSeats())
+            {
+                System.out.println(rs);
+            }
         System.out.println(s1.getScreeningSeats());
     }
 

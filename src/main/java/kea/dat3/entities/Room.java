@@ -25,6 +25,7 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "room", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<Seat> seats = new ArrayList<>();
 

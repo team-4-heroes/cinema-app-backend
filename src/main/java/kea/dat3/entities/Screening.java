@@ -61,8 +61,7 @@ public class Screening {
         //Create seats for the screening
         List<ReservedSeat> screeningSeats = new ArrayList<>();
         for (Seat s : room.getSeats()) {
-            ReservedSeat rs = new ReservedSeat(s);
-            rs.setScreening(this);
+            ReservedSeat rs = new ReservedSeat(this, s);
             screeningSeats.add(rs);
         }
         return screeningSeats;
