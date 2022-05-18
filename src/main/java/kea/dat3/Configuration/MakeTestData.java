@@ -7,6 +7,7 @@ import kea.dat3.entities.builders.MovieBuilder;
 import kea.dat3.entities.pegi.AgeLimit;
 import kea.dat3.repositories.*;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Profile;
@@ -16,7 +17,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Year;
 
-@AllArgsConstructor
+//@AllArgsConstructor
+//@NoArgsConstructor
 @Controller
 @Profile("!test")
 public class MakeTestData implements ApplicationRunner {
@@ -28,9 +30,33 @@ public class MakeTestData implements ApplicationRunner {
     ActorRepository actorRepository;
     GenreRepository genreRepository;
 
+    ReservedSeatRepository reservedSeatRepository;
+
+    public MakeTestData(PersonRepository personRepository, ScreeningRepository screeningRepository, RoomRepository roomRepository, MovieRepository movieRepository, ActorRepository actorRepository, ReservedSeatRepository reservedSeatRepository) {
+        this.personRepository = personRepository;
+        this.screeningRepository = screeningRepository;
+        this.roomRepository = roomRepository;
+        this.movieRepository = movieRepository;
+        this.actorRepository = actorRepository;
+        this.reservedSeatRepository = reservedSeatRepository;
+    }
+
+    public void makeSeats() {
+        Room r1 = new Room("Room1", 10);
+        roomRepository.save(r1);
+        System.out.println(r1.getSeats());
+        Movie m1 = new Movie("TestMovie", "A test movie for screenings", 1999, 120, 120);
+        movieRepository.save(m1);
+        Screening s1 = new Screening(LocalDateTime.now(), r1, m1);
+        screeningRepository.save(s1);
+        for (ReservedSeat rs : s1.getScreeningSeats())
+            {
+                System.out.println(rs);
+            }
+        System.out.println(s1.getScreeningSeats());
+    }
 
     public void makeUsers() {
-        System.out.println("Jeg er her");
         Person customer = new Person("email@testCustumer.dk", "gitteCustumer", "test", "12342121", "testNameCustumer", "testPassowrdCustumer");
         Person admin = new Person("email@testAdmin.dk", "gitteAdmin", "test", "22342122", "testNameAdmin", "testPassowrdAdmin");
         Person staff = new Person("email@testStaff.dk", "gitteStaff", "test", "32342123", "testNameStaff", "testPassowrdStaff");
@@ -52,7 +78,6 @@ public class MakeTestData implements ApplicationRunner {
     }
 
     public void makeScreenings() {
-        LocalDateTime startTime = LocalDateTime.of(2022, 10, 1, 10, 0);
         Room room = roomRepository.save(new Room("testRoom"));
         Movie movie = movieRepository.save(MovieBuilder.create().addAllDefaultAttributes().build());
         Screening screening = new Screening(startTime, room, movie);
@@ -113,5 +138,6 @@ public class MakeTestData implements ApplicationRunner {
         makeMovies();
         makeUsers();
         makeScreenings();
+        makeSeats();
     }
 }
