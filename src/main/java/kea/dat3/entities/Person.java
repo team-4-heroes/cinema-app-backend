@@ -82,7 +82,8 @@ public class Person implements UserWithPassword {
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.username = username;
-        this.password = password;
+        this.password = pwEncoder.encode(password);
+        this.enabled = true;
     }
 
     public Person(PersonRequest body) {
