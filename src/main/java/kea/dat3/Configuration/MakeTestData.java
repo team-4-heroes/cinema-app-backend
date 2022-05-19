@@ -89,20 +89,20 @@ public class MakeTestData implements ApplicationRunner {
                 .addActor("Christopher", "Lee", Year.of(1922))
                 .addLengthInMinutes(178)
                 .addAgeLimit(AgeLimit.PEGI_3)
-                .addPosterUrlDefault()
+                .addPosterUrl("https://d1nslcd7m2225b.cloudfront.net/Pictures/480xAny/4/7/7/1252477_fellowship.jpg")
                 .build();
         var m_2 = MovieBuilder.create("Lord of the Rings: The Two Towers", "Things get hairy and the party splits. Also wizards.", 2002)
                 .addActor("Cate", "Blanchet", Year.of(1975))
                 .addActor("Miranda", "Otto", Year.of(1987))
                 .addLengthInMinutes(179)
                 .addAgeLimit(AgeLimit.PEGI_3)
-                .addPosterUrlDefault()
+                .addPosterUrl("https://thecinematicket.files.wordpress.com/2022/02/two-towers-poster.jpg")
                 .build();
         var m_3 = MovieBuilder.create("Lord of the Rings: The Return of the King", "Split story. Slow crawl through Mordor and epic battles. Golumn save the day", 2003)
                 .addActor("Andy", "Serkis", Year.of(1969))
                 .addLengthInMinutes(201)
                 .addAgeLimit(AgeLimit.PEGI_3)
-                .addPosterUrlDefault()
+                .addPosterUrl("https://cdn11.bigcommerce.com/s-ydriczk/images/stencil/1280x1280/products/82360/91855/THE-LORD-OF-THE-RINGS-THE-RETURN-OF-THE-KING-DS-ADV-Style-A-2003-ORIGINAL-CINEMA-POSTER__10176.1543239944.jpg?c=2")
                 .build();
 
         movieRepository.save(m_1);

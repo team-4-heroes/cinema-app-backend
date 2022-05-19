@@ -90,6 +90,11 @@ public class MovieBuilder {
         return this;
     }
 
+    public MovieBuilder addPosterUrl(String url) {
+        movie.setPosterUrl(url);
+        return this;
+    }
+
     public MovieBuilder addPosterUrlDefault() {
         movie.setPosterUrl(localHost);
         return this;
