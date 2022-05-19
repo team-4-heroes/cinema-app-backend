@@ -43,7 +43,12 @@ public class MakeTestData implements ApplicationRunner {
         Room r1 = new Room("Room1", 10);
         roomRepository.save(r1);
         System.out.println(r1.getSeats());
-        Movie m1 = new Movie("TestMovie", "A test movie for screenings", 1999, 120, 120, "https://no-poster-url");
+        Movie m1 = MovieBuilder.create("The Labyrinth", "Selfish girl fumbles around in a labyrinth. David Bowie has a bulge", 1987)
+                .addActor("David", "Bowie", Year.of(1947))
+                .addPosterUrl("https://m.media-amazon.com/images/M/MV5BMjM2MDE4OTQwOV5BMl5BanBnXkFtZTgwNjgxMTg2NzE@._V1_.jpg")
+                .addLengthInMinutes(120)
+                .addBasePrice(120)
+                .build();
         movieRepository.save(m1);
         Screening s1 = new Screening(LocalDateTime.now(), r1, m1);
         screeningRepository.save(s1);
@@ -76,7 +81,11 @@ public class MakeTestData implements ApplicationRunner {
 
     public void makeScreenings() {
         Room room = roomRepository.save(new Room("testRoom"));
-        Movie movie = movieRepository.save(MovieBuilder.create().addAllDefaultAttributes().build());
+        Movie movie = movieRepository.save(MovieBuilder.create("Star Wars: Return of the Jedi", "A farm boy discovers hidden magic powers and The Princess needs no rescuing", 1983)
+                .addLengthInMinutes(131)
+                .addBasePrice(120)
+                .addPosterUrl("https://m.media-amazon.com/images/M/MV5BOWZlMjFiYzgtMTUzNC00Y2IzLTk1NTMtZmNhMTczNTk0ODk1XkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_.jpg")
+                .build());
         LocalDateTime startTime = LocalDateTime.now();
         Screening screening = new Screening(startTime, room, movie);
         screeningRepository.save(screening);
