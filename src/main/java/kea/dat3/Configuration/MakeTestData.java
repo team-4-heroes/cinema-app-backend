@@ -6,8 +6,6 @@ import kea.dat3.entities.builders.GenreBuilder;
 import kea.dat3.entities.builders.MovieBuilder;
 import kea.dat3.entities.pegi.AgeLimit;
 import kea.dat3.repositories.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Profile;
@@ -45,14 +43,13 @@ public class MakeTestData implements ApplicationRunner {
         Room r1 = new Room("Room1", 10);
         roomRepository.save(r1);
         System.out.println(r1.getSeats());
-        Movie m1 = new Movie("TestMovie", "A test movie for screenings", 1999, 120, 120,"https://no-poster-url");
+        Movie m1 = new Movie("TestMovie", "A test movie for screenings", 1999, 120, 120, "https://no-poster-url");
         movieRepository.save(m1);
         Screening s1 = new Screening(LocalDateTime.now(), r1, m1);
         screeningRepository.save(s1);
-        for (ReservedSeat rs : s1.getScreeningSeats())
-            {
-                // System.out.println(rs);
-            }
+        for (ReservedSeat rs : s1.getScreeningSeats()) {
+            // System.out.println(rs);
+        }
         System.out.println(s1.getScreeningSeats());
     }
 
@@ -88,6 +85,8 @@ public class MakeTestData implements ApplicationRunner {
     private void makeMovies() {
         var m_1 = MovieBuilder.create("Lord of the Rings: Fellowship of the Ring", "Little hobbits go on a grand adventure and Gandalf dies", 2001)
                 .addActor("Viggo", "Mortensen", Year.of(1984))
+                .addActor("John", "Rhys-Davies", Year.of(1969))
+                .addActor("Christopher", "Lee", Year.of(1922))
                 .addLengthInMinutes(178)
                 .addAgeLimit(AgeLimit.PEGI_3)
                 .addPosterUrlDefault()
@@ -101,7 +100,6 @@ public class MakeTestData implements ApplicationRunner {
                 .build();
         var m_3 = MovieBuilder.create("Lord of the Rings: The Return of the King", "Split story. Slow crawl through Mordor and epic battles. Golumn save the day", 2003)
                 .addActor("Andy", "Serkis", Year.of(1969))
-                .addActor("John", "Rhys-Davies", Year.of(1969))
                 .addLengthInMinutes(201)
                 .addAgeLimit(AgeLimit.PEGI_3)
                 .addPosterUrlDefault()
