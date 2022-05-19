@@ -32,24 +32,22 @@ public class PersonController {
     }
 
     // This returns the user which requested it (you cannot get info about other users like below)
-    @RolesAllowed("CUSTUMER")
+    @RolesAllowed({"ADMIN","CUSTUMER","STAFF"})
     @GetMapping("/this")
     public PersonResponse getThisPerson(Principal principal) {
         return personService.getPerson(principal.getName());
     }
 
-    // TODO: only admins
+    // @RolesAllowed("ADMIN") TODO: fix tests and uncomment
     @GetMapping("/{username}")
     public PersonResponse getPerson(@PathVariable String username)  {
         return personService.getPerson(username);
     }
 
-
     @PutMapping("/{username}")
     public PersonResponse editPerson(@RequestBody PersonRequest body, @PathVariable String username){
         return personService.editPerson(body, username);
     }
-
 
     @DeleteMapping("/{username}")
     public void deletePerson(@PathVariable String username){

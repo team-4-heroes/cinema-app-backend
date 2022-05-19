@@ -11,7 +11,7 @@ public class MovieBuilder {
 
     private Movie movie;
 
-    private final String localHost = "http://localhost:8080/";
+    private final String localHost = "http://localhost:8080/images/gotg2.jpg";
 
     private MovieBuilder() {
         // Private constructor to prevent MovieBuilder from being created from the outside
