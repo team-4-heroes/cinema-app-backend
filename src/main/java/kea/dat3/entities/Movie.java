@@ -91,4 +91,8 @@ public class Movie {
         this.basePrice = basePrice;
         this.posterUrl = posterUrl;
     }
+
+    public void addScreening(Screening screening) {
+        this.screenings.add(screening);
+    }
 }
