@@ -40,7 +40,7 @@ public class MovieDetailResponse {
         this.lengthInMinutes = movie.getLengthInMinutes();
         this.price = movie.getBasePrice();
         this.ageLimit = movie.getAgeLimit();
-        this.posterUrl = getPosterUrl();
+        this.posterUrl = movie.getPosterUrl();
         this.actors = ActorResponse.getActorsFromEntities(movie.getActors());
         this.screenings = ScreeningResponse.getScreeningsFromEntities(movie.getScreenings());
         this.genres = GenreResponse.getGenresFromEntities(movie.getGenres());
