@@ -100,11 +100,6 @@ public class MovieBuilder {
         return this;
     }
 
-    public MovieBuilder addPosterUrl(String Url) {
-        movie.setPosterUrl(Url);
-        return this;
-    }
-
     public MovieBuilder addActor(String firstName, String lastName, Year year) {
         return addActor(ActorBuilder.create(firstName, lastName, LocalDate.of(year.getValue(), 1, 1)).build());
     }
