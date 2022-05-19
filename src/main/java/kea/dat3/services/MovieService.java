@@ -3,6 +3,7 @@ package kea.dat3.services;
 import kea.dat3.dto.MovieDetailResponse;
 import kea.dat3.dto.MovieRequest;
 import kea.dat3.dto.MovieResponse;
+import kea.dat3.dto.MovieScreeningsResponse;
 import kea.dat3.entities.Actor;
 import kea.dat3.entities.Movie;
 import kea.dat3.error.ActorNotFoundException;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -72,5 +74,13 @@ public class MovieService {
         Actor actor = actorRepository.findById(actorId).orElseThrow(() -> new ActorNotFoundException(actorId));
         movie.getActors().add(actor);
         return new MovieDetailResponse(movieRepository.save(movie));
+    }
+
+    public Set<MovieScreeningsResponse> getScreeningsByMovie() {
+        // Get all movies with at least one screening
+        List<Movie> movies = movieRepository.findAll().stream().filter(
+                movie -> !movie.getScreenings().isEmpty()).collect(Collectors.toList());
+        System.out.println("MOVIES: " + movies);
+        return MovieScreeningsResponse.getMoviesFromEntities(movies);
     }
 }

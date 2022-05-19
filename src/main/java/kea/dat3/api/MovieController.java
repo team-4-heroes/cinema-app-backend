@@ -1,8 +1,6 @@
 package kea.dat3.api;
 
-import kea.dat3.dto.MovieDetailResponse;
-import kea.dat3.dto.MovieRequest;
-import kea.dat3.dto.MovieResponse;
+import kea.dat3.dto.*;
 import kea.dat3.services.MovieService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -55,5 +53,10 @@ public class MovieController {
     @DeleteMapping("/{id}")
     public void deleteMovie(@PathVariable Long id) {
         movieService.deleteMovie(id);
+    }
+
+    @GetMapping("/screenings")
+    public Set<MovieScreeningsResponse> getScreeningsByMovie(){
+        return movieService.getScreeningsByMovie();
     }
 }
